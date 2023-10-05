@@ -1,38 +1,243 @@
 .App {
-  text-align: center;
-}
+  background-color: #383838;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+  .utang-summary {
+    height: 15vh;
+    display: flex;
+    flex-direction: row;
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    .gab,
+    .mei,
+    .summary {
+      flex: 3;
+      border-radius: 5px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      margin-right: 5px;
+      margin-left: 5px;
+    }
+
+    .gab {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .name {
+        margin: 5px;
+        color: rgb(184, 184, 184);
+        font-size: 1em;
+        font-family: "ui-monospace";
+      }
+
+      .amount {
+        color: white;
+        font-size: 1.3em;
+        margin: 5px;
+        font-family: "ui-monospace";
+      }
+    }
+    .mei {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .name {
+        margin: 5px;
+        color: rgb(184, 184, 184);
+        font-size: 1em;
+        font-family: "ui-monospace";
+      }
+
+      .amount {
+        color: white;
+        font-size: 1.3em;
+        margin: 5px;
+        font-family: "ui-monospace";
+      }
+    }
+    .summary {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .green {
+        color: green !important;
+      }
+      .name {
+        margin: 5px;
+        color: rgb(184, 184, 184);
+        font-size: 1em;
+        font-family: "ui-monospace";
+      }
+
+      .amount {
+        color: white;
+        font-size: 1.3em;
+        margin: 5px;
+        font-family: "ui-monospace";
+      }
+    }
   }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+  .utang-list {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    overflow: scroll;
+    height: 65vh;
+    background-color: #5c5c5c;
 
-.App-link {
-  color: #61dafb;
-}
+    .no-utang {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      color: rgb(181, 181, 181);
+      font-family: "ui-monospace";
+      text-align: center;
+    }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+    .utang-item {
+      display: flex;
+      height: 90px;
+      border-radius: 5px;
+
+      .orange {
+        color: orange !important;
+      }
+
+      .red {
+        color: tomato !important;
+      }
+      .title-person {
+        flex: 3;
+        color: white;
+        font-family: "ui-monospace";
+        display: flex;
+        justify-content: center;
+        align-items: left;
+        flex-direction: column;
+
+        .utang-name {
+          font-size: 1em;
+          overflow: hidden;
+          margin-left: 20px;
+        }
+        .utang-person {
+          color: rgb(184, 184, 184);
+          font-size: 0.7em;
+          font-family: "ui-monospace";
+          margin-left: 20px;
+        }
+      }
+
+      .amount {
+        color: white;
+        font-size: 1em;
+        flex: 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "ui-monospace";
+      }
+
+      .check {
+        flex: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .btn {
+          width: 30px;
+          height: 30px;
+          border: none;
+          border-radius: 5px;
+          font-size: 30px;
+          background-color: transparent;
+          margin-right: 20px;
+          text-align: center;
+        }
+      }
+    }
   }
-  to {
-    transform: rotate(360deg);
+
+  .create-utang {
+    display: flex;
+    flex-direction: column;
+    height: 20vh;
+
+    .input-title {
+      background-color: #909090;
+      color: white;
+      flex: 5;
+      outline: none;
+      border: none;
+      font-size: 1em;
+      /* font-weight: bold; */
+      border-radius: 0;
+      text-align: center;
+      font-family: "ui-monospace";
+    }
+
+    ::-webkit-input-placeholder {
+      /* Chrome/Opera/Safari */
+      font-size: 1em;
+      font-family: "ui-monospace";
+      font-weight: normal;
+    }
+
+    .amount-person {
+      flex: 5;
+      display: flex;
+
+      .amount {
+        background-color: #5c5c5c;
+        border: none;
+        flex: 3;
+        color: white;
+        font-size: 1em;
+        width: 50%;
+        border-radius: 0;
+        font-family: "ui-monospace";
+        text-align: center;
+        outline: none;
+      }
+
+      .select {
+        outline: none;
+        background-color: #383838;
+        color: white;
+        flex: 3;
+        border: none;
+        font-size: 1em;
+        font-weight: normal;
+        border-radius: 0;
+        font-family: "ui-monospace";
+        text-align-last: center;
+      }
+
+      .create {
+        color: white;
+        flex: 3;
+        border: none;
+        font-size: 1.1em;
+        border-radius: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: green;
+
+        .btn {
+          font-size: 1em;
+          font-family: "ui-monospace";
+          border-radius: 0;
+          background-color: transparent;
+          border: none;
+          color: white;
+        }
+      }
+    }
   }
 }
