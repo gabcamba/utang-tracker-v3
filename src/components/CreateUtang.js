@@ -141,8 +141,6 @@ const CreateUtang = () => {
           value={person}
           onChange={(e) => onSelectPerson(e)}
           className="select"
-          name="cars"
-          id="cars"
         >
           <option value="Gab">{GAB}</option>
           <option value="Mei">{MEI}</option>
