@@ -5,7 +5,6 @@ import UtangList from "./components/UtangList";
 import CreateUtang from "./components/CreateUtang";
 import ConfettiExplosion from "react-confetti-explosion";
 import { db } from "./firebase-database";
-
 import LinearProgress from "@mui/material/LinearProgress";
 import { onValue, ref } from "firebase/database";
 import HeaderTitle from "./components/HeaderTitle";
@@ -53,7 +52,6 @@ function App() {
       {exploding && (
         <ConfettiExplosion particleCount={500} width={1600} duration={2000} />
       )}
-
       <SnackToast
         open={snackDeleteOpen}
         onClose={handleClose}
@@ -66,7 +64,6 @@ function App() {
         severity={SUCCESS}
         message={UTANG_PAID}
       />
-
       {isFetching && <LinearProgress sx={{ top: 0 }} color={SUCCESS} />}
       <HeaderTitle />
       <UtangSummary

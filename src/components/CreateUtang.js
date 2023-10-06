@@ -4,10 +4,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { db } from "../firebase-database";
 import { set, ref } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
-// import SnackToast from "./Snacktoast";
 import SnackToast from "./Snacktoast";
-// import Snackbar from "@mui/material/Snackbar";
-import { Alert } from "@mui/material";
 import { GAB, MEI, SUCCESS, UNPAID, UTANG_CREATED } from "../constants";
 const CreateUtang = () => {
   const [title, setTitle] = useState("");
@@ -29,7 +26,6 @@ const CreateUtang = () => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 
@@ -74,7 +70,12 @@ const CreateUtang = () => {
           <LinearProgress color={SUCCESS} />
         </Box>
       ) : null}
-      <SnackToast open={open} onClose={handleClose} severity={SUCCESS} message={UTANG_CREATED} />
+      <SnackToast
+        open={open}
+        onClose={handleClose}
+        severity={SUCCESS}
+        message={UTANG_CREATED}
+      />
       <input
         value={title}
         onChange={(e) => onChangeTitle(e)}
