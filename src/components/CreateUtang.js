@@ -142,8 +142,8 @@ const CreateUtang = () => {
           onChange={(e) => onSelectPerson(e)}
           className="select"
         >
-          <option value="Gab">{GAB}</option>
-          <option value="Mei">{MEI}</option>
+          <option value={GAB}>{GAB}</option>
+          <option value={MEI}>{MEI}</option>
         </select>
         <div className="create">
           {confirm && !loading ? (
@@ -155,7 +155,11 @@ const CreateUtang = () => {
               ok
             </button>
           ) : (
-            <button disabled={loading} onClick={() => onClickPlus()} className="btn">
+            <button
+              disabled={loading}
+              onClick={() => onClickPlus()}
+              className="btn"
+            >
               +
             </button>
           )}
