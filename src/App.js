@@ -9,8 +9,9 @@ import { db } from "./firebase-database";
 import LinearProgress from "@mui/material/LinearProgress";
 import { onValue, ref } from "firebase/database";
 import HeaderTitle from "./components/HeaderTitle";
-import Snackbar from "@mui/material/Snackbar";
-import { Alert } from "@mui/material";
+import SnackToast from "./components/Snacktoast";
+import { UNPAID, INFO, SUCCESS, UTANG_DELETED, UTANG_PAID } from "./constants";
+
 function App() {
   const [utangs, setUtangs] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
@@ -23,7 +24,6 @@ function App() {
     if (reason === "clickaway") {
       return;
     }
-
     setSnackDeleteOpen(false);
   };
 
@@ -37,8 +37,7 @@ function App() {
         let records = [];
         snapshot.forEach((child) => {
           let data = child.val();
-          console.log("DATA", data);
-          if (data.status === "UNPAID") {
+          if (data.status === UNPAID) {
             records.push(data);
           }
         });
@@ -48,61 +47,27 @@ function App() {
     fetch();
     setIsFetching(false);
   }, []);
-  
+
   return (
     <div className="App">
       {exploding && (
         <ConfettiExplosion particleCount={500} width={1600} duration={2000} />
       )}
-      <Snackbar
+
+      <SnackToast
         open={snackDeleteOpen}
-        autoHideDuration={6000}
         onClose={handleClose}
-      >
-        <Alert
-          onClose={handleClose}
-          severity="info"
-          sx={{
-            width: "100%",
-            backgroundColor: "#383838",
-            color: "white",
-            fontFamily: "ui-monospace",
-            marginBottom: "20px",
-            borderRadius: "50px",
-            marginRight: "20px",
-            marginLeft: "20px",
-            boxShadow: "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px"
-          }}
-        >
-          Utang deleted
-        </Alert>
-      </Snackbar>
-
-      <Snackbar
+        severity={INFO}
+        message={UTANG_DELETED}
+      />
+      <SnackToast
         open={snackPaidOpen}
-        autoHideDuration={1500}
         onClose={handleClose}
-      >
-        <Alert
-          onClose={handleClose}
-          severity="success"
-          sx={{
-            width: "100%",
-            backgroundColor: "#383838",
-            color: "white",
-            fontFamily: "ui-monospace",
-            marginBottom: "20px",
-            borderRadius: "50px",
-            marginRight: "20px",
-            marginLeft: "20px",
-            boxShadow: "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px"
-          }}
-        >
-          Utangs paid
-        </Alert>
-      </Snackbar>
+        severity={SUCCESS}
+        message={UTANG_PAID}
+      />
 
-      {isFetching ? <LinearProgress sx={{ top: 0 }} color="success" /> : null}
+      {isFetching && <LinearProgress sx={{ top: 0 }} color={SUCCESS} />}
       <HeaderTitle />
       <UtangSummary
         setExploding={setExploding}
