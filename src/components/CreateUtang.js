@@ -16,7 +16,7 @@ import {
 } from "../constants";
 const CreateUtang = () => {
   const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState(undefined);
+  const [amount, setAmount] = useState("");
   const [person, setPerson] = useState(GAB);
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,10 +24,12 @@ const CreateUtang = () => {
   const [openValidation, setOpenValidation] = useState(false);
 
   const onChangeTitle = (e) => {
+    setConfirm(false);
     setTitle(e.target.value);
   };
 
   const onChangeAmount = (e) => {
+    setConfirm(false);
     setAmount(e.target.value);
   };
 
@@ -46,6 +48,7 @@ const CreateUtang = () => {
   };
 
   const onSelectPerson = (e) => {
+    setConfirm(false);
     setPerson(e.target.value);
   };
 
@@ -154,7 +157,7 @@ const CreateUtang = () => {
               ok
             </button>
           ) : (
-            <button disabled={loading} onClick={onClickPlus} className="btn">
+            <button disabled={loading} onClick={() => onClickPlus()} className="btn">
               +
             </button>
           )}
