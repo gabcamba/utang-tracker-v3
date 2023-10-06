@@ -104,6 +104,8 @@
 
     .utang-item {
       display: flex;
+      justify-content: center;
+      align-items: center;
       height: 90px;
       border-radius: 5px;
 
@@ -144,6 +146,7 @@
         align-items: center;
         justify-content: center;
         font-family: "ui-monospace";
+        text-align: center;
       }
 
       .check {
