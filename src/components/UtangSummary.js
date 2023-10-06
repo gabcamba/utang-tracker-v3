@@ -59,9 +59,12 @@ const UtangSummary = ({
     });
 
     setTimeout(() => {
-      setExploding(false);
       setSnackPaidOpen(false);
     }, 1500);
+
+    setTimeout(() => {
+      setExploding(false);
+    }, 2000);
   };
 
   useEffect(() => {

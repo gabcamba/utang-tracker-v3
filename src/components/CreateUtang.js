@@ -5,14 +5,23 @@ import { db } from "../firebase-database";
 import { set, ref } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
 import SnackToast from "./Snacktoast";
-import { GAB, MEI, SUCCESS, UNPAID, UTANG_CREATED } from "../constants";
+import {
+  ERROR,
+  FIELD_ERROR,
+  GAB,
+  MEI,
+  SUCCESS,
+  UNPAID,
+  UTANG_CREATED,
+} from "../constants";
 const CreateUtang = () => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState(undefined);
-  const [person, setPerson] = useState("Gab");
+  const [person, setPerson] = useState(GAB);
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openValidation, setOpenValidation] = useState(false);
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -29,6 +38,13 @@ const CreateUtang = () => {
     setOpen(false);
   };
 
+  const handleValidationClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenValidation(false);
+  };
+
   const onSelectPerson = (e) => {
     setPerson(e.target.value);
   };
@@ -40,12 +56,29 @@ const CreateUtang = () => {
   const onClickOK = async () => {
     setLoading(true);
 
+    if (
+      !title ||
+      !amount ||
+      isNaN(parseInt(amount)) ||
+      isNaN(Number(parseFloat(amount).toFixed(2)))
+    ) {
+      setOpenValidation(true);
+
+      setTimeout(() => {
+        setOpenValidation(false);
+      }, 1500);
+
+      setLoading(false);
+      return;
+    }
     const uid = uuidv4();
     const date = Date.now();
     await set(ref(db, `${date}${uid}`), {
       date: Date.now(),
       name: title,
-      amount: parseInt(amount),
+      amount: amount.includes(".")
+        ? Number(parseFloat(amount).toFixed(2))
+        : parseInt(amount),
       person: person,
       status: UNPAID,
       uid: `${date}${uid}`,
@@ -76,6 +109,12 @@ const CreateUtang = () => {
         severity={SUCCESS}
         message={UTANG_CREATED}
       />
+      <SnackToast
+        open={openValidation}
+        onClose={handleValidationClose}
+        severity={ERROR}
+        message={FIELD_ERROR}
+      />
       <input
         value={title}
         onChange={(e) => onChangeTitle(e)}
@@ -89,9 +128,11 @@ const CreateUtang = () => {
           value={amount}
           onChange={(e) => onChangeAmount(e)}
           placeholder="amount"
-          maxLength={5}
+          maxLength={10}
           className="amount"
           pattern="[0-9]*"
+          inputMode="decimal"
+          required
         />
         <select
           value={person}
@@ -106,18 +147,14 @@ const CreateUtang = () => {
         <div className="create">
           {confirm && !loading ? (
             <button
-              disabled={!amount || amount === "0" || loading}
+              disabled={loading}
               onClick={() => onClickOK()}
               className="btn"
             >
               ok
             </button>
           ) : (
-            <button
-              disabled={!amount || amount === "0" || loading}
-              onClick={onClickPlus}
-              className="btn"
-            >
+            <button disabled={loading} onClick={onClickPlus} className="btn">
               +
             </button>
           )}

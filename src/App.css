@@ -1,6 +1,9 @@
 .App {
   background-color: #383838;
 
+  ::-webkit-scrollbar {
+    display: none;
+  };
   .utang-summary {
     height: 15vh;
     display: flex;
@@ -83,10 +86,9 @@
   }
 
   .utang-list {
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    overflow: auto;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    overflow: scroll;
     height: 65vh;
     background-color: #5c5c5c;
 

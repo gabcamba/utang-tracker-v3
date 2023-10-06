@@ -50,7 +50,7 @@ function App() {
   return (
     <div className="App">
       {exploding && (
-        <ConfettiExplosion particleCount={500} width={1600} duration={2000} />
+        <ConfettiExplosion particleCount={250} width={1600} duration={1500} />
       )}
       <SnackToast
         open={snackDeleteOpen}
