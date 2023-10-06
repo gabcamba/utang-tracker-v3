@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Skeleton } from "@mui/material";
 import { db } from "../firebase-database";
 import { ref, update } from "firebase/database";
-import Snackbar from "@mui/material/Snackbar";
-import { Alert } from "@mui/material";
 import useSound from "use-sound";
-import ding from "../done.wav";
+import ding from "../media/done.wav";
+import SnackToast from "./Snacktoast";
+import { GAB, MEI, PAID } from "../constants";
 
 const UtangSummary = ({
   utangs,
@@ -28,9 +28,9 @@ const UtangSummary = ({
     let meiAmount = 0;
 
     utangs.map((utang) => {
-      if (utang.person === "Gab") {
+      if (utang.person === GAB) {
         gabAmount += utang.amount;
-      } else if (utang.person === "Mei") {
+      } else if (utang.person === MEI) {
         meiAmount += utang.amount;
       }
     });
@@ -54,14 +54,17 @@ const UtangSummary = ({
     setForPay(false);
 
     utangs.map(async (utang) => {
-      const utangNew = { ...utang, status: "PAID" };
+      const utangNew = { ...utang, status: PAID };
       await update(ref(db, utang.uid), utangNew);
     });
 
     setTimeout(() => {
-      setExploding(false);
       setSnackPaidOpen(false);
     }, 1500);
+
+    setTimeout(() => {
+      setExploding(false);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -189,7 +192,7 @@ const UtangSummary = ({
     <>
       <div className="utang-summary">
         <div className="gab">
-          <div className="name">Gab</div>
+          <div className="name">{GAB}</div>
           <div className="amount">
             {isFetching ? (
               <>
@@ -206,7 +209,7 @@ const UtangSummary = ({
           </div>
         </div>
         <div className="mei">
-          <div className="name">Mei</div>
+          <div className="name">{MEI}</div>
           <div className="amount">
             {isFetching ? (
               <>
@@ -258,30 +261,12 @@ const UtangSummary = ({
         </div>
       </div>
 
-      <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleClose}>
-        <Alert
-          onClose={handleClose}
-          severity="info"
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            textWrap: 'balance',
-            textAlign: 'center',
-            width: "100%",
-            backgroundColor: "#383838",
-            color: "white",
-            fontFamily: "ui-monospace",
-            marginBottom: "20px",
-            borderRadius: "50px",
-            marginRight: "20px",
-            marginLeft: "20px",
-            boxShadow: "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px"
-          }}
-        >
-          {alertMessage}
-        </Alert>
-      </Snackbar>
+      <SnackToast
+        open={alertOpen}
+        onClose={handleClose}
+        severity="info"
+        message={alertMessage}
+      />
     </>
   );
 };

@@ -1,9 +1,7 @@
 import React from "react";
 import UtangItem from "./UtangItem";
-import { Skeleton } from "@mui/material";
 import SkeletonLoader from "./SkeletonLoader";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import { GOOD_JOB, NO_UTANG_FOUND } from "../constants";
 
 const UtangList = ({
   utangs,
@@ -30,7 +28,7 @@ const UtangList = ({
         ) : (
           <div className="no-utang">
             <span>
-              No utangs found. <br /> Good job Gab & Mei!
+              {NO_UTANG_FOUND} <br /> {GOOD_JOB}
             </span>
           </div>
         )}

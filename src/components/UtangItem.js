@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { db } from "../firebase-database";
 import { ref, remove } from "firebase/database";
 import useSound from "use-sound";
-import trash from "../trash.mp3";
+import trash from "../media/trash.mp3";
+import { GAB } from "../constants";
 
 const UtangItem = ({ utang, setIsFetching, setSnackDeleteOpen }) => {
   useEffect(() => {}, []);
@@ -34,8 +35,8 @@ const UtangItem = ({ utang, setIsFetching, setSnackDeleteOpen }) => {
     setSnackDeleteOpen(true);
 
     setTimeout(() => {
-      setSnackDeleteOpen(false)
-    }, 1500)
+      setSnackDeleteOpen(false);
+    }, 1500);
   };
 
   return (
@@ -48,7 +49,7 @@ const UtangItem = ({ utang, setIsFetching, setSnackDeleteOpen }) => {
 
         <div
           onClick={() => setDelete(false)}
-          className={`amount ${utang.person === "Gab" ? "orange" : "red"}`}
+          className={`amount ${utang.person === GAB ? "orange" : "red"}`}
         >
           {utang.person}
         </div>
