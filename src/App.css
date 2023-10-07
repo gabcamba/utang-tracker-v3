@@ -1,10 +1,13 @@
 .App {
-  background-color: #383838;
 
   ::-webkit-scrollbar {
     display: none;
   };
   .utang-summary {
+    background-image: url('../public/C&S.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size:contain;
     height: 15vh;
     display: flex;
     flex-direction: row;
@@ -28,9 +31,10 @@
 
       .name {
         margin: 5px;
-        color: rgb(184, 184, 184);
+        color: white;
         font-size: 1em;
         font-family: "ui-monospace";
+        text-shadow: 2px 2px 8px #000000;;
       }
 
       .amount {
@@ -38,6 +42,7 @@
         font-size: 1.3em;
         margin: 5px;
         font-family: "ui-monospace";
+        text-shadow: 2px 2px 8px #000000;;
       }
     }
     .mei {
@@ -48,9 +53,10 @@
 
       .name {
         margin: 5px;
-        color: rgb(184, 184, 184);
+        color: white;
         font-size: 1em;
         font-family: "ui-monospace";
+        text-shadow: 2px 2px 8px #000000;;
       }
 
       .amount {
@@ -58,6 +64,7 @@
         font-size: 1.3em;
         margin: 5px;
         font-family: "ui-monospace";
+        text-shadow: 2px 2px 8px #000000;;
       }
     }
     .summary {
@@ -71,16 +78,18 @@
       }
       .name {
         margin: 5px;
-        color: rgb(184, 184, 184);
+        color: white;
         font-size: 1em;
         font-family: "ui-monospace";
+        text-shadow: 2px 2px 8px #000000;;
       }
 
       .amount {
         color: white;
         font-size: 1.3em;
         margin: 5px;
-        font-family: "ui-monospace";
+        text-shadow: 2px 2px 8px #000000;;
+        font-family: "ui-monospace"
       }
     }
   }

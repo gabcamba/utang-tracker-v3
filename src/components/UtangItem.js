@@ -55,7 +55,7 @@ const UtangItem = ({ utang, setIsFetching, setSnackDeleteOpen }) => {
         </div>
         <div className="check">
           {del ? (
-            <div onClick={() => confirmDelete(utang)}>❌</div>
+            <div style={{textAlign: 'center'}} onClick={() => confirmDelete(utang)}>❌</div>
           ) : (
             <div onClick={() => toggleDelete()} className="amount">
               {utang.amount.toLocaleString()}

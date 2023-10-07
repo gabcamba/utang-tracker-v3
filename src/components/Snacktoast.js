@@ -9,6 +9,11 @@ const SnackToast = ({ open, onClose, severity, message }) => {
         onClose={onClose}
         severity={severity}
         sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          textAlign: 'center',
+          textWrap: "balance",
           width: "100%",
           backgroundColor: "#383838",
           color: "white",
