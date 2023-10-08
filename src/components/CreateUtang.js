@@ -1,27 +1,43 @@
-import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import LinearProgress from "@mui/material/LinearProgress";
+import React, { useState, useEffect } from "react";
 import { db } from "../firebase-database";
-import { set, ref } from "firebase/database";
+import { set, ref, update } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
-import SnackToast from "./Snacktoast";
+import useSound from "use-sound";
+import pop from "../media/pop.wav";
+import error from "../media/error.wav";
+
 import {
-  ERROR,
   FIELD_ERROR,
   GAB,
+  GAB_LC,
+  HOT_TOAST_STYLES,
   MEI,
-  SUCCESS,
+  MEI_LC,
   UNPAID,
   UTANG_CREATED,
+  UTANG_UPDATED,
 } from "../constants";
-const CreateUtang = () => {
+import toast from "react-hot-toast";
+const CreateUtang = ({ isEdit, utangToEdit, setIsEdit }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [person, setPerson] = useState(GAB);
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [openValidation, setOpenValidation] = useState(false);
+  const [play] = useSound(pop);
+  const [playError] = useSound(error);
+
+  useEffect(() => {
+    if (isEdit) {
+      setAmount(utangToEdit.amount.toString());
+      setTitle(utangToEdit.name);
+      setPerson(utangToEdit.person);
+    } else {
+      setAmount("");
+      setTitle("");
+      setPerson(GAB);
+    }
+  }, [isEdit, utangToEdit]);
 
   const onChangeTitle = (e) => {
     setConfirm(false);
@@ -31,20 +47,6 @@ const CreateUtang = () => {
   const onChangeAmount = (e) => {
     setConfirm(false);
     setAmount(e.target.value);
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
-
-  const handleValidationClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpenValidation(false);
   };
 
   const onSelectPerson = (e) => {
@@ -62,88 +64,115 @@ const CreateUtang = () => {
     if (
       !title ||
       !amount ||
+      title.trim().length === 0 ||
       isNaN(parseInt(amount)) ||
-      isNaN(Number(parseFloat(amount).toFixed(2)))
+      isNaN(Number(parseFloat(amount).toFixed(2))) ||
+      parseInt(amount) === 0 ||
+      Number(parseFloat(amount).toFixed(2)) === 0
     ) {
-      setOpenValidation(true);
+      playError();
 
-      setTimeout(() => {
-        setOpenValidation(false);
-      }, 1500);
-
+      toast.error(FIELD_ERROR, {
+        style: HOT_TOAST_STYLES,
+      });
       setLoading(false);
       return;
     }
-    const uid = uuidv4();
-    const date = Date.now();
-    await set(ref(db, `${date}${uid}`), {
-      date: Date.now(),
-      name: title,
-      amount: amount.includes(".")
-        ? Number(parseFloat(amount).toFixed(2))
-        : parseInt(amount),
-      person: person,
-      status: UNPAID,
-      uid: `${date}${uid}`,
-    });
 
-    setOpen(true);
+    if (isEdit) {
+      play();
+      const date = Date.now();
+      const updatedUtang = {
+        ...utangToEdit,
+        name: title,
+        amount: amount.includes(".")
+          ? Number(parseFloat(amount).toFixed(2))
+          : parseInt(amount),
+        person: person,
+        edited: true,
+        editDate: date,
+      };
+
+      updatedUtang.hist = [
+        ...utangToEdit.hist,
+        {
+          name: title,
+          amount: amount.includes(".")
+            ? Number(parseFloat(amount).toFixed(2))
+            : parseInt(amount),
+          person: person,
+          editDate: date,
+        },
+      ];
+      await update(ref(db, utangToEdit.uid), updatedUtang);
+      setIsEdit(false);
+      toast.success(UTANG_UPDATED, {
+        style: HOT_TOAST_STYLES,
+      });
+    } else {
+      play();
+      const uid = uuidv4();
+      const date = Date.now();
+      const utangObj = {
+        date: Date.now(),
+        name: title,
+        amount: amount.includes(".")
+          ? Number(parseFloat(amount).toFixed(2))
+          : parseInt(amount),
+        person: person,
+        status: UNPAID,
+        uid: `${date}${uid}`,
+        edited: false,
+      };
+      utangObj.hist = [{ ...utangObj }];
+      await set(ref(db, `${date}${uid}`), utangObj);
+
+      toast.success(UTANG_CREATED, {
+        style: HOT_TOAST_STYLES,
+      });
+    }
+
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setTitle("");
     setAmount("");
     setConfirm(false);
-    setLoading(false);
 
     setTimeout(() => {
-      setOpen(false);
+      setLoading(false);
     }, 1000);
   };
 
   return (
     <div className="create-utang">
-      {loading ? (
-        <Box sx={{ width: "100%" }}>
-          <LinearProgress color={SUCCESS} />
-        </Box>
-      ) : null}
-      <SnackToast
-        open={open}
-        onClose={handleClose}
-        severity={SUCCESS}
-        message={UTANG_CREATED}
-      />
-      <SnackToast
-        open={openValidation}
-        onClose={handleValidationClose}
-        severity={ERROR}
-        message={FIELD_ERROR}
-      />
       <input
         value={title}
         onChange={(e) => onChangeTitle(e)}
-        placeholder="utang description"
+        placeholder="description"
         maxLength={10}
-        className="input-title"
+        className={`${isEdit ? "editing" : ""} input-title`}
         type="text"
       />
       <div className="amount-person">
-        <input
-          value={amount}
-          onChange={(e) => onChangeAmount(e)}
-          placeholder="amount"
-          maxLength={10}
-          className="amount"
-          pattern="[0-9]*"
-          inputMode="decimal"
-          required
-        />
+        <div style={{ flex: 3, display: "flex" }}>
+          <input
+            value={amount}
+            onChange={(e) => onChangeAmount(e)}
+            placeholder="amount"
+            maxLength={8}
+            className="amount"
+            pattern="[0-9]*"
+            inputMode="decimal"
+            required
+          />
+        </div>
+
         <select
           value={person}
           onChange={(e) => onSelectPerson(e)}
           className="select"
         >
-          <option value={GAB}>{GAB}</option>
-          <option value={MEI}>{MEI}</option>
+          <option value={GAB}>{GAB_LC}</option>
+          <option value={MEI}>{MEI_LC}</option>
         </select>
         <div className="create">
           {confirm && !loading ? (
@@ -160,7 +189,7 @@ const CreateUtang = () => {
               onClick={() => onClickPlus()}
               className="btn"
             >
-              +
+              {isEdit ? "edit" : "create"}
             </button>
           )}
         </div>

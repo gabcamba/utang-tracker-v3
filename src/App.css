@@ -1,13 +1,13 @@
 .App {
-
+  background-color: #383838;
   ::-webkit-scrollbar {
     display: none;
-  };
+  }
   .utang-summary {
-    background-image: url('../public/C&S.png');
+    background-image: url("../public/C&S.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size:contain;
+    background-size: contain;
     height: 15vh;
     display: flex;
     flex-direction: row;
@@ -17,10 +17,7 @@
     .summary {
       flex: 3;
       border-radius: 5px;
-      margin-top: 5px;
-      margin-bottom: 5px;
-      margin-right: 5px;
-      margin-left: 5px;
+      margin: 5px;
     }
 
     .gab {
@@ -31,10 +28,10 @@
 
       .name {
         margin: 5px;
-        color: white;
+        color: rgb(216, 216, 216);
         font-size: 1em;
         font-family: "ui-monospace";
-        text-shadow: 2px 2px 8px #000000;;
+        text-shadow: 2px 2px 8px #000000;
       }
 
       .amount {
@@ -42,7 +39,7 @@
         font-size: 1.3em;
         margin: 5px;
         font-family: "ui-monospace";
-        text-shadow: 2px 2px 8px #000000;;
+        text-shadow: 2px 2px 8px #000000;
       }
     }
     .mei {
@@ -53,10 +50,10 @@
 
       .name {
         margin: 5px;
-        color: white;
+        color: rgb(216, 216, 216);
         font-size: 1em;
         font-family: "ui-monospace";
-        text-shadow: 2px 2px 8px #000000;;
+        text-shadow: 2px 2px 8px #000000;
       }
 
       .amount {
@@ -64,7 +61,7 @@
         font-size: 1.3em;
         margin: 5px;
         font-family: "ui-monospace";
-        text-shadow: 2px 2px 8px #000000;;
+        text-shadow: 2px 2px 8px #000000;
       }
     }
     .summary {
@@ -74,22 +71,22 @@
       align-items: center;
 
       .green {
-        color: green !important;
+        color: #69c881 !important;
       }
       .name {
         margin: 5px;
-        color: white;
+        color: rgb(216, 216, 216);
         font-size: 1em;
         font-family: "ui-monospace";
-        text-shadow: 2px 2px 8px #000000;;
+        text-shadow: 2px 2px 8px #000000;
       }
 
       .amount {
         color: white;
         font-size: 1.3em;
         margin: 5px;
-        text-shadow: 2px 2px 8px #000000;;
-        font-family: "ui-monospace"
+        text-shadow: 2px 2px 8px #000000;
+        font-family: "ui-monospace";
       }
     }
   }
@@ -103,20 +100,27 @@
 
     .no-utang {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100%;
       color: rgb(181, 181, 181);
       font-family: "ui-monospace";
       text-align: center;
+      font-size: 0.9rem;
     }
 
+    .editing {
+      border: 1px solid darksalmon !important;
+    }
     .utang-item {
+      border: 1px solid #5c5c5c;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 90px;
-      border-radius: 5px;
+      height: 80px;
+      margin: 5px;
+      border-radius: 15px;
 
       .orange {
         color: orange !important;
@@ -140,8 +144,17 @@
           margin-left: 20px;
         }
         .utang-person {
+          margin-top: 5px;
           color: rgb(184, 184, 184);
           font-size: 0.7em;
+          font-family: "ui-monospace";
+          margin-left: 20px;
+        }
+
+        .utang-edited {
+          margin-top: 5px;
+          color: rgb(255, 178, 178);
+          font-size: 0.3em;
           font-family: "ui-monospace";
           margin-left: 20px;
         }
@@ -182,14 +195,17 @@
     flex-direction: column;
     height: 20vh;
 
+    .editing {
+      background-color: darksalmon !important;
+    }
+
     .input-title {
-      background-color: #909090;
+      background-color: cornflowerblue;
       color: white;
       flex: 5;
       outline: none;
       border: none;
       font-size: 1em;
-      /* font-weight: bold; */
       border-radius: 0;
       text-align: center;
       font-family: "ui-monospace";
@@ -200,6 +216,7 @@
       font-size: 1em;
       font-family: "ui-monospace";
       font-weight: normal;
+      color: rgb(255, 255, 255);
     }
 
     .amount-person {
@@ -207,12 +224,12 @@
       display: flex;
 
       .amount {
-        background-color: #5c5c5c;
+        background-color: #de6238;
         border: none;
         flex: 3;
         color: white;
         font-size: 1em;
-        width: 50%;
+        width: 100%;
         border-radius: 0;
         font-family: "ui-monospace";
         text-align: center;
@@ -221,7 +238,7 @@
 
       .select {
         outline: none;
-        background-color: #383838;
+        background-color: #967ae9;
         color: white;
         flex: 3;
         border: none;
@@ -236,12 +253,12 @@
         color: white;
         flex: 3;
         border: none;
-        font-size: 1.1em;
+        font-size: 1em;
         border-radius: 0;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: green;
+        background-color: #69c881;
 
         .btn {
           font-size: 1em;
