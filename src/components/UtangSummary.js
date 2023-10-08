@@ -3,9 +3,9 @@ import { Skeleton } from "@mui/material";
 import { db } from "../firebase-database";
 import { ref, update } from "firebase/database";
 import useSound from "use-sound";
-import ding from "../media/done.wav";
-import SnackToast from "./Snacktoast";
-import { GAB, MEI, PAID } from "../constants";
+import ding from "../media/success.wav";
+import { GAB, HOT_TOAST_STYLES, MEI, PAID, UTANG_PAID } from "../constants";
+import toast from "react-hot-toast";
 
 const UtangSummary = ({
   utangs,
@@ -13,13 +13,15 @@ const UtangSummary = ({
   setExploding,
   setForPay,
   forPay,
-  setSnackPaidOpen,
+  setUtangToEdit,
+  setIsEdit,
 }) => {
   const [gabUtang, setGabUtang] = useState(0);
   const [meiUtang, setMeiUtang] = useState(0);
   const [allGoodCount, setAllGoodCount] = useState(0);
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessage, setAlertMessage] = useState(
+    "Hai baby! Bakit pindut ng pindut?? 🤔"
+  );
 
   const [play] = useSound(ding);
 
@@ -39,28 +41,21 @@ const UtangSummary = ({
     setMeiUtang(meiAmount);
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setAlertOpen(false);
-  };
-
   const markAsPaid = async () => {
     play();
     setExploding(true);
-    setSnackPaidOpen(true);
     setForPay(false);
+    setUtangToEdit(null);
+    setIsEdit(false);
+
+    toast.success(UTANG_PAID, {
+      style: HOT_TOAST_STYLES,
+    });
 
     utangs.map(async (utang) => {
       const utangNew = { ...utang, status: PAID };
       await update(ref(db, utang.uid), utangNew);
     });
-
-    setTimeout(() => {
-      setSnackPaidOpen(false);
-    }, 1500);
 
     setTimeout(() => {
       setExploding(false);
@@ -70,123 +65,124 @@ const UtangSummary = ({
   useEffect(() => {
     computeUtangs(utangs);
     if (allGoodCount === 5) {
-      setAlertOpen(true);
-      setAlertMessage("Hai baby! Bakit pindut ng pindut?? 🤔");
+      setAlertMessage("🤔");
+      toast.success(alertMessage, {
+        icon: "🥰",
+        style: HOT_TOAST_STYLES,
+      });
       setAllGoodCount(allGoodCount + 1);
-
-      setTimeout(() => {
-        setAlertOpen(false);
-      }, 3000);
     }
 
     if (allGoodCount === 20) {
-      setAlertOpen(true);
       setAlertMessage("Abnuy ba u?? 🤨");
+      toast.success(alertMessage, {
+        icon: "🥰",
+        style: HOT_TOAST_STYLES,
+      });
       setAllGoodCount(allGoodCount + 1);
-      setTimeout(() => {
-        setAlertOpen(false);
-      }, 3000);
     }
 
     if (allGoodCount === 30) {
-      setAlertOpen(true);
       setAlertMessage("Ahhhhy!! Masisira yung app kow!! 😭");
+      toast.success(alertMessage, {
+        icon: "🥰",
+        style: HOT_TOAST_STYLES,
+      });
       setAllGoodCount(allGoodCount + 1);
-      setTimeout(() => {
-        setAlertOpen(false);
-      }, 3000);
     }
 
     if (allGoodCount === 50) {
-      setAlertOpen(true);
       setAlertMessage(
         "Aysus walang magawa ambabung!! Kala naman nya may mangyayari sa dulo 🤔"
       );
+      toast.success(alertMessage, {
+        icon: "🥰",
+        style: HOT_TOAST_STYLES,
+      });
       setAllGoodCount(allGoodCount + 1);
-      setTimeout(() => {
-        setAlertOpen(false);
-      }, 3000);
     }
 
     if (allGoodCount === 80) {
-      setAlertOpen(true);
       setAlertMessage("yieeeeeee susuko na syaaaa");
+      toast.success(alertMessage, {
+        icon: "🥰",
+        style: HOT_TOAST_STYLES,
+      });
       setAllGoodCount(allGoodCount + 1);
-      setTimeout(() => {
-        setAlertOpen(false);
-      }, 3000);
     }
 
     if (allGoodCount === 100) {
-      setAlertOpen(true);
       setAlertMessage("🤨📸");
+      toast.success(alertMessage, {
+        icon: "🥰",
+        style: HOT_TOAST_STYLES,
+      });
       setAllGoodCount(allGoodCount + 1);
-      setTimeout(() => {
-        setAlertOpen(false);
-      }, 3000);
     }
 
     if (allGoodCount === 130) {
-      setAlertOpen(true);
       setAlertMessage(
         "feel ko naku-cutean ka nanaman saken kung umabot ka dito...."
       );
       setAllGoodCount(allGoodCount + 1);
-      setTimeout(() => {
-        setAlertOpen(false);
-      }, 3000);
+      toast.success(alertMessage, {
+        icon: "🥰",
+        style: HOT_TOAST_STYLES,
+      });
     }
 
     if (allGoodCount === 150) {
-      setAlertOpen(true);
       setAlertMessage("AMACCANA AKLA!!");
       setAllGoodCount(allGoodCount + 1);
-      setTimeout(() => {
-        setAlertOpen(false);
-      }, 3000);
+      toast.success(alertMessage, {
+        icon: "🥰",
+        style: HOT_TOAST_STYLES,
+      });
     }
 
     if (allGoodCount === 170) {
-      setAlertOpen(true);
       setAlertMessage("GRRRR 🦖");
       setAllGoodCount(allGoodCount + 1);
-      setTimeout(() => {
-        setAlertOpen(false);
-      }, 3000);
+      toast.success(alertMessage, {
+        icon: "🥰",
+        style: HOT_TOAST_STYLES,
+      });
     }
 
     if (allGoodCount === 200) {
-      setAlertOpen(true);
       setAlertMessage("baby....");
+      toast.success(alertMessage, {
+        icon: "🥰",
+        style: HOT_TOAST_STYLES,
+      });
       setAllGoodCount(allGoodCount + 1);
-      setTimeout(() => {
-        setAlertOpen(false);
-      }, 3000);
     }
 
     if (allGoodCount === 205) {
-      setAlertOpen(true);
       setAlertMessage("i just wanna say...");
+      toast.success(alertMessage, {
+        icon: "🥰",
+        style: HOT_TOAST_STYLES,
+      });
       setAllGoodCount(allGoodCount + 1);
-      setTimeout(() => {
-        setAlertOpen(false);
-      }, 3000);
     }
 
     if (allGoodCount === 230) {
-      setAlertOpen(true);
       setExploding(true);
       setAllGoodCount(0);
 
       setAlertMessage("I love you!! HAHAHA 😘");
+      toast.success(alertMessage, {
+        icon: "🥰",
+        style: HOT_TOAST_STYLES,
+      });
 
       setTimeout(() => {
         setExploding(false);
-        setAlertOpen(false);
       }, 3000);
       setAllGoodCount(0);
     }
-  }, [utangs, forPay, allGoodCount]);
+  }, [utangs, forPay, allGoodCount, alertMessage, setExploding]);
 
   return (
     <>
@@ -260,13 +256,6 @@ const UtangSummary = ({
           )}
         </div>
       </div>
-
-      <SnackToast
-        open={alertOpen}
-        onClose={handleClose}
-        severity="info"
-        message={alertMessage}
-      />
     </>
   );
 };

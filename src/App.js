@@ -7,24 +7,16 @@ import ConfettiExplosion from "react-confetti-explosion";
 import { db } from "./firebase-database";
 import LinearProgress from "@mui/material/LinearProgress";
 import { onValue, ref } from "firebase/database";
-import HeaderTitle from "./components/HeaderTitle";
-import SnackToast from "./components/Snacktoast";
-import { UNPAID, INFO, SUCCESS, UTANG_DELETED, UTANG_PAID } from "./constants";
+import { UNPAID, SUCCESS } from "./constants";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [utangs, setUtangs] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [exploding, setExploding] = useState(false);
   const [forPay, setForPay] = useState(false);
-  const [snackDeleteOpen, setSnackDeleteOpen] = useState(false);
-  const [snackPaidOpen, setSnackPaidOpen] = useState(false);
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setSnackDeleteOpen(false);
-  };
+  const [utangToEdit, setUtangToEdit] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
     setIsFetching(true);
@@ -49,38 +41,40 @@ function App() {
 
   return (
     <div className="App">
+      <div>
+        <Toaster />
+      </div>
       {exploding && (
-        <ConfettiExplosion particleCount={250} width={1600} duration={1500} />
+        <ConfettiExplosion
+          colors={["#de6238", "#967ae9", "#69c881", "#ff718d", "#fdff6a"]}
+          particleCount={250}
+          width={1600}
+          duration={1500}
+        />
       )}
-      <SnackToast
-        open={snackDeleteOpen}
-        onClose={handleClose}
-        severity={INFO}
-        message={UTANG_DELETED}
-      />
-      <SnackToast
-        open={snackPaidOpen}
-        onClose={handleClose}
-        severity={SUCCESS}
-        message={UTANG_PAID}
-      />
       {isFetching && <LinearProgress sx={{ top: 0 }} color={SUCCESS} />}
-      <HeaderTitle />
       <UtangSummary
         setExploding={setExploding}
         isFetching={isFetching}
         utangs={utangs}
         forPay={forPay}
         setForPay={setForPay}
-        setSnackPaidOpen={setSnackPaidOpen}
+        setUtangToEdit={setUtangToEdit}
+        setIsEdit={setIsEdit}
       />
       <UtangList
         isFetching={isFetching}
         utangs={utangs}
         setIsFetching={setIsFetching}
-        setSnackDeleteOpen={setSnackDeleteOpen}
+        isEdit={isEdit}
+        setUtangToEdit={setUtangToEdit}
+        setIsEdit={setIsEdit}
       />
-      <CreateUtang />
+      <CreateUtang
+        isEdit={isEdit}
+        setIsEdit={setIsEdit}
+        utangToEdit={utangToEdit}
+      />
     </div>
   );
 }
