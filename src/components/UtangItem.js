@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase-database";
-import { ref, remove } from "firebase/database";
+import { ref, update } from "firebase/database";
 import useSound from "use-sound";
 import pop from "../media/pop.wav";
 import edit from "../media/edit.wav";
-import { GAB, HOT_TOAST_STYLES, UTANG_DELETED } from "../constants";
+import { DELETED, GAB, HOT_TOAST_STYLES, UTANG_DELETED } from "../constants";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import toast from "react-hot-toast";
-
-const UtangItem = ({
-  utang,
-  setIsFetching,
-  setUtangToEdit,
-  setIsEdit,
-  isEdit,
-}) => {
+const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit }) => {
   useEffect(() => {
     if (!isEdit) {
       setLocalEdit(false);
@@ -43,11 +36,12 @@ const UtangItem = ({
   };
 
   const escape = () => {
-    if (!del && !isEdit && !localEdit) return;
+    if (!del && !localEdit) return;
     playEdit();
     setDelete(false);
     setIsEdit(false);
     setUtangToEdit(null);
+    setLocalEdit(false);
   };
   const toggleDelete = () => {
     if (!isEdit) {
@@ -59,9 +53,12 @@ const UtangItem = ({
 
   const confirmDelete = async (utang) => {
     play();
-    setIsFetching(true);
-    remove(ref(db, utang.uid));
-    setIsFetching(false);
+    const deletedUtang = {
+      ...utang,
+      status: DELETED,
+    };
+    await update(ref(db, utang.uid), deletedUtang);
+
     toggleDelete();
     toast.success(UTANG_DELETED, {
       style: HOT_TOAST_STYLES,
@@ -81,7 +78,6 @@ const UtangItem = ({
 
   const toggleHistory = () => {
     setViewHistory(!viewHistory);
-    console.log("toggle hist");
   };
 
   return (
@@ -146,7 +142,9 @@ const UtangItem = ({
           style: {
             borderRadius: "15px",
             fontFamily: "ui-monospace",
-            background: "#5c5c5c",
+            background: 'none',
+            '-webkit-backdrop-filter': 'blur(10px)',
+            backdropFilter: 'blur(10px)',
           },
         }}
       >
@@ -158,13 +156,13 @@ const UtangItem = ({
           }}
           id="alert-dialog-title"
         >
-          edit history 🍓🥕
+          edit history
         </DialogTitle>
         <DialogContent sx={{ margin: 0 }}>
           <div
             style={{
               width: "70vw",
-              maxHeight: '40vh',
+              maxHeight: "40vh",
               color: "white",
               fontSize: "50px",
             }}
@@ -204,7 +202,11 @@ const UtangItem = ({
                   >
                     {hist.person}
                   </div>
-                  <div style={{ flex: 3, textAlign: 'right', marginRight: '10px' }}>{hist.amount.toLocaleString()}</div>
+                  <div
+                    style={{ flex: 3, textAlign: "right", marginRight: "10px" }}
+                  >
+                    {hist.amount.toLocaleString()}
+                  </div>
                 </div>
               ))}
           </div>

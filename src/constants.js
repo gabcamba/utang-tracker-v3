@@ -6,6 +6,7 @@ export const MEI_LC = "mei";
 // statuses
 export const PAID = "PAID";
 export const UNPAID = "UNPAID";
+export const DELETED = "DELETED";
 
 // snack toast severities
 export const INFO = "info";
@@ -14,6 +15,7 @@ export const ERROR = "error";
 
 // snack toast messages
 export const UTANG_DELETED = "Utang deleted";
+export const NO_FIELDS_CHANGED = "No fields have been changed.";
 export const UTANG_PAID = "Utangs paid";
 export const UTANG_CREATED = "Utang created";
 export const UTANG_UPDATED = "Utang edited";

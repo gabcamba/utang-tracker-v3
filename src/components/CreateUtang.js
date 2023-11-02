@@ -13,6 +13,7 @@ import {
   HOT_TOAST_STYLES,
   MEI,
   MEI_LC,
+  NO_FIELDS_CHANGED,
   UNPAID,
   UTANG_CREATED,
   UTANG_UPDATED,
@@ -75,6 +76,21 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit }) => {
       toast.error(FIELD_ERROR, {
         style: HOT_TOAST_STYLES,
       });
+      setLoading(false);
+      return;
+    }
+
+    if (
+      utangToEdit &&
+      isEdit &&
+      utangToEdit.name == title &&
+      utangToEdit.amount == amount &&
+      utangToEdit.person == person
+    ) {
+      toast.error(NO_FIELDS_CHANGED, {
+        style: HOT_TOAST_STYLES,
+      });
+      playError();
       setLoading(false);
       return;
     }
@@ -142,6 +158,13 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit }) => {
     }, 1000);
   };
 
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const clipboardText = e.clipboardData.getData("text/plain");
+    const numericText = clipboardText.replace(/[^0-9]/g, "");
+    setAmount(numericText);
+  };
+
   return (
     <div className="create-utang">
       <input
@@ -163,6 +186,7 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit }) => {
             pattern="[0-9]*"
             inputMode="decimal"
             required
+            onPaste={handlePaste}
           />
         </div>
 
@@ -174,12 +198,12 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit }) => {
           <option value={GAB}>{GAB_LC}</option>
           <option value={MEI}>{MEI_LC}</option>
         </select>
-        <div className="create">
+        <div className={`${confirm ? "confirm" : ""} create`}>
           {confirm && !loading ? (
             <button
               disabled={loading}
               onClick={() => onClickOK()}
-              className="btn"
+              className="btn confirm"
             >
               ok
             </button>

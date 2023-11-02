@@ -5,9 +5,9 @@
   }
   .utang-summary {
     background-image: url("../public/C&S.png");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: contain;
+    background-repeat: repeat;
+    /* background-attachment: fixed; */
+    background-size: cover;
     height: 15vh;
     display: flex;
     flex-direction: row;
@@ -91,12 +91,15 @@
     }
   }
 
+  .lock-scroll {
+    overflow: hidden !important;
+  }
   .utang-list {
     overflow: auto;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     height: 65vh;
-    background-color: #5c5c5c;
+    background-color: #484848;
 
     .no-utang {
       display: flex;
@@ -114,13 +117,13 @@
       border: 1px solid darksalmon !important;
     }
     .utang-item {
-      border: 1px solid #5c5c5c;
+      border: 1px solid #484848;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 80px;
       margin: 5px;
-      border-radius: 15px;
+      border-radius: 10px;
 
       .orange {
         color: orange !important;
@@ -270,6 +273,10 @@
           height: 100%;
           width: 100%;
         }
+      }
+
+      .confirm {
+        background-color: #26ab47;
       }
     }
   }

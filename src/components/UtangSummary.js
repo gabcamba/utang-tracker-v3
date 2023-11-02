@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Skeleton } from "@mui/material";
 import { db } from "../firebase-database";
 import { ref, update } from "firebase/database";
 import useSound from "use-sound";
@@ -9,7 +8,6 @@ import toast from "react-hot-toast";
 
 const UtangSummary = ({
   utangs,
-  isFetching,
   setExploding,
   setForPay,
   forPay,
@@ -67,7 +65,7 @@ const UtangSummary = ({
     if (allGoodCount === 5) {
       setAlertMessage("🤔");
       toast.success(alertMessage, {
-        icon: "🥰",
+        icon: "❣️",
         style: HOT_TOAST_STYLES,
       });
       setAllGoodCount(allGoodCount + 1);
@@ -76,7 +74,7 @@ const UtangSummary = ({
     if (allGoodCount === 20) {
       setAlertMessage("Abnuy ba u?? 🤨");
       toast.success(alertMessage, {
-        icon: "🥰",
+        icon: "❣️",
         style: HOT_TOAST_STYLES,
       });
       setAllGoodCount(allGoodCount + 1);
@@ -85,7 +83,7 @@ const UtangSummary = ({
     if (allGoodCount === 30) {
       setAlertMessage("Ahhhhy!! Masisira yung app kow!! 😭");
       toast.success(alertMessage, {
-        icon: "🥰",
+        icon: "❣️",
         style: HOT_TOAST_STYLES,
       });
       setAllGoodCount(allGoodCount + 1);
@@ -96,7 +94,7 @@ const UtangSummary = ({
         "Aysus walang magawa ambabung!! Kala naman nya may mangyayari sa dulo 🤔"
       );
       toast.success(alertMessage, {
-        icon: "🥰",
+        icon: "❣️",
         style: HOT_TOAST_STYLES,
       });
       setAllGoodCount(allGoodCount + 1);
@@ -105,7 +103,7 @@ const UtangSummary = ({
     if (allGoodCount === 80) {
       setAlertMessage("yieeeeeee susuko na syaaaa");
       toast.success(alertMessage, {
-        icon: "🥰",
+        icon: "❣️",
         style: HOT_TOAST_STYLES,
       });
       setAllGoodCount(allGoodCount + 1);
@@ -114,7 +112,7 @@ const UtangSummary = ({
     if (allGoodCount === 100) {
       setAlertMessage("🤨📸");
       toast.success(alertMessage, {
-        icon: "🥰",
+        icon: "❣️",
         style: HOT_TOAST_STYLES,
       });
       setAllGoodCount(allGoodCount + 1);
@@ -126,7 +124,7 @@ const UtangSummary = ({
       );
       setAllGoodCount(allGoodCount + 1);
       toast.success(alertMessage, {
-        icon: "🥰",
+        icon: "❣️",
         style: HOT_TOAST_STYLES,
       });
     }
@@ -135,7 +133,7 @@ const UtangSummary = ({
       setAlertMessage("AMACCANA AKLA!!");
       setAllGoodCount(allGoodCount + 1);
       toast.success(alertMessage, {
-        icon: "🥰",
+        icon: "❣️",
         style: HOT_TOAST_STYLES,
       });
     }
@@ -144,7 +142,7 @@ const UtangSummary = ({
       setAlertMessage("GRRRR 🦖");
       setAllGoodCount(allGoodCount + 1);
       toast.success(alertMessage, {
-        icon: "🥰",
+        icon: "❣️",
         style: HOT_TOAST_STYLES,
       });
     }
@@ -152,7 +150,7 @@ const UtangSummary = ({
     if (allGoodCount === 200) {
       setAlertMessage("baby....");
       toast.success(alertMessage, {
-        icon: "🥰",
+        icon: "❣️",
         style: HOT_TOAST_STYLES,
       });
       setAllGoodCount(allGoodCount + 1);
@@ -161,7 +159,7 @@ const UtangSummary = ({
     if (allGoodCount === 205) {
       setAlertMessage("i just wanna say...");
       toast.success(alertMessage, {
-        icon: "🥰",
+        icon: "❣️",
         style: HOT_TOAST_STYLES,
       });
       setAllGoodCount(allGoodCount + 1);
@@ -173,7 +171,7 @@ const UtangSummary = ({
 
       setAlertMessage("I love you!! HAHAHA 😘");
       toast.success(alertMessage, {
-        icon: "🥰",
+        icon: "❣️",
         style: HOT_TOAST_STYLES,
       });
 
@@ -189,37 +187,11 @@ const UtangSummary = ({
       <div className="utang-summary">
         <div className="gab">
           <div className="name">{GAB}</div>
-          <div className="amount">
-            {isFetching ? (
-              <>
-                <Skeleton
-                  circle={true}
-                  sx={{ margin: 2 }}
-                  width={50}
-                  height={20}
-                />
-              </>
-            ) : (
-              gabUtang.toLocaleString()
-            )}
-          </div>
+          <div className="amount">{gabUtang.toLocaleString()}</div>
         </div>
         <div className="mei">
           <div className="name">{MEI}</div>
-          <div className="amount">
-            {isFetching ? (
-              <>
-                <Skeleton
-                  circle={true}
-                  sx={{ margin: 2 }}
-                  width={50}
-                  height={20}
-                />
-              </>
-            ) : (
-              meiUtang.toLocaleString()
-            )}
-          </div>
+          <div className="amount">{meiUtang.toLocaleString()}</div>
         </div>
         <div className="summary">
           <div className={`name ${gabUtang === meiUtang ? "green" : ""}`}>
@@ -233,9 +205,7 @@ const UtangSummary = ({
               "Mei pays:"
             )}{" "}
           </div>
-          {isFetching ? (
-            <Skeleton circle={true} sx={{ margin: 2 }} width={50} height={20} />
-          ) : forPay ? (
+          {forPay && utangs.length ? (
             <div
               style={{
                 display: "flex",
