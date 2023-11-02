@@ -1,32 +1,23 @@
 import React from "react";
 import UtangItem from "./UtangItem";
-import SkeletonLoader from "./SkeletonLoader";
 import { GOOD_JOB, NO_UTANG_FOUND } from "../constants";
-import {useAutoAnimate} from '@formkit/auto-animate/react';
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 const UtangList = ({
   utangs,
-  isFetching,
-  setIsFetching,
   setUtangToEdit,
   setIsEdit,
   isEdit,
 }) => {
-
-  const [parent, enableAnimations] = useAutoAnimate()
+  const [parent, enableAnimations] = useAutoAnimate();
 
   return (
     <>
-      <div ref={parent} className="utang-list">
-        {isFetching ? (
-          <>
-            <SkeletonLoader count={50} />
-          </>
-        ) : utangs.length ? (
+      <div ref={parent} className={`${isEdit ? "lock-scroll" : null} utang-list`}>
+        {utangs.length ? (
           utangs.map((utang) => (
             <UtangItem
               key={utang.uid}
               utang={utang}
-              setIsFetching={setIsFetching}
               setUtangToEdit={setUtangToEdit}
               setIsEdit={setIsEdit}
               isEdit={isEdit}
@@ -53,7 +44,7 @@ const UtangList = ({
               style={{
                 fontSize: "0.5rem",
                 color: "darksalmon",
-                marginTop: "5px",
+                marginTop: "20px",
               }}
             >
               github.com/gabcamba
@@ -66,12 +57,12 @@ const UtangList = ({
                 fontSize: "0.5rem",
                 color: "darksalmon",
                 marginTop: "5px",
-                marginBottom: "10px"
+                marginBottom: "10px",
               }}
             >
               github.com/meinardxd
             </a>
-            <span>🍓🥕</span>
+            <span style={{fontSize: '0.7rem'}}>🍓🥕</span>
           </div>
         )}
       </div>

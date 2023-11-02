@@ -5,25 +5,23 @@ import UtangList from "./components/UtangList";
 import CreateUtang from "./components/CreateUtang";
 import ConfettiExplosion from "react-confetti-explosion";
 import { db } from "./firebase-database";
-import LinearProgress from "@mui/material/LinearProgress";
 import { onValue, ref } from "firebase/database";
-import { UNPAID, SUCCESS } from "./constants";
+import { UNPAID } from "./constants";
 import { Toaster } from "react-hot-toast";
 
 function App() {
   const [utangs, setUtangs] = useState([]);
-  const [isFetching, setIsFetching] = useState(false);
   const [exploding, setExploding] = useState(false);
   const [forPay, setForPay] = useState(false);
   const [utangToEdit, setUtangToEdit] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
-    setIsFetching(true);
     const setList = (list) => {
       setUtangs(list);
     };
     const fetch = async () => {
+      
       onValue(ref(db), (snapshot) => {
         let records = [];
         snapshot.forEach((child) => {
@@ -32,15 +30,16 @@ function App() {
             records.push(data);
           }
         });
-        setList(records);
+
+        const reversedRecs = records.reverse();
+        setList(reversedRecs);
       });
     };
     fetch();
-    setIsFetching(false);
   }, []);
 
   return (
-    <div className="App">
+    <div className="App lock-scroll">
       <div>
         <Toaster />
       </div>
@@ -52,10 +51,8 @@ function App() {
           duration={1500}
         />
       )}
-      {isFetching && <LinearProgress sx={{ top: 0 }} color={SUCCESS} />}
       <UtangSummary
         setExploding={setExploding}
-        isFetching={isFetching}
         utangs={utangs}
         forPay={forPay}
         setForPay={setForPay}
@@ -63,9 +60,7 @@ function App() {
         setIsEdit={setIsEdit}
       />
       <UtangList
-        isFetching={isFetching}
         utangs={utangs}
-        setIsFetching={setIsFetching}
         isEdit={isEdit}
         setUtangToEdit={setUtangToEdit}
         setIsEdit={setIsEdit}
