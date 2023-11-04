@@ -1,37 +1,20 @@
 import React from "react";
-import UtangItem from "./UtangItem";
-import { GOOD_JOB, NO_UTANG_FOUND } from "../constants";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-const UtangList = ({
-  utangs,
-  setUtangToEdit,
-  setIsEdit,
-  isEdit,
-  deleted,
-  view
-}) => {
+import PaymentItem from "./PaymentItem";
+import { NO_UTANG_FOUND } from "../constants";
+const UtangList = ({ payments }) => {
   const [parent] = useAutoAnimate();
-  const list = view === 'home' ? utangs : deleted;
 
   return (
     <>
-      <div ref={parent} className={`${isEdit ? "lock-scroll" : null} utang-list`}>
-        {list.length ? (
-          list.map((utang) => (
-            <UtangItem
-              key={utang.uid}
-              utang={utang}
-              setUtangToEdit={setUtangToEdit}
-              setIsEdit={setIsEdit}
-              isEdit={isEdit}
-              view={view}
-            />
+      <div ref={parent} className="utang-list">
+        {payments.length ? (
+          payments.map((payment) => (
+            <PaymentItem key={payment.id} payment={payment} />
           ))
         ) : (
           <div className="no-utang">
-            <span>
-              {NO_UTANG_FOUND} <br /> {GOOD_JOB}
-            </span>
+            <span>{NO_UTANG_FOUND}</span>
             <span
               style={{
                 fontSize: "0.7rem",
@@ -66,7 +49,7 @@ const UtangList = ({
             >
               github.com/meinardxd
             </a>
-            <span style={{fontSize: '0.7rem'}}>🍓🥕</span>
+            <span style={{ fontSize: "0.7rem" }}>🍓🥕</span>
           </div>
         )}
       </div>

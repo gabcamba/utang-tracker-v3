@@ -98,7 +98,7 @@
     overflow: auto;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    height: 65vh;
+    height: 55vh;
     background-color: #484848;
 
     .no-utang {
@@ -125,12 +125,47 @@
       margin: 5px;
       border-radius: 10px;
 
+      .item {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-family: ui-monospace;
+      }
+
+      .namedate {
+        display: flex;
+        flex-direction: column;
+        justify-content: left !important;
+        align-items: flex-start;
+
+        .name {
+          margin-left: 20px;
+        }
+        .date {
+          margin-top: 5px;
+          color: rgb(184, 184, 184);
+          font-size: 0.7em;
+          font-family: "ui-monospace";
+          margin-left: 20px;
+        }
+      }
+
+      .view {
+        display: flex;
+        justify-content: end;
+      }
       .orange {
         color: orange !important;
+        display: flex;
+        justify-content: flex-end !important;
       }
 
       .red {
         color: tomato !important;
+        display: flex;
+        justify-content: flex-end !important;
       }
       .title-person {
         flex: 3;

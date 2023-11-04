@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../firebase-database";
-import { ref, update } from "firebase/database";
 import useSound from "use-sound";
 import pop from "../media/pop.wav";
 import edit from "../media/edit.wav";
-import { DELETED, GAB, HOT_TOAST_STYLES, UTANG_DELETED } from "../constants";
+import { DELETED, GAB, UTANG_DELETED } from "../constants";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import toast from "react-hot-toast";
-const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit }) => {
+import { formatDateTime } from "../utils/formatDate";
+import { updateItem } from "../utils/database";
+import { formatCurrency } from "../utils/converter";
+import { successToast } from "../utils/toast";
+const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit, view }) => {
   useEffect(() => {
     if (!isEdit) {
       setLocalEdit(false);
@@ -23,18 +24,6 @@ const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit }) => {
   const [play] = useSound(pop);
   const [playEdit] = useSound(edit);
 
-  const formatDateTime = (timestamp) => {
-    const date = new Date(timestamp);
-    const options = {
-      month: "2-digit",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: false,
-    };
-    return new Intl.DateTimeFormat("en-US", options).format(date);
-  };
-
   const escape = () => {
     if (!del && !localEdit) return;
     playEdit();
@@ -43,6 +32,7 @@ const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit }) => {
     setUtangToEdit(null);
     setLocalEdit(false);
   };
+
   const toggleDelete = () => {
     if (!isEdit) {
       setDelete((del) => {
@@ -55,14 +45,14 @@ const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit }) => {
     play();
     const deletedUtang = {
       ...utang,
+      date: Date.now(),
       status: DELETED,
     };
-    await update(ref(db, utang.uid), deletedUtang);
+    
+    await updateItem(deletedUtang);
 
     toggleDelete();
-    toast.success(UTANG_DELETED, {
-      style: HOT_TOAST_STYLES,
-    });
+    successToast(UTANG_DELETED);
   };
 
   const toggleEdit = (utang) => {
@@ -83,7 +73,7 @@ const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit }) => {
   return (
     <>
       <div
-        key={utang.id}
+        key={utang.uid}
         className={`${localEdit && isEdit ? "editing" : ""} utang-item`}
       >
         <div className="title-person">
@@ -95,21 +85,21 @@ const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit }) => {
             </div>
           )}
         </div>
-
+        <div onClick={() => escape()} className="check">
+          <div className="amount">{formatCurrency(utang.amount)}</div>
+        </div>
         <div
-          onClick={() => escape()}
+          onClick={() => toggleDelete()}
           className={`amount ${utang.person === GAB ? "orange" : "red"}`}
         >
-          {utang.person}
-        </div>
-        <div className="check">
-          {del && !isEdit ? (
+          {del && !isEdit && view !== "deleted" ? (
             <div
               style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "20px",
+                marginRight: "20px",
               }}
             >
               <div
@@ -126,9 +116,7 @@ const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit }) => {
               </div>
             </div>
           ) : (
-            <div onClick={() => toggleDelete()} className="amount">
-              {utang.amount.toLocaleString()}
-            </div>
+            <span style={{ marginRight: 20 }}>{utang.person}</span>
           )}
         </div>
       </div>
@@ -142,9 +130,9 @@ const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit }) => {
           style: {
             borderRadius: "15px",
             fontFamily: "ui-monospace",
-            background: 'none',
-            '-webkit-backdrop-filter': 'blur(10px)',
-            backdropFilter: 'blur(10px)',
+            background: "none",
+            "-webkit-backdrop-filter": "blur(10px)",
+            backdropFilter: "blur(10px)",
           },
         }}
       >
@@ -205,7 +193,7 @@ const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit }) => {
                   <div
                     style={{ flex: 3, textAlign: "right", marginRight: "10px" }}
                   >
-                    {hist.amount.toLocaleString()}
+                    {formatCurrency(hist.amount)}
                   </div>
                 </div>
               ))}

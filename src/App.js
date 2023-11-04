@@ -1,55 +1,48 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import UtangSummary from "./components/UtangSummary";
 import UtangList from "./components/UtangList";
+import PaymentsList from "./components/PaymentsList";
 import CreateUtang from "./components/CreateUtang";
+import NavBar from "./components/NavBar";
+
 import ConfettiExplosion from "react-confetti-explosion";
-import { db } from "./firebase-database";
-import { onValue, ref } from "firebase/database";
-import { UNPAID } from "./constants";
 import { Toaster } from "react-hot-toast";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { getPayments, fetchUtangList } from "./utils/database";
 
 function App() {
   const [utangs, setUtangs] = useState([]);
+  const [deleted, setDeleted] = useState([]);
   const [exploding, setExploding] = useState(false);
   const [forPay, setForPay] = useState(false);
   const [utangToEdit, setUtangToEdit] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
+  const [payments, setPayments] = useState([]);
+  const [view, setView] = useState("home");
+  const [parent] = useAutoAnimate();
 
   useEffect(() => {
-    const setList = (list) => {
-      setUtangs(list);
+    const getHistory = async () => {
+      await getPayments(setPayments);
     };
-    const fetch = async () => {
-      
-      onValue(ref(db), (snapshot) => {
-        let records = [];
-        snapshot.forEach((child) => {
-          let data = child.val();
-          if (data.status === UNPAID) {
-            records.push(data);
-          }
-        });
 
-        const reversedRecs = records.reverse();
-        setList(reversedRecs);
-      });
+    const fetch = async () => {
+      await fetchUtangList(setUtangs, setDeleted);
     };
+
     fetch();
-  }, []);
+    getHistory();
+  }, [view]);
 
   return (
-    <div className="App lock-scroll">
+    <div ref={parent} className="App lock-scroll">
       <div>
         <Toaster />
       </div>
       {exploding && (
-        <ConfettiExplosion
-          colors={["#de6238", "#967ae9", "#69c881", "#ff718d", "#fdff6a"]}
-          particleCount={250}
-          width={1600}
-          duration={1500}
-        />
+        <ConfettiExplosion particleCount={500} width={1600} duration={1500} />
       )}
       <UtangSummary
         setExploding={setExploding}
@@ -59,17 +52,34 @@ function App() {
         setUtangToEdit={setUtangToEdit}
         setIsEdit={setIsEdit}
       />
-      <UtangList
-        utangs={utangs}
-        isEdit={isEdit}
-        setUtangToEdit={setUtangToEdit}
-        setIsEdit={setIsEdit}
-      />
+      {view === "deleted" || view === "home" ? (
+        <UtangList
+          utangs={utangs}
+          deleted={deleted}
+          isEdit={isEdit}
+          setUtangToEdit={setUtangToEdit}
+          setIsEdit={setIsEdit}
+          payments={payments}
+          view={view}
+        />
+      ) : (
+        <PaymentsList
+          utangs={utangs}
+          isEdit={isEdit}
+          setUtangToEdit={setUtangToEdit}
+          setIsEdit={setIsEdit}
+          payments={payments}
+        />
+      )}
+
       <CreateUtang
         isEdit={isEdit}
         setIsEdit={setIsEdit}
         utangToEdit={utangToEdit}
+        view={view}
+        setView={setView}
       />
+      <NavBar view={view} setView={setView} />
     </div>
   );
 }

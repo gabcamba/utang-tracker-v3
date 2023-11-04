@@ -1,16 +1,14 @@
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
-import { db } from "../firebase-database";
-import { set, ref, update } from "firebase/database";
-import { v4 as uuidv4 } from "uuid";
 import useSound from "use-sound";
 import pop from "../media/pop.wav";
 import error from "../media/error.wav";
+import { createItem, updateItem } from "../utils/database";
 
 import {
   FIELD_ERROR,
   GAB,
   GAB_LC,
-  HOT_TOAST_STYLES,
   MEI,
   MEI_LC,
   NO_FIELDS_CHANGED,
@@ -18,8 +16,10 @@ import {
   UTANG_CREATED,
   UTANG_UPDATED,
 } from "../constants";
-import toast from "react-hot-toast";
-const CreateUtang = ({ isEdit, utangToEdit, setIsEdit }) => {
+import { toFloat, toInt } from "../utils/converter";
+import { errorToast, successToast } from "../utils/toast";
+import { generateUUID } from "../utils/uuid";
+const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [person, setPerson] = useState(GAB);
@@ -66,16 +66,13 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit }) => {
       !title ||
       !amount ||
       title.trim().length === 0 ||
-      isNaN(parseInt(amount)) ||
-      isNaN(Number(parseFloat(amount).toFixed(2))) ||
-      parseInt(amount) === 0 ||
-      Number(parseFloat(amount).toFixed(2)) === 0
+      isNaN(toInt(amount)) ||
+      isNaN(toFloat(amount)) ||
+      toInt(amount) === 0 ||
+      toFloat(amount) === 0
     ) {
       playError();
-
-      toast.error(FIELD_ERROR, {
-        style: HOT_TOAST_STYLES,
-      });
+      errorToast(FIELD_ERROR);
       setLoading(false);
       return;
     }
@@ -87,9 +84,7 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit }) => {
       utangToEdit.amount == amount &&
       utangToEdit.person == person
     ) {
-      toast.error(NO_FIELDS_CHANGED, {
-        style: HOT_TOAST_STYLES,
-      });
+      errorToast(NO_FIELDS_CHANGED);
       playError();
       setLoading(false);
       return;
@@ -101,9 +96,7 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit }) => {
       const updatedUtang = {
         ...utangToEdit,
         name: title,
-        amount: amount.includes(".")
-          ? Number(parseFloat(amount).toFixed(2))
-          : parseInt(amount),
+        amount: amount.includes(".") ? toFloat(amount) : toInt(amount),
         person: person,
         edited: true,
         editDate: date,
@@ -113,41 +106,37 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit }) => {
         ...utangToEdit.hist,
         {
           name: title,
-          amount: amount.includes(".")
-            ? Number(parseFloat(amount).toFixed(2))
-            : parseInt(amount),
+          amount: amount.includes(".") ? toFloat(amount) : toInt(amount),
           person: person,
           editDate: date,
         },
       ];
-      await update(ref(db, utangToEdit.uid), updatedUtang);
+      await updateItem(utangToEdit, updatedUtang);
       setIsEdit(false);
-      toast.success(UTANG_UPDATED, {
-        style: HOT_TOAST_STYLES,
-      });
+      successToast(UTANG_UPDATED);
     } else {
-      play();
-      const uid = uuidv4();
+      const uid = generateUUID();
       const date = Date.now();
       const utangObj = {
         date: Date.now(),
         name: title,
-        amount: amount.includes(".")
-          ? Number(parseFloat(amount).toFixed(2))
-          : parseInt(amount),
+        amount: amount.includes(".") ? toFloat(amount) : toInt(amount),
         person: person,
         status: UNPAID,
         uid: `${date}${uid}`,
         edited: false,
       };
       utangObj.hist = [{ ...utangObj }];
-      await set(ref(db, `${date}${uid}`), utangObj);
 
-      toast.success(UTANG_CREATED, {
-        style: HOT_TOAST_STYLES,
-      });
+      await createItem(utangObj);
+
+      play();
+      successToast(UTANG_CREATED);
     }
 
+    if (view !== "home") {
+      setView("home");
+    }
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setTitle("");
     setAmount("");

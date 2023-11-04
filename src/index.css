@@ -13,3 +13,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.Mui-selected {
+  color: darksalmon !important;
+}
+
+.MuiBottomNavigationAction-label {
+  color: darksalmon !important;
+  font-family: ui-monospace !important;
+  font-size: 0.7rem !important;
+  margin-top: 7px !important;
+}

@@ -19,15 +19,9 @@ export const NO_FIELDS_CHANGED = "No fields have been changed.";
 export const UTANG_PAID = "Utangs paid";
 export const UTANG_CREATED = "Utang created";
 export const UTANG_UPDATED = "Utang edited";
-export const FIELD_ERROR =
-  "Errors found on some fields.";
-export const NO_UTANG_FOUND = "No utangs found.";
+export const FIELD_ERROR = "Errors found on some fields.";
+export const NO_UTANG_FOUND = "No data found.";
 export const GOOD_JOB = `Good job ${GAB} & ${MEI}!`;
 
-export const HOT_TOAST_STYLES = {
-  borderRadius: '50px',
-  background: '#000000',
-  color: '#fff',
-  fontFamily: 'ui-monospace',
-  fontSize: '0.8rem'
-}
+// database consts
+export const PAYMENTS = "PAYMENTS";
