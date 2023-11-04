@@ -1,10 +1,12 @@
+/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from "react";
-import { db } from "../firebase-database";
-import { ref, update } from "firebase/database";
 import useSound from "use-sound";
 import ding from "../media/success.wav";
-import { GAB, HOT_TOAST_STYLES, MEI, PAID, UTANG_PAID } from "../constants";
-import toast from "react-hot-toast";
+import { GAB, MEI, UTANG_PAID } from "../constants";
+import { pay, paid } from "../utils/database";
+import { formatCurrency } from "../utils/converter";
+import { successToast } from "../utils/toast";
+import { generateUUID } from "../utils/uuid";
 
 const UtangSummary = ({
   utangs,
@@ -46,14 +48,17 @@ const UtangSummary = ({
     setUtangToEdit(null);
     setIsEdit(false);
 
-    toast.success(UTANG_PAID, {
-      style: HOT_TOAST_STYLES,
+    pay({
+      id: `${Date.now()}-${generateUUID()}}`,
+      datePaid: Date.now(),
+      utangs,
+      whoPaid: gabUtang > meiUtang ? "Gab" : "Mei",
+      amount: Math.abs(gabUtang - meiUtang),
     });
 
-    utangs.map(async (utang) => {
-      const utangNew = { ...utang, status: PAID };
-      await update(ref(db, utang.uid), utangNew);
-    });
+    successToast(UTANG_PAID);
+
+    await paid(utangs);
 
     setTimeout(() => {
       setExploding(false);
@@ -64,28 +69,19 @@ const UtangSummary = ({
     computeUtangs(utangs);
     if (allGoodCount === 5) {
       setAlertMessage("🤔");
-      toast.success(alertMessage, {
-        icon: "❣️",
-        style: HOT_TOAST_STYLES,
-      });
+      successToast(alertMessage);
       setAllGoodCount(allGoodCount + 1);
     }
 
     if (allGoodCount === 20) {
       setAlertMessage("Abnuy ba u?? 🤨");
-      toast.success(alertMessage, {
-        icon: "❣️",
-        style: HOT_TOAST_STYLES,
-      });
+      successToast(alertMessage);
       setAllGoodCount(allGoodCount + 1);
     }
 
     if (allGoodCount === 30) {
       setAlertMessage("Ahhhhy!! Masisira yung app kow!! 😭");
-      toast.success(alertMessage, {
-        icon: "❣️",
-        style: HOT_TOAST_STYLES,
-      });
+      successToast(alertMessage);
       setAllGoodCount(allGoodCount + 1);
     }
 
@@ -93,28 +89,19 @@ const UtangSummary = ({
       setAlertMessage(
         "Aysus walang magawa ambabung!! Kala naman nya may mangyayari sa dulo 🤔"
       );
-      toast.success(alertMessage, {
-        icon: "❣️",
-        style: HOT_TOAST_STYLES,
-      });
+      successToast(alertMessage);
       setAllGoodCount(allGoodCount + 1);
     }
 
     if (allGoodCount === 80) {
       setAlertMessage("yieeeeeee susuko na syaaaa");
-      toast.success(alertMessage, {
-        icon: "❣️",
-        style: HOT_TOAST_STYLES,
-      });
+      successToast(alertMessage);
       setAllGoodCount(allGoodCount + 1);
     }
 
     if (allGoodCount === 100) {
       setAlertMessage("🤨📸");
-      toast.success(alertMessage, {
-        icon: "❣️",
-        style: HOT_TOAST_STYLES,
-      });
+      successToast(alertMessage);
       setAllGoodCount(allGoodCount + 1);
     }
 
@@ -122,46 +109,31 @@ const UtangSummary = ({
       setAlertMessage(
         "feel ko naku-cutean ka nanaman saken kung umabot ka dito...."
       );
+      successToast(alertMessage);
       setAllGoodCount(allGoodCount + 1);
-      toast.success(alertMessage, {
-        icon: "❣️",
-        style: HOT_TOAST_STYLES,
-      });
     }
 
     if (allGoodCount === 150) {
       setAlertMessage("AMACCANA AKLA!!");
+      successToast(alertMessage);
       setAllGoodCount(allGoodCount + 1);
-      toast.success(alertMessage, {
-        icon: "❣️",
-        style: HOT_TOAST_STYLES,
-      });
     }
 
     if (allGoodCount === 170) {
       setAlertMessage("GRRRR 🦖");
+      successToast(alertMessage);
       setAllGoodCount(allGoodCount + 1);
-      toast.success(alertMessage, {
-        icon: "❣️",
-        style: HOT_TOAST_STYLES,
-      });
     }
 
     if (allGoodCount === 200) {
       setAlertMessage("baby....");
-      toast.success(alertMessage, {
-        icon: "❣️",
-        style: HOT_TOAST_STYLES,
-      });
+      successToast(alertMessage);
       setAllGoodCount(allGoodCount + 1);
     }
 
     if (allGoodCount === 205) {
       setAlertMessage("i just wanna say...");
-      toast.success(alertMessage, {
-        icon: "❣️",
-        style: HOT_TOAST_STYLES,
-      });
+      successToast(alertMessage);
       setAllGoodCount(allGoodCount + 1);
     }
 
@@ -170,10 +142,7 @@ const UtangSummary = ({
       setAllGoodCount(0);
 
       setAlertMessage("I love you!! HAHAHA 😘");
-      toast.success(alertMessage, {
-        icon: "❣️",
-        style: HOT_TOAST_STYLES,
-      });
+      successToast(alertMessage);
 
       setTimeout(() => {
         setExploding(false);
@@ -187,11 +156,11 @@ const UtangSummary = ({
       <div className="utang-summary">
         <div className="gab">
           <div className="name">{GAB}</div>
-          <div className="amount">{gabUtang.toLocaleString()}</div>
+          <div className="amount">{formatCurrency(gabUtang)}</div>
         </div>
         <div className="mei">
           <div className="name">{MEI}</div>
-          <div className="amount">{meiUtang.toLocaleString()}</div>
+          <div className="amount">{formatCurrency(meiUtang)}</div>
         </div>
         <div className="summary">
           <div className={`name ${gabUtang === meiUtang ? "green" : ""}`}>
@@ -220,7 +189,7 @@ const UtangSummary = ({
           ) : (
             <div onClick={() => setForPay(true)} className="amount">
               {gabUtang !== meiUtang
-                ? Math.abs(gabUtang - meiUtang).toLocaleString()
+                ? formatCurrency(Math.abs(gabUtang - meiUtang))
                 : null}
             </div>
           )}
