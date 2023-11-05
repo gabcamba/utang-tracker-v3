@@ -14,7 +14,6 @@ const UtangSummary = ({
   setForPay,
   forPay,
   setUtangToEdit,
-  setIsEdit,
 }) => {
   const [gabUtang, setGabUtang] = useState(0);
   const [meiUtang, setMeiUtang] = useState(0);
@@ -46,7 +45,6 @@ const UtangSummary = ({
     setExploding(true);
     setForPay(false);
     setUtangToEdit(null);
-    setIsEdit(false);
 
     pay({
       id: `${Date.now()}-${generateUUID()}}`,

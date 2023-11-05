@@ -19,7 +19,7 @@ import {
 import { toFloat, toInt } from "../utils/converter";
 import { errorToast, successToast } from "../utils/toast";
 import { generateUUID } from "../utils/uuid";
-const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
+const CreateUtang = ({ utangToEdit, view, setView, setUtangToEdit }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [person, setPerson] = useState(GAB);
@@ -29,7 +29,7 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
   const [playError] = useSound(error);
 
   useEffect(() => {
-    if (isEdit) {
+    if (utangToEdit) {
       setAmount(utangToEdit.amount.toString());
       setTitle(utangToEdit.name);
       setPerson(utangToEdit.person);
@@ -38,7 +38,7 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
       setTitle("");
       setPerson(GAB);
     }
-  }, [isEdit, utangToEdit]);
+  }, [utangToEdit]);
 
   const onChangeTitle = (e) => {
     setConfirm(false);
@@ -79,7 +79,6 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
 
     if (
       utangToEdit &&
-      isEdit &&
       utangToEdit.name == title &&
       utangToEdit.amount == amount &&
       utangToEdit.person == person
@@ -90,7 +89,7 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
       return;
     }
 
-    if (isEdit) {
+    if (utangToEdit) {
       play();
       const date = Date.now();
       const updatedUtang = {
@@ -111,8 +110,8 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
           editDate: date,
         },
       ];
-      await updateItem(utangToEdit, updatedUtang);
-      setIsEdit(false);
+      await updateItem(updatedUtang);
+      setUtangToEdit(null);
       successToast(UTANG_UPDATED);
     } else {
       const uid = generateUUID();
@@ -161,7 +160,7 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
         onChange={(e) => onChangeTitle(e)}
         placeholder="description"
         maxLength={10}
-        className={`${isEdit ? "editing" : ""} input-title`}
+        className={`${utangToEdit ? "editing" : ""} input-title`}
         type="text"
       />
       <div className="amount-person">
@@ -202,7 +201,7 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
               onClick={() => onClickPlus()}
               className="btn"
             >
-              {isEdit ? "edit" : "create"}
+              {utangToEdit ? "edit" : "create"}
             </button>
           )}
         </div>

@@ -18,7 +18,6 @@ function App() {
   const [exploding, setExploding] = useState(false);
   const [forPay, setForPay] = useState(false);
   const [utangToEdit, setUtangToEdit] = useState(null);
-  const [isEdit, setIsEdit] = useState(false);
   const [payments, setPayments] = useState([]);
   const [view, setView] = useState("home");
   const [parent] = useAutoAnimate();
@@ -50,34 +49,29 @@ function App() {
         forPay={forPay}
         setForPay={setForPay}
         setUtangToEdit={setUtangToEdit}
-        setIsEdit={setIsEdit}
       />
       {view === "deleted" || view === "home" ? (
         <UtangList
           utangs={utangs}
           deleted={deleted}
-          isEdit={isEdit}
           setUtangToEdit={setUtangToEdit}
-          setIsEdit={setIsEdit}
+          utangToEdit={utangToEdit}
           payments={payments}
           view={view}
         />
       ) : (
         <PaymentsList
           utangs={utangs}
-          isEdit={isEdit}
           setUtangToEdit={setUtangToEdit}
-          setIsEdit={setIsEdit}
           payments={payments}
         />
       )}
 
       <CreateUtang
-        isEdit={isEdit}
-        setIsEdit={setIsEdit}
         utangToEdit={utangToEdit}
         view={view}
         setView={setView}
+        setUtangToEdit={setUtangToEdit}
       />
       <NavBar view={view} setView={setView} />
     </div>

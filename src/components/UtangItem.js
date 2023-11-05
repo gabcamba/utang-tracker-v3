@@ -1,70 +1,14 @@
-import React, { useState, useEffect } from "react";
-import useSound from "use-sound";
-import pop from "../media/pop.wav";
-import edit from "../media/edit.wav";
-import { DELETED, GAB, UTANG_DELETED } from "../constants";
+import React, { useState } from "react";
+import { GAB } from "../constants";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { formatDateTime } from "../utils/formatDate";
-import { updateItem } from "../utils/database";
 import { formatCurrency } from "../utils/converter";
-import { successToast } from "../utils/toast";
-const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit, view }) => {
-  useEffect(() => {
-    if (!isEdit) {
-      setLocalEdit(false);
-    }
-  }, [isEdit]);
-  const [del, setDelete] = useState(false);
-  const [localEdit, setLocalEdit] = useState(false);
+const UtangItem = ({ utang }) => {
   const [viewHistory, setViewHistory] = useState(false);
-  const [play] = useSound(pop);
-  const [playEdit] = useSound(edit);
-
-  const escape = () => {
-    if (!del && !localEdit) return;
-    playEdit();
-    setDelete(false);
-    setIsEdit(false);
-    setUtangToEdit(null);
-    setLocalEdit(false);
-  };
-
-  const toggleDelete = () => {
-    if (!isEdit) {
-      setDelete((del) => {
-        return !del;
-      });
-    }
-  };
-
-  const confirmDelete = async (utang) => {
-    play();
-    const deletedUtang = {
-      ...utang,
-      date: Date.now(),
-      status: DELETED,
-    };
-    
-    await updateItem(deletedUtang);
-
-    toggleDelete();
-    successToast(UTANG_DELETED);
-  };
-
-  const toggleEdit = (utang) => {
-    setIsEdit(false);
-    setLocalEdit(true);
-    setIsEdit(true);
-    setUtangToEdit(utang);
-    playEdit();
-
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-    setDelete(false);
-  };
 
   const toggleHistory = () => {
     setViewHistory(!viewHistory);
@@ -72,10 +16,7 @@ const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit, view }) => {
 
   return (
     <>
-      <div
-        key={utang.uid}
-        className={`${localEdit && isEdit ? "editing" : ""} utang-item`}
-      >
+      <div key={utang.uid} className="utang-item">
         <div className="title-person">
           <div className="utang-name">{utang.name}</div>
           <div className="utang-person">{formatDateTime(utang.date)}</div>
@@ -89,35 +30,10 @@ const UtangItem = ({ utang, setUtangToEdit, setIsEdit, isEdit, view }) => {
           <div className="amount">{formatCurrency(utang.amount)}</div>
         </div>
         <div
-          onClick={() => toggleDelete()}
+          // onClick={() => toggleDelete()}
           className={`amount ${utang.person === GAB ? "orange" : "red"}`}
         >
-          {del && !isEdit && view !== "deleted" ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "20px",
-                marginRight: "20px",
-              }}
-            >
-              <div
-                style={{ textAlign: "center" }}
-                onClick={() => toggleEdit(utang)}
-              >
-                ✏️
-              </div>
-              <div
-                style={{ textAlign: "center" }}
-                onClick={() => confirmDelete(utang)}
-              >
-                ❌
-              </div>
-            </div>
-          ) : (
-            <span style={{ marginRight: 20 }}>{utang.person}</span>
-          )}
+          <span style={{ marginRight: 20 }}>{utang.person}</span>
         </div>
       </div>
 

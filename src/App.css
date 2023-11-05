@@ -117,13 +117,14 @@
       border: 1px solid darksalmon !important;
     }
     .utang-item {
-      border: 1px solid #484848;
+      /* border: 1px solid #484848; */
       display: flex;
       justify-content: center;
       align-items: center;
       height: 80px;
-      margin: 5px;
+      /* margin: 5px; */
       border-radius: 10px;
+      width: 100%;
 
       .item {
         flex: 1;
@@ -234,7 +235,7 @@
     height: 20vh;
 
     .editing {
-      background-color: darksalmon !important;
+      background-color: darkslateblue !important;
     }
 
     .input-title {
