@@ -25,6 +25,7 @@ const WithTwoActions = ({
   utangToEdit,
   view,
   setExploding,
+  setCreate,
 }) => {
   const [play] = useSound(pop);
   const [playEdit] = useSound(edit);
@@ -40,7 +41,7 @@ const WithTwoActions = ({
     };
     setUtangToEdit(null);
     await deleteItem(deletedUtang);
-    await createDeleted(deletedUtang)
+    await createDeleted(deletedUtang);
     successToast(UTANG_DELETED);
   };
 
@@ -53,6 +54,7 @@ const WithTwoActions = ({
       playEdit();
       setUtangToEdit(utang);
       setEditItemID(utang.uid);
+      setCreate(true);
     }
   };
 
@@ -81,24 +83,30 @@ const WithTwoActions = ({
     fontFamily: "ui-monospace",
     justifyContent: "center",
     alignItems: "center",
+    // borderRadius: 3,
+    borderTopRadius: 5
+    // marginRight: 5
   };
 
   const trailingActions = (utang) => (
     <TrailingActions>
       {utangToEdit ? null : (
         <SwipeAction destructive={true} onClick={() => handlePay(utang)}>
-          <div style={{ ...actionStyles, backgroundColor: "#69c881" }}>pay</div>
+          <div style={{ ...actionStyles, backgroundColor: "#69c881", borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }}>pay</div>
         </SwipeAction>
       )}
 
-      <SwipeAction onClick={() => handleEdit(utang)}>
-        <div style={{ ...actionStyles, backgroundColor: "darksalmon" }}>
-          {utangToEdit && utang.uid === utangToEdit.uid ? "cancel" : "edit"}
-        </div>
-      </SwipeAction>
+      {utangToEdit ? null : (
+        <SwipeAction onClick={() => handleEdit(utang)}>
+          <div style={{ ...actionStyles, backgroundColor: "darksalmon" }}>
+            edit
+          </div>
+        </SwipeAction>
+      )}
+
       {utangToEdit ? null : (
         <SwipeAction destructive={true} onClick={() => handleDelete(utang)}>
-          <div style={{ ...actionStyles, backgroundColor: "#de6238" }}>del</div>
+          <div style={{ ...actionStyles, backgroundColor: "tomato" }}>del</div>
         </SwipeAction>
       )}
     </TrailingActions>
@@ -128,7 +136,7 @@ const WithTwoActions = ({
               key={utang.uid}
               trailingActions={trailingActions(utang)}
               blockSwipe={
-                (utangToEdit && utang.uid !== utangToEdit.uid) ||
+                utangToEdit || 
                 view === "deleted"
               }
             >
@@ -138,11 +146,11 @@ const WithTwoActions = ({
                 style={{
                   width: "100%",
                   borderRadius: "10px",
-                  margin: "5px",
+                  // margin: "5px",
                   ...editStyle(utang.uid),
                 }}
               >
-                <UtangItem key={utang.uid} utang={utang} />
+                <UtangItem key={utang.uid} utang={utang} view={view} />
               </div>
             </SwipeableListItem>
           ))}

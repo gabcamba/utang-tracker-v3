@@ -9,7 +9,8 @@ const UtangList = ({
   view,
   utangToEdit,
   setExploding,
-  create
+  create,
+  setCreate
 }) => {
   const [parent] = useAutoAnimate();
   const list = view === HOME_VIEW ? utangs : deleted;
@@ -28,6 +29,7 @@ const UtangList = ({
             list={list}
             utangToEdit={utangToEdit}
             setExploding={setExploding}
+            setCreate={setCreate}
           />
         ) : (
           <div className="no-utang">

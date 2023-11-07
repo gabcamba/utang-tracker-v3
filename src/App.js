@@ -28,6 +28,10 @@ function App() {
 
   const toggleCreate = () => {
     setCreate(!create);
+
+    if(utangToEdit && create){
+      setUtangToEdit(null);
+    }
   };
   useEffect(() => {
     const getHistory = async () => {
@@ -72,6 +76,7 @@ function App() {
           view={view}
           setExploding={setExploding}
           create={create}
+          setCreate={setCreate}
         />
       ) : (
         <PaymentsList

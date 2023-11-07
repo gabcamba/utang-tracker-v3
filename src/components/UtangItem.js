@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { GAB } from "../constants";
+import { DELETED_VIEW, GAB, HOME_VIEW } from "../constants";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
+import DeleteSweepRoundedIcon from '@mui/icons-material/DeleteSweepRounded';
 import { formatDateTime } from "../utils/formatDate";
 import { formatCurrency } from "../utils/converter";
-const UtangItem = ({ utang }) => {
+const UtangItem = ({ utang, view }) => {
   const [viewHistory, setViewHistory] = useState(false);
 
   const toggleHistory = () => {
@@ -21,13 +22,22 @@ const UtangItem = ({ utang }) => {
         <div className="title-person">
           <div className="utang-name">{utang.name}</div>
           <div style={{ display: "flex", flexDirection: "row" }}>
-          {!utang.edited && <div className="utang-person">{formatDateTime(utang.date)}</div>}
+          {!utang.edited && view === HOME_VIEW && <div className="utang-person">{formatDateTime(utang.date)}</div>}
             {utang.edited && (
               <div onClick={() => toggleHistory()} className="utang-edited">
                 <EditNoteRoundedIcon
-                  sx={{ marginRight: "2px", fontSize: '2em' }}
+                  sx={{ marginRight: "5px", fontSize: '2em' }}
                 />
                 {utang.editDate ? `${formatDateTime(utang.editDate)}` : null}
+              </div>
+            )}
+
+            {view === DELETED_VIEW && (
+              <div onClick={() => toggleHistory()} className="utang-deleted">
+                <DeleteSweepRoundedIcon
+                  sx={{ marginRight: "5px", fontSize: '2em' }}
+                />
+                {formatDateTime(utang.date)}
               </div>
             )}
           </div>
