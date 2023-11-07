@@ -1,5 +1,5 @@
 /* eslint-disable eqeqeq */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import useSound from "use-sound";
 import pop from "../media/pop.wav";
 import error from "../media/error.wav";
@@ -20,7 +20,7 @@ import { toFloat, toInt } from "../utils/converter";
 import { errorToast, successToast } from "../utils/toast";
 import { generateUUID } from "../utils/uuid";
 
-const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
+const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [person, setPerson] = useState(GAB);
@@ -157,7 +157,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
         value={title}
         onChange={(e) => onChangeTitle(e)}
         placeholder="description"
-        maxLength={10}
+        maxLength={20}
         className={`${utangToEdit ? "editing" : ""} input-title`}
         type="text"
       />

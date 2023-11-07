@@ -9,6 +9,7 @@ const UtangList = ({
   view,
   utangToEdit,
   setExploding,
+  create
 }) => {
   const [parent] = useAutoAnimate();
   const list = view === HOME_VIEW ? utangs : deleted;
@@ -17,7 +18,7 @@ const UtangList = ({
       <div
         ref={parent}
         className={`${
-          view === "deleted" ? "utang-list list-expand" : "utang-list"
+          view === "deleted" || !create ? "utang-list list-expand" : "utang-list"
         }`}
       >
         {list.length ? (

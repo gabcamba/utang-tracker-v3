@@ -5,6 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
 import { formatDateTime } from "../utils/formatDate";
 import { formatCurrency } from "../utils/converter";
 const UtangItem = ({ utang }) => {
@@ -19,12 +20,17 @@ const UtangItem = ({ utang }) => {
       <div key={utang.uid} className="utang-item">
         <div className="title-person">
           <div className="utang-name">{utang.name}</div>
-          <div className="utang-person">{formatDateTime(utang.date)}</div>
-          {utang.edited && (
-            <div onClick={() => toggleHistory()} className="utang-edited">
-              Edited {utang.editDate ? formatDateTime(utang.editDate) : null}
-            </div>
-          )}
+          <div style={{ display: "flex", flexDirection: "row" }}>
+          {!utang.edited && <div className="utang-person">{formatDateTime(utang.date)}</div>}
+            {utang.edited && (
+              <div onClick={() => toggleHistory()} className="utang-edited">
+                <EditNoteRoundedIcon
+                  sx={{ marginRight: "2px", fontSize: '2em' }}
+                />
+                {utang.editDate ? `${formatDateTime(utang.editDate)}` : null}
+              </div>
+            )}
+          </div>
         </div>
         <div className="check">
           <div className="amount">{formatCurrency(utang.amount)}</div>
@@ -84,7 +90,7 @@ const UtangItem = ({ utang }) => {
                     textAlign: "center",
                   }}
                 >
-                  <div style={{ flex: 3, textAlign: "left" }}>
+                  <div style={{ flex: 5, textAlign: "left" }}>
                     <div>{hist.name}</div>
                     <div style={{ fontSize: "0.6rem", color: "darksalmon" }}>
                       {hist.date
@@ -97,12 +103,12 @@ const UtangItem = ({ utang }) => {
                   <div
                     style={{
                       color: hist.person === "Gab" ? "orange" : "tomato",
-                      flex: 1,
+                      flex: 2.5,
                     }}
                   >
                     {hist.person}
                   </div>
-                  <div style={{ flex: 3, textAlign: "right" }}>
+                  <div style={{ flex: 2.5, textAlign: "right" }}>
                     {formatCurrency(hist.amount)}
                   </div>
                 </div>

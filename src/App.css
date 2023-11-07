@@ -7,7 +7,6 @@
   .utang-summary {
     background-image: url("../public/C&S.png");
     background-repeat: repeat;
-    /* background-attachment: fixed; */
     background-size: cover;
     height: 15vh;
     display: flex;
@@ -171,7 +170,7 @@
         justify-content: flex-end !important;
       }
       .title-person {
-        flex: 3;
+        flex: 6;
         color: white;
         font-family: "ui-monospace";
         display: flex;
@@ -180,14 +179,14 @@
         flex-direction: column;
 
         .utang-name {
-          font-size: 1em;
+          font-size: 0.87em;
           overflow: hidden;
           margin-left: 20px;
         }
         .utang-person {
           margin-top: 5px;
           color: rgb(184, 184, 184);
-          font-size: 0.7em;
+          font-size: 0.5em;
           font-family: "ui-monospace";
           margin-left: 20px;
         }
@@ -195,25 +194,28 @@
         .utang-edited {
           margin-top: 5px;
           color: rgb(255, 178, 178);
-          font-size: 0.3em;
+          font-size: 0.5em;
           font-family: "ui-monospace";
           margin-left: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       }
 
       .amount {
         color: white;
         font-size: 1em;
-        flex: 3;
+        flex: 2.5;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
         font-family: "ui-monospace";
         text-align: center;
       }
 
       .check {
-        flex: 3;
+        flex: 2.5;
         display: flex;
         justify-content: center;
         align-items: center;

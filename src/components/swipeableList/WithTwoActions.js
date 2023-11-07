@@ -12,7 +12,7 @@ import "./WithTwoActions.css";
 import UtangItem from "../UtangItem";
 import { successToast } from "../../utils/toast";
 import { DELETED, UTANG_DELETED, UTANG_PAID_SINGULAR } from "../../constants";
-import { paid, createPayment, deleteItem, createDeleted } from "../../utils/database";
+import { createPayment, deleteItem, createDeleted } from "../../utils/database";
 import useSound from "use-sound";
 import pop from "../../media/pop.wav";
 import edit from "../../media/edit.wav";
