@@ -20,7 +20,7 @@ const PaymentItem = ({ payment }) => {
         <div className="item view">
           <VisibilityRoundedIcon
             onClick={() => toggleModal(true)}
-            sx={{ color: "darksalmon !important", paddingRight: "20px" }}
+            sx={{ color: "#69c881 !important", paddingRight: "20px" }}
           />
         </div>
       </div>

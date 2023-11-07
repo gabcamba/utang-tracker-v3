@@ -1,5 +1,6 @@
 .App {
-  background-color: #383838;
+  /* background-color: #383838; */
+  background-color: #121212;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -99,7 +100,8 @@
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     height: 55vh;
-    background-color: #484848;
+    /* background-color: #484848; */
+    background-color: #181818;
 
     .no-utang {
       display: flex;
@@ -117,13 +119,14 @@
       border: 1px solid darksalmon !important;
     }
     .utang-item {
-      border: 1px solid #484848;
+      /* border: 1px solid #484848; */
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 80px;
-      margin: 5px;
+      height: 70px;
+      /* margin: 5px; */
       border-radius: 10px;
+      width: 100%;
 
       .item {
         flex: 1;
@@ -154,7 +157,7 @@
 
       .view {
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
       }
       .orange {
         color: orange !important;
@@ -173,7 +176,7 @@
         font-family: "ui-monospace";
         display: flex;
         justify-content: center;
-        align-items: left;
+        align-items: flex-start;
         flex-direction: column;
 
         .utang-name {
@@ -228,13 +231,17 @@
     }
   }
 
+  .list-expand {
+    height: 75vh !important;
+  }
+
   .create-utang {
     display: flex;
     flex-direction: column;
     height: 20vh;
 
     .editing {
-      background-color: darksalmon !important;
+      background-color: darkslateblue !important;
     }
 
     .input-title {

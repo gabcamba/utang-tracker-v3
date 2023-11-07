@@ -1,32 +1,33 @@
 import React from "react";
-import UtangItem from "./UtangItem";
-import { GOOD_JOB, NO_UTANG_FOUND } from "../constants";
+import { APP_VERSION, GOOD_JOB, HOME_VIEW, NO_UTANG_FOUND } from "../constants";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import WithTwoActions from "./swipeableList/WithTwoActions";
 const UtangList = ({
   utangs,
   setUtangToEdit,
-  setIsEdit,
-  isEdit,
   deleted,
-  view
+  view,
+  utangToEdit,
+  setExploding,
 }) => {
   const [parent] = useAutoAnimate();
-  const list = view === 'home' ? utangs : deleted;
-
+  const list = view === HOME_VIEW ? utangs : deleted;
   return (
     <>
-      <div ref={parent} className={`${isEdit ? "lock-scroll" : null} utang-list`}>
+      <div
+        ref={parent}
+        className={`${
+          view === "deleted" ? "utang-list list-expand" : "utang-list"
+        }`}
+      >
         {list.length ? (
-          list.map((utang) => (
-            <UtangItem
-              key={utang.uid}
-              utang={utang}
-              setUtangToEdit={setUtangToEdit}
-              setIsEdit={setIsEdit}
-              isEdit={isEdit}
-              view={view}
-            />
-          ))
+          <WithTwoActions
+            setUtangToEdit={setUtangToEdit}
+            view={view}
+            list={list}
+            utangToEdit={utangToEdit}
+            setExploding={setExploding}
+          />
         ) : (
           <div className="no-utang">
             <span>
@@ -39,7 +40,7 @@ const UtangList = ({
                 marginTop: "10px",
               }}
             >
-              v3.110223a
+              {APP_VERSION }
             </span>
             <a
               href="https://github.com/gabcamba"
@@ -66,7 +67,7 @@ const UtangList = ({
             >
               github.com/meinardxd
             </a>
-            <span style={{fontSize: '0.7rem'}}>🍓🥕</span>
+            <span style={{ fontSize: "0.7rem" }}>🍓🥕</span>
           </div>
         )}
       </div>

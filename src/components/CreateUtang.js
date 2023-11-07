@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import useSound from "use-sound";
 import pop from "../media/pop.wav";
 import error from "../media/error.wav";
-import { createItem, updateItem } from "../utils/database";
+import { createUtang, updateItem } from "../utils/database";
 
 import {
   FIELD_ERROR,
@@ -19,7 +19,8 @@ import {
 import { toFloat, toInt } from "../utils/converter";
 import { errorToast, successToast } from "../utils/toast";
 import { generateUUID } from "../utils/uuid";
-const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
+
+const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [person, setPerson] = useState(GAB);
@@ -29,7 +30,7 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
   const [playError] = useSound(error);
 
   useEffect(() => {
-    if (isEdit) {
+    if (utangToEdit) {
       setAmount(utangToEdit.amount.toString());
       setTitle(utangToEdit.name);
       setPerson(utangToEdit.person);
@@ -38,7 +39,7 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
       setTitle("");
       setPerson(GAB);
     }
-  }, [isEdit, utangToEdit]);
+  }, [utangToEdit]);
 
   const onChangeTitle = (e) => {
     setConfirm(false);
@@ -79,7 +80,6 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
 
     if (
       utangToEdit &&
-      isEdit &&
       utangToEdit.name == title &&
       utangToEdit.amount == amount &&
       utangToEdit.person == person
@@ -90,7 +90,7 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
       return;
     }
 
-    if (isEdit) {
+    if (utangToEdit) {
       play();
       const date = Date.now();
       const updatedUtang = {
@@ -111,8 +111,8 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
           editDate: date,
         },
       ];
-      await updateItem(utangToEdit, updatedUtang);
-      setIsEdit(false);
+      await updateItem(updatedUtang);
+      setUtangToEdit(null);
       successToast(UTANG_UPDATED);
     } else {
       const uid = generateUUID();
@@ -128,15 +128,12 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
       };
       utangObj.hist = [{ ...utangObj }];
 
-      await createItem(utangObj);
+      await createUtang(utangObj);
 
       play();
       successToast(UTANG_CREATED);
     }
 
-    if (view !== "home") {
-      setView("home");
-    }
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setTitle("");
     setAmount("");
@@ -161,7 +158,7 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
         onChange={(e) => onChangeTitle(e)}
         placeholder="description"
         maxLength={10}
-        className={`${isEdit ? "editing" : ""} input-title`}
+        className={`${utangToEdit ? "editing" : ""} input-title`}
         type="text"
       />
       <div className="amount-person">
@@ -178,7 +175,6 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
             onPaste={handlePaste}
           />
         </div>
-
         <select
           value={person}
           onChange={(e) => onSelectPerson(e)}
@@ -202,7 +198,7 @@ const CreateUtang = ({ isEdit, utangToEdit, setIsEdit, view, setView }) => {
               onClick={() => onClickPlus()}
               className="btn"
             >
-              {isEdit ? "edit" : "create"}
+              {utangToEdit ? "edit" : "create"}
             </button>
           )}
         </div>
