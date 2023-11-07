@@ -67,7 +67,7 @@ const WithTwoActions = ({
       amount: utang.amount,
     });
 
-    await paid([utang]);
+    await deleteItem(utang);
 
     successToast(UTANG_PAID_SINGULAR);
     setTimeout(() => {
