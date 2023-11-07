@@ -59,7 +59,7 @@ const PaymentHistoryModal = ({ open, payment, toggleModal }) => {
                 }}
                 key={payment.id}
               >
-                <div style={{ flex: 3, textAlign: "left", marginLeft: "10px" }}>
+                <div style={{ flex: 3, textAlign: "left",}}>
                   <div>{payment.name}</div>
                   <div style={{ fontSize: "0.6rem", color: "darksalmon" }}>
                     {formatDateTime(payment.date)}
@@ -74,7 +74,7 @@ const PaymentHistoryModal = ({ open, payment, toggleModal }) => {
                   {payment.person}
                 </div>
                 <div
-                  style={{ flex: 3, textAlign: "right", marginRight: "10px" }}
+                  style={{ flex: 3, textAlign: "right",}}
                 >
                   {formatCurrency(payment.amount)}
                 </div>

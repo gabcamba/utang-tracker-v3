@@ -1,13 +1,13 @@
 import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import PaymentItem from "./PaymentItem";
-import { NO_UTANG_FOUND } from "../constants";
+import { APP_VERSION, NO_UTANG_FOUND } from "../constants";
 const UtangList = ({ payments }) => {
   const [parent] = useAutoAnimate();
 
   return (
     <>
-      <div ref={parent} className="utang-list">
+      <div ref={parent} className="utang-list list-expand">
         {payments.length ? (
           payments.map((payment) => (
             <PaymentItem key={payment.id} payment={payment} />
@@ -22,7 +22,7 @@ const UtangList = ({ payments }) => {
                 marginTop: "10px",
               }}
             >
-              v3.110223a
+              {APP_VERSION}
             </span>
             <a
               href="https://github.com/gabcamba"

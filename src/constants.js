@@ -17,6 +17,7 @@ export const ERROR = "error";
 export const UTANG_DELETED = "Utang deleted";
 export const NO_FIELDS_CHANGED = "No fields have been changed.";
 export const UTANG_PAID = "Utangs paid";
+export const UTANG_PAID_SINGULAR = "Utang paid";
 export const UTANG_CREATED = "Utang created";
 export const UTANG_UPDATED = "Utang edited";
 export const FIELD_ERROR = "Errors found on some fields.";
@@ -25,3 +26,11 @@ export const GOOD_JOB = `Good job ${GAB} & ${MEI}!`;
 
 // database consts
 export const PAYMENTS = "PAYMENTS";
+
+// views
+export const HOME_VIEW = 'home'
+export const DELETED_VIEW = 'deleted'
+export const PAYMENTS_VIEW = 'payments'
+
+// app version
+export const APP_VERSION = "v3.110523a"

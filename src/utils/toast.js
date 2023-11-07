@@ -2,7 +2,7 @@ import toast from "react-hot-toast";
 
 const HOT_TOAST_STYLES = {
   borderRadius: "50px",
-  background: "#000000",
+  background: "#404040",
   color: "#fff",
   fontFamily: "ui-monospace",
   fontSize: "0.8rem",

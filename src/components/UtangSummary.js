@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import useSound from "use-sound";
 import ding from "../media/success.wav";
 import { GAB, MEI, UTANG_PAID } from "../constants";
-import { pay, paid } from "../utils/database";
+import { paid, createPayment } from "../utils/database";
 import { formatCurrency } from "../utils/converter";
 import { successToast } from "../utils/toast";
 import { generateUUID } from "../utils/uuid";
@@ -46,7 +46,7 @@ const UtangSummary = ({
     setForPay(false);
     setUtangToEdit(null);
 
-    pay({
+    createPayment({
       id: `${Date.now()}-${generateUUID()}}`,
       datePaid: Date.now(),
       utangs,

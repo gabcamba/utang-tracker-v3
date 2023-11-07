@@ -26,13 +26,10 @@ const UtangItem = ({ utang }) => {
             </div>
           )}
         </div>
-        <div onClick={() => escape()} className="check">
+        <div className="check">
           <div className="amount">{formatCurrency(utang.amount)}</div>
         </div>
-        <div
-          // onClick={() => toggleDelete()}
-          className={`amount ${utang.person === GAB ? "orange" : "red"}`}
-        >
+        <div className={`amount ${utang.person === GAB ? "orange" : "red"}`}>
           <span style={{ marginRight: 20 }}>{utang.person}</span>
         </div>
       </div>
@@ -45,6 +42,7 @@ const UtangItem = ({ utang }) => {
         PaperProps={{
           style: {
             borderRadius: "15px",
+            border: "1px solid darksalmon",
             fontFamily: "ui-monospace",
             background: "none",
             "-webkit-backdrop-filter": "blur(10px)",
@@ -86,9 +84,7 @@ const UtangItem = ({ utang }) => {
                     textAlign: "center",
                   }}
                 >
-                  <div
-                    style={{ flex: 3, textAlign: "left", marginLeft: "10px" }}
-                  >
+                  <div style={{ flex: 3, textAlign: "left" }}>
                     <div>{hist.name}</div>
                     <div style={{ fontSize: "0.6rem", color: "darksalmon" }}>
                       {hist.date
@@ -106,9 +102,7 @@ const UtangItem = ({ utang }) => {
                   >
                     {hist.person}
                   </div>
-                  <div
-                    style={{ flex: 3, textAlign: "right", marginRight: "10px" }}
-                  >
+                  <div style={{ flex: 3, textAlign: "right" }}>
                     {formatCurrency(hist.amount)}
                   </div>
                 </div>

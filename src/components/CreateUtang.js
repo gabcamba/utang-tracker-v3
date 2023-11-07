@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import useSound from "use-sound";
 import pop from "../media/pop.wav";
 import error from "../media/error.wav";
-import { createItem, updateItem } from "../utils/database";
+import { createUtang, updateItem } from "../utils/database";
 
 import {
   FIELD_ERROR,
@@ -19,7 +19,8 @@ import {
 import { toFloat, toInt } from "../utils/converter";
 import { errorToast, successToast } from "../utils/toast";
 import { generateUUID } from "../utils/uuid";
-const CreateUtang = ({ utangToEdit, view, setView, setUtangToEdit }) => {
+
+const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [person, setPerson] = useState(GAB);
@@ -127,15 +128,12 @@ const CreateUtang = ({ utangToEdit, view, setView, setUtangToEdit }) => {
       };
       utangObj.hist = [{ ...utangObj }];
 
-      await createItem(utangObj);
+      await createUtang(utangObj);
 
       play();
       successToast(UTANG_CREATED);
     }
 
-    if (view !== "home") {
-      setView("home");
-    }
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setTitle("");
     setAmount("");
@@ -177,7 +175,6 @@ const CreateUtang = ({ utangToEdit, view, setView, setUtangToEdit }) => {
             onPaste={handlePaste}
           />
         </div>
-
         <select
           value={person}
           onChange={(e) => onSelectPerson(e)}

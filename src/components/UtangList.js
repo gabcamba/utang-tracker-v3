@@ -1,5 +1,5 @@
 import React from "react";
-import { GOOD_JOB, NO_UTANG_FOUND } from "../constants";
+import { APP_VERSION, GOOD_JOB, HOME_VIEW, NO_UTANG_FOUND } from "../constants";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import WithTwoActions from "./swipeableList/WithTwoActions";
 const UtangList = ({
@@ -8,19 +8,25 @@ const UtangList = ({
   deleted,
   view,
   utangToEdit,
+  setExploding,
 }) => {
   const [parent] = useAutoAnimate();
-  const list = view === "home" ? utangs : deleted;
-
+  const list = view === HOME_VIEW ? utangs : deleted;
   return (
     <>
-      <div ref={parent} className="utang-list">
+      <div
+        ref={parent}
+        className={`${
+          view === "deleted" ? "utang-list list-expand" : "utang-list"
+        }`}
+      >
         {list.length ? (
           <WithTwoActions
             setUtangToEdit={setUtangToEdit}
             view={view}
             list={list}
             utangToEdit={utangToEdit}
+            setExploding={setExploding}
           />
         ) : (
           <div className="no-utang">
@@ -34,7 +40,7 @@ const UtangList = ({
                 marginTop: "10px",
               }}
             >
-              v3.110223a
+              {APP_VERSION }
             </span>
             <a
               href="https://github.com/gabcamba"

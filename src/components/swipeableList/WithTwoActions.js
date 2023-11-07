@@ -4,7 +4,6 @@ import {
   SwipeableListItem,
   SwipeAction,
   TrailingActions,
-  LeadingActions,
   Type as ListType,
 } from "react-swipeable-list";
 import "react-swipeable-list/dist/styles.css";
@@ -12,15 +11,21 @@ import "react-swipeable-list/dist/styles.css";
 import "./WithTwoActions.css";
 import UtangItem from "../UtangItem";
 import { successToast } from "../../utils/toast";
-import { DELETED, UTANG_DELETED, UTANG_PAID } from "../../constants";
-import { paid, pay, updateItem } from "../../utils/database";
+import { DELETED, UTANG_DELETED, UTANG_PAID_SINGULAR } from "../../constants";
+import { paid, createPayment, deleteItem, createDeleted } from "../../utils/database";
 import useSound from "use-sound";
 import pop from "../../media/pop.wav";
 import edit from "../../media/edit.wav";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { generateUUID } from "../../utils/uuid";
 
-const WithTwoActions = ({ list, setUtangToEdit, utangToEdit, view }) => {
+const WithTwoActions = ({
+  list,
+  setUtangToEdit,
+  utangToEdit,
+  view,
+  setExploding,
+}) => {
   const [play] = useSound(pop);
   const [playEdit] = useSound(edit);
   const [editItemID, setEditItemID] = useState(null);
@@ -34,7 +39,8 @@ const WithTwoActions = ({ list, setUtangToEdit, utangToEdit, view }) => {
       status: DELETED,
     };
     setUtangToEdit(null);
-    await updateItem(deletedUtang);
+    await deleteItem(deletedUtang);
+    await createDeleted(deletedUtang)
     successToast(UTANG_DELETED);
   };
 
@@ -50,10 +56,10 @@ const WithTwoActions = ({ list, setUtangToEdit, utangToEdit, view }) => {
     }
   };
 
-  const handlePay = async(utang) => {
-    console.log(utang);
+  const handlePay = async (utang) => {
+    setExploding(true);
     play();
-    pay({
+    createPayment({
       id: `${Date.now()}-${generateUUID()}}`,
       datePaid: Date.now(),
       utangs: [utang],
@@ -63,7 +69,10 @@ const WithTwoActions = ({ list, setUtangToEdit, utangToEdit, view }) => {
 
     await paid([utang]);
 
-    successToast(UTANG_PAID);
+    successToast(UTANG_PAID_SINGULAR);
+    setTimeout(() => {
+      setExploding(false);
+    }, 2000);
   };
 
   const actionStyles = {
@@ -89,9 +98,7 @@ const WithTwoActions = ({ list, setUtangToEdit, utangToEdit, view }) => {
       </SwipeAction>
       {utangToEdit ? null : (
         <SwipeAction destructive={true} onClick={() => handleDelete(utang)}>
-          <div style={{ ...actionStyles, backgroundColor: "#de6238" }}>
-            delete
-          </div>
+          <div style={{ ...actionStyles, backgroundColor: "#de6238" }}>del</div>
         </SwipeAction>
       )}
     </TrailingActions>
@@ -113,6 +120,7 @@ const WithTwoActions = ({ list, setUtangToEdit, utangToEdit, view }) => {
         fullSwipe={false}
         type={ListType.IOS}
         destructiveCallbackDelay={300}
+        swipeStartThreshold={0}
       >
         {list.length &&
           list.map((utang) => (
@@ -134,7 +142,7 @@ const WithTwoActions = ({ list, setUtangToEdit, utangToEdit, view }) => {
                   ...editStyle(utang.uid),
                 }}
               >
-                <UtangItem utang={utang} />
+                <UtangItem key={utang.uid} utang={utang} />
               </div>
             </SwipeableListItem>
           ))}
