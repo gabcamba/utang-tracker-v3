@@ -5,10 +5,14 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
-import DeleteSweepRoundedIcon from '@mui/icons-material/DeleteSweepRounded';
+import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
+import DeleteSweepRoundedIcon from "@mui/icons-material/DeleteSweepRounded";
 import { formatDateTime } from "../utils/formatDate";
 import { formatCurrency } from "../utils/converter";
+
+import RestaurantRoundedIcon from '@mui/icons-material/RestaurantRounded';
+import { AttachMoneyRounded, DirectionsBusRounded, HomeRounded, PaidRounded, ShoppingCartRounded } from "@mui/icons-material";
+
 const UtangItem = ({ utang, view }) => {
   const [viewHistory, setViewHistory] = useState(false);
 
@@ -16,26 +20,64 @@ const UtangItem = ({ utang, view }) => {
     setViewHistory(!viewHistory);
   };
 
+  const categoryIconList = {
+    food : {
+      icon: <RestaurantRoundedIcon />,
+      color: '#69c881'
+    },
+    transport: {
+      icon: <DirectionsBusRounded />,
+      color: '#967ae9'
+    },
+    household: {
+      icon: <HomeRounded />,
+      color: '#7acde9'
+    },
+    grocery:  {
+      icon: <ShoppingCartRounded />,
+      color: 'darksalmon'
+    },
+  }
+
   return (
     <>
       <div key={utang.uid} className="utang-item">
+        <div
+          style={{
+            width: 40,
+            height: 40,
+            backgroundColor: utang.category ? categoryIconList[utang.category].color : 'blueviolet',
+            borderRadius: "50%",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: 'white',
+
+            marginLeft: 20,
+            marginRight: 12,
+          }}
+        >
+        {utang.category ? categoryIconList[utang.category].icon : <AttachMoneyRounded />}
+        </div>
         <div className="title-person">
           <div className="utang-name">{utang.name}</div>
           <div style={{ display: "flex", flexDirection: "row" }}>
-          {!utang.edited && view === HOME_VIEW && <div className="utang-person">{formatDateTime(utang.date)}</div>}
+            {!utang.edited && view === HOME_VIEW && (
+              <div className="utang-person">{formatDateTime(utang.date)}</div>
+            )}
             {utang.edited && (
               <div onClick={() => toggleHistory()} className="utang-edited">
                 <EditNoteRoundedIcon
-                  sx={{ marginRight: "5px", fontSize: '2em' }}
+                  sx={{ marginRight: "5px", fontSize: "2em" }}
                 />
                 {utang.editDate ? `${formatDateTime(utang.editDate)}` : null}
               </div>
             )}
 
             {view === DELETED_VIEW && (
-              <div onClick={() => toggleHistory()} className="utang-deleted">
+              <div className="utang-deleted">
                 <DeleteSweepRoundedIcon
-                  sx={{ marginRight: "5px", fontSize: '2em' }}
+                  sx={{ marginRight: "5px", fontSize: "2em" }}
                 />
                 {formatDateTime(utang.date)}
               </div>
@@ -100,7 +142,7 @@ const UtangItem = ({ utang, view }) => {
                     textAlign: "center",
                   }}
                 >
-                  <div style={{ flex: 5, textAlign: "left" }}>
+                  <div style={{ flex: 7, textAlign: "left" }}>
                     <div>{hist.name}</div>
                     <div style={{ fontSize: "0.6rem", color: "darksalmon" }}>
                       {hist.date

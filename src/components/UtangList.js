@@ -10,7 +10,7 @@ const UtangList = ({
   utangToEdit,
   setExploding,
   create,
-  setCreate
+  setCreate,
 }) => {
   const [parent] = useAutoAnimate();
   const list = view === HOME_VIEW ? utangs : deleted;
@@ -19,7 +19,11 @@ const UtangList = ({
       <div
         ref={parent}
         className={`${
-          view === "deleted" || !create ? "utang-list list-expand" : "utang-list"
+          view === "deleted" || !create
+            ? "utang-list list-expand"
+            : utangToEdit
+            ? "utang-list lock-scroll"
+            : "utang-list"
         }`}
       >
         {list.length ? (
@@ -43,7 +47,7 @@ const UtangList = ({
                 marginTop: "10px",
               }}
             >
-              {APP_VERSION }
+              {APP_VERSION}
             </span>
             <a
               href="https://github.com/gabcamba"

@@ -29,27 +29,27 @@ function App() {
   const toggleCreate = () => {
     setCreate(!create);
 
-    if(utangToEdit && create){
+    if (utangToEdit && create) {
       setUtangToEdit(null);
     }
   };
   useEffect(() => {
-    const getHistory = async () => {
-      await getPayments(setPayments);
+    const fetch = () => {
+      getUtangs(setUtangs);
     };
 
-    const fetch = async () => {
-      await getUtangs(setUtangs);
+    const fetchDeleted = () => {
+      getDeleted(setDeleted);
     };
 
-    const fetchDeleted = async () => {
-      await getDeleted(setDeleted);
+    const getHistory = () => {
+      getPayments(setPayments);
     };
 
     fetch();
     getHistory();
     fetchDeleted();
-  }, [view, create]);
+  }, []);
 
   return (
     <div ref={parent} className="App lock-scroll">
@@ -100,10 +100,10 @@ function App() {
           onClick={() => toggleCreate()}
           sx={{
             position: "absolute",
-            bottom: create ? '26vh' : 100,
+            bottom: create ? "26vh" : 100,
             right: 16,
             backgroundColor: `${
-              create ? "#eb4c42 !important" : "cornflowerblue !important"
+              create ? "#eb4c42 !important" : "#75d16d !important"
             }`,
             color: "white",
           }}

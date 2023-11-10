@@ -83,22 +83,28 @@ const WithTwoActions = ({
     fontFamily: "ui-monospace",
     justifyContent: "center",
     alignItems: "center",
-    // borderRadius: 3,
-    borderTopRadius: 5
-    // marginRight: 5
   };
 
   const trailingActions = (utang) => (
     <TrailingActions>
       {utangToEdit ? null : (
         <SwipeAction destructive={true} onClick={() => handlePay(utang)}>
-          <div style={{ ...actionStyles, backgroundColor: "#69c881", borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }}>pay</div>
+          <div
+            style={{
+              ...actionStyles,
+              backgroundColor: "#69c881",
+              borderTopLeftRadius: 5,
+              borderBottomLeftRadius: 5,
+            }}
+          >
+            pay
+          </div>
         </SwipeAction>
       )}
 
       {utangToEdit ? null : (
         <SwipeAction onClick={() => handleEdit(utang)}>
-          <div style={{ ...actionStyles, backgroundColor: "darksalmon" }}>
+          <div style={{ ...actionStyles, backgroundColor: "darkslateblue" }}>
             edit
           </div>
         </SwipeAction>
@@ -122,38 +128,32 @@ const WithTwoActions = ({
   };
 
   return (
-    <div className="basic-swipeable-list__container lock-scroll">
+    <div className="basic-swipeable-list__container">
       <SwipeableList
         ref={parent}
         fullSwipe={false}
         type={ListType.IOS}
         destructiveCallbackDelay={300}
-        swipeStartThreshold={0}
       >
-        {list.length &&
-          list.map((utang) => (
-            <SwipeableListItem
+      {list.length &&
+        list.map((utang) => (
+          <SwipeableListItem
+            key={utang.uid}
+            trailingActions={trailingActions(utang)}
+            blockSwipe={utangToEdit || view === "deleted"}
+          >
+            <div
               key={utang.uid}
-              trailingActions={trailingActions(utang)}
-              blockSwipe={
-                utangToEdit || 
-                view === "deleted"
-              }
+              className="test-div"
+              style={{
+                width: "100%",
+                ...editStyle(utang.uid),
+              }}
             >
-              <div
-                key={utang.uid}
-                className="test-div"
-                style={{
-                  width: "100%",
-                  borderRadius: "10px",
-                  // margin: "5px",
-                  ...editStyle(utang.uid),
-                }}
-              >
-                <UtangItem key={utang.uid} utang={utang} view={view} />
-              </div>
-            </SwipeableListItem>
-          ))}
+              <UtangItem key={utang.uid} utang={utang} view={view} />
+            </div>
+          </SwipeableListItem>
+        ))}
       </SwipeableList>
     </div>
   );

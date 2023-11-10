@@ -1,5 +1,4 @@
 .App {
-  /* background-color: #383838; */
   background-color: #121212;
   ::-webkit-scrollbar {
     display: none;
@@ -118,13 +117,10 @@
       border: 1px solid darksalmon !important;
     }
     .utang-item {
-      /* border: 1px solid #484848; */
       display: flex;
       justify-content: center;
       align-items: center;
       height: 80px;
-      /* margin: 5px; */
-      /* border-radius: 10px; */
       width: 100%;
       border-bottom: 0.2px solid #323232;
 
@@ -182,15 +178,13 @@
 
         .utang-name {
           font-size: 0.87em;
-          overflow: hidden;
-          margin-left: 20px;
+          font-weight: 500;
         }
         .utang-person {
           margin-top: 5px;
           color: rgb(184, 184, 184);
           font-size: 0.5em;
           font-family: "ui-monospace";
-          margin-left: 20px;
         }
 
         .utang-edited {
@@ -198,7 +192,6 @@
           color: rgb(255, 178, 178);
           font-size: 0.5em;
           font-family: "ui-monospace";
-          margin-left: 20px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -209,7 +202,6 @@
           color: tomato;
           font-size: 0.5em;
           font-family: "ui-monospace";
-          margin-left: 20px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -218,7 +210,7 @@
 
       .amount {
         color: white;
-        font-size: 1em;
+        font-size: 0.95em;
         flex: 2.5;
         display: flex;
         align-items: center;
@@ -260,7 +252,7 @@
     }
 
     .input-title {
-      background-color: cornflowerblue;
+      background-color: #7acde9;
       color: white;
       flex: 5;
       outline: none;

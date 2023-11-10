@@ -15,11 +15,11 @@ code {
 }
 
 .Mui-selected {
-  color: cornflowerblue !important;
+  color: #7acde9 !important;
 }
 
 .MuiBottomNavigationAction-label{
-  color: cornflowerblue !important;
+  color: #7acde9 !important;
   font-family: ui-monospace !important ;
   font-size: 0.7rem !important;
   margin-top: 7px !important;
