@@ -12,12 +12,16 @@ const LabelBottomNavigation = ({ view, setView }) => {
 
   return (
     <BottomNavigation
-      // showLabels
       sx={{
         width: "100%",
         height: "10vh",
         backgroundColor: "transparent",
         textColor: "white",
+        position: "fixed",
+        bottom: 0,
+        background: "none",
+        "-webkit-backdrop-filter": "blur(30px)",
+        backdropFilter: "blur(30px)",
       }}
       value={view}
       onChange={handleChange}

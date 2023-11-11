@@ -1,13 +1,16 @@
 import React from "react";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import PaymentItem from "./PaymentItem";
 import { APP_VERSION, NO_UTANG_FOUND } from "../constants";
-const UtangList = ({ payments }) => {
-  const [parent] = useAutoAnimate();
+import { useSpring, animated } from "@react-spring/web";
 
+const UtangList = ({ payments }) => {
+  const springs = useSpring({
+    from: { opacity: 0, y: 30 },
+    to: { opacity: 1, y: 0 },
+  });
   return (
     <>
-      <div ref={parent} className="utang-list list-expand">
+      <animated.div style={{ ...springs }} className="utang-list list-expand">
         {payments.length ? (
           payments.map((payment) => (
             <PaymentItem key={payment.id} payment={payment} />
@@ -52,7 +55,7 @@ const UtangList = ({ payments }) => {
             <span style={{ fontSize: "0.7rem" }}>🍓🥕</span>
           </div>
         )}
-      </div>
+      </animated.div>
     </>
   );
 };

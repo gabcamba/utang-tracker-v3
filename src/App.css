@@ -5,11 +5,16 @@
   }
   .utang-summary {
     background-image: url("../public/C&S.png");
+    background-color: #121212;
     background-repeat: repeat;
     background-size: cover;
     height: 15vh;
     display: flex;
     flex-direction: row;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 999;
 
     .gab,
     .mei,
@@ -97,20 +102,22 @@
     overflow: auto;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    height: 55vh;
-    /* background-color: #484848; */
+    height: auto;
     background-color: #181818;
+    margin-bottom: 30vh;
+    padding-top: 15vh;
 
     .no-utang {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100%;
+      height: 80vh;
       color: rgb(181, 181, 181);
       font-family: "ui-monospace";
       text-align: center;
       font-size: 0.9rem;
+      background-color: #121212 !important;
     }
 
     .editing {
@@ -239,16 +246,22 @@
   }
 
   .list-expand {
-    height: 75vh !important;
+    height: auto !important;
+    margin-bottom: 10vh !important;
   }
 
   .create-utang {
     display: flex;
     flex-direction: column;
     height: 20vh;
+    position: fixed;
+    bottom: 10vh;
+    width: 100vw;
 
     .editing {
-      background-color: darkslateblue !important;
+      background-color: rgba(71, 61, 139, 0.567) !important;
+      -webkit-backdrop-filter: blur(30px);
+      backdrop-filter: blur(30px);
     }
 
     .input-title {
@@ -261,6 +274,8 @@
       border-radius: 0;
       text-align: center;
       font-family: "ui-monospace";
+      -webkit-backdrop-filter: blur(30px);
+      backdrop-filter: blur(30px);
     }
 
     ::-webkit-input-placeholder {
@@ -286,6 +301,8 @@
         font-family: "ui-monospace";
         text-align: center;
         outline: none;
+        -webkit-backdrop-filter: blur(30px);
+        backdrop-filter: blur(30px);
       }
 
       .select {
@@ -294,11 +311,18 @@
         color: white;
         flex: 3;
         border: none;
-        font-size: 1em;
+        font-size: 0.95em;
         font-weight: normal;
         border-radius: 0;
         font-family: "ui-monospace";
         text-align-last: center;
+        -webkit-backdrop-filter: blur(30px);
+        backdrop-filter: blur(30px);
+        width: 25%;
+      }
+
+      .category {
+        background-color: rgb(233, 150, 122);
       }
 
       .create {
@@ -311,6 +335,9 @@
         justify-content: center;
         align-items: center;
         background-color: #69c881;
+        -webkit-backdrop-filter: blur(30px);
+        backdrop-filter: blur(30px);
+        width: 25%;
 
         .btn {
           font-size: 1em;

@@ -16,7 +16,6 @@ import { createPayment, deleteItem, createDeleted } from "../../utils/database";
 import useSound from "use-sound";
 import pop from "../../media/pop.wav";
 import edit from "../../media/edit.wav";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { generateUUID } from "../../utils/uuid";
 
 const WithTwoActions = ({
@@ -30,7 +29,6 @@ const WithTwoActions = ({
   const [play] = useSound(pop);
   const [playEdit] = useSound(edit);
   const [editItemID, setEditItemID] = useState(null);
-  const [parent] = useAutoAnimate();
 
   const handleDelete = async (utang) => {
     play();
@@ -130,30 +128,30 @@ const WithTwoActions = ({
   return (
     <div className="basic-swipeable-list__container">
       <SwipeableList
-        ref={parent}
+        // ref={parent}
         fullSwipe={false}
         type={ListType.IOS}
         destructiveCallbackDelay={300}
       >
-      {list.length &&
-        list.map((utang) => (
-          <SwipeableListItem
-            key={utang.uid}
-            trailingActions={trailingActions(utang)}
-            blockSwipe={utangToEdit || view === "deleted"}
-          >
-            <div
+        {list.length &&
+          list.map((utang) => (
+            <SwipeableListItem
               key={utang.uid}
-              className="test-div"
-              style={{
-                width: "100%",
-                ...editStyle(utang.uid),
-              }}
+              trailingActions={trailingActions(utang)}
+              blockSwipe={utangToEdit || view === "deleted"}
             >
-              <UtangItem key={utang.uid} utang={utang} view={view} />
-            </div>
-          </SwipeableListItem>
-        ))}
+              <div
+                key={utang.uid}
+                className="test-div"
+                style={{
+                  width: "100%",
+                  ...editStyle(utang.uid),
+                }}
+              >
+                <UtangItem key={utang.uid} utang={utang} view={view} />
+              </div>
+            </SwipeableListItem>
+          ))}
       </SwipeableList>
     </div>
   );

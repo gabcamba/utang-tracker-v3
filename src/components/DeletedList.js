@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { APP_VERSION, GOOD_JOB, NO_UTANG_FOUND } from "../constants";
 import WithTwoActions from "./swipeableList/WithTwoActions";
-import { useSpring,animated } from "@react-spring/web";
+import { useSpring, animated } from "@react-spring/web";
 
-const UtangList = ({
+const DeletedList = ({
   utangs,
   setUtangToEdit,
   deleted,
@@ -13,24 +13,24 @@ const UtangList = ({
   create,
   setCreate,
 }) => {
-  const list = utangs;
+  const list = deleted;
   const springs = useSpring({
-    from: { opacity: 0, y:30 },
-    to: { opacity: 1, y: 0},
-  })
+    from: { opacity: 0, y: 30 },
+    to: { opacity: 1, y: 0 },
+  });
 
   useEffect(() => {
     console.log("LIST MOUNT");
 
-    return(() => {
+    return () => {
       console.log("LIST UNMOUNT");
-    })
-  }, [view])
+    };
+  }, [view]);
   return (
     <>
       <animated.div
         // ref={parent}
-        style={{...springs}}
+        style={{ ...springs }}
         className={`${
           view === "deleted" || !create
             ? "utang-list list-expand"
@@ -95,4 +95,4 @@ const UtangList = ({
   );
 };
 
-export default UtangList;
+export default DeletedList;

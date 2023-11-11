@@ -10,8 +10,14 @@ import DeleteSweepRoundedIcon from "@mui/icons-material/DeleteSweepRounded";
 import { formatDateTime } from "../utils/formatDate";
 import { formatCurrency } from "../utils/converter";
 
-import RestaurantRoundedIcon from '@mui/icons-material/RestaurantRounded';
-import { AttachMoneyRounded, DirectionsBusRounded, HomeRounded, PaidRounded, ShoppingCartRounded } from "@mui/icons-material";
+import RestaurantRoundedIcon from "@mui/icons-material/RestaurantRounded";
+import {
+  AttachMoneyRounded,
+  DirectionsBusRounded,
+  HomeRounded,
+  ShoppingCartRounded,
+  StarRounded,
+} from "@mui/icons-material";
 
 const UtangItem = ({ utang, view }) => {
   const [viewHistory, setViewHistory] = useState(false);
@@ -21,23 +27,31 @@ const UtangItem = ({ utang, view }) => {
   };
 
   const categoryIconList = {
-    food : {
+    food: {
       icon: <RestaurantRoundedIcon />,
-      color: '#69c881'
+      color: "forestgreen",
     },
-    transport: {
+    transpo: {
       icon: <DirectionsBusRounded />,
-      color: '#967ae9'
+      color: "#967ae9",
+    },
+    home: {
+      icon: <HomeRounded />,
+      color: "blueviolet",
     },
     household: {
       icon: <HomeRounded />,
-      color: '#7acde9'
+      color: "blueviolet",
     },
-    grocery:  {
+    grocery: {
       icon: <ShoppingCartRounded />,
-      color: 'darksalmon'
+      color: "cornflowerblue",
     },
-  }
+    leisure: {
+      icon: <StarRounded />,
+      color: "darkorange",
+    },
+  };
 
   return (
     <>
@@ -46,18 +60,24 @@ const UtangItem = ({ utang, view }) => {
           style={{
             width: 40,
             height: 40,
-            backgroundColor: utang.category ? categoryIconList[utang.category].color : 'blueviolet',
+            backgroundColor: utang.category
+              ? categoryIconList[utang.category]?.color
+              : "blueviolet",
             borderRadius: "50%",
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            color: 'white',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "white",
 
             marginLeft: 20,
             marginRight: 12,
           }}
         >
-        {utang.category ? categoryIconList[utang.category].icon : <AttachMoneyRounded />}
+          {utang.category ? (
+            categoryIconList[utang.category]?.icon
+          ) : (
+            <AttachMoneyRounded />
+          )}
         </div>
         <div className="title-person">
           <div className="utang-name">{utang.name}</div>

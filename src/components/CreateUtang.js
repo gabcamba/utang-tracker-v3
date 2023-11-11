@@ -1,9 +1,10 @@
 /* eslint-disable eqeqeq */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import useSound from "use-sound";
 import pop from "../media/pop.wav";
 import error from "../media/error.wav";
 import { createUtang, updateItem } from "../utils/database";
+import { useSpring, animated } from "@react-spring/web";
 
 import {
   FIELD_ERROR,
@@ -23,11 +24,17 @@ import { generateUUID } from "../utils/uuid";
 const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
-  const [person, setPerson] = useState(GAB);
+  const [person, setPerson] = useState(null);
+  const [category, setCategory] = useState("");
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [play] = useSound(pop);
   const [playError] = useSound(error);
+
+  const springs = useSpring({
+    from: { opacity: 0, y: 500 },
+    to: { opacity: 1, y: 0 },
+  });
 
   useEffect(() => {
     if (utangToEdit) {
@@ -56,6 +63,11 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
     setPerson(e.target.value);
   };
 
+  const onSelectCategory = (e) => {
+    setConfirm(false);
+    setCategory(e.target.value);
+  };
+
   const onClickPlus = () => {
     setConfirm(true);
   };
@@ -70,7 +82,8 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
       isNaN(toInt(amount)) ||
       isNaN(toFloat(amount)) ||
       toInt(amount) === 0 ||
-      toFloat(amount) === 0
+      toFloat(amount) === 0 ||
+      !category
     ) {
       playError();
       errorToast(FIELD_ERROR);
@@ -100,6 +113,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
         person: person,
         edited: true,
         editDate: date,
+        category: category,
       };
 
       updatedUtang.hist = [
@@ -123,6 +137,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
         amount: amount.includes(".") ? toFloat(amount) : toInt(amount),
         person: person,
         status: UNPAID,
+        category: category,
         uid: `${date}${uid}`,
         edited: false,
       };
@@ -152,7 +167,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
   };
 
   return (
-    <div className="create-utang">
+    <animated.div className="create-utang" style={{ ...springs }}>
       <input
         value={title}
         onChange={(e) => onChangeTitle(e)}
@@ -183,6 +198,20 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
           <option value={GAB}>{GAB_LC}</option>
           <option value={MEI}>{MEI_LC}</option>
         </select>
+        <select
+          value={category}
+          onChange={(e) => onSelectCategory(e)}
+          className="select category"
+        >
+          <option value="" disabled selected>
+            category
+          </option>
+          <option value="food">food</option>
+          <option value="transpo">transpo</option>
+          <option value="home">home</option>
+          <option value="grocery">grocery</option>
+          <option value="leisure">leisure</option>
+        </select>
         <div className={`${confirm ? "confirm" : ""} create`}>
           {confirm && !loading ? (
             <button
@@ -203,7 +232,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
           )}
         </div>
       </div>
-    </div>
+    </animated.div>
   );
 };
 
