@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import useSound from "use-sound";
 import ding from "../media/success.wav";
 import { GAB, MEI, UTANG_PAID } from "../constants";
-import { paid, createPayment } from "../utils/database";
+import { createPayment, deleteItem } from "../utils/database";
 import { formatCurrency } from "../utils/converter";
 import { successToast } from "../utils/toast";
 import { generateUUID } from "../utils/uuid";
@@ -56,7 +56,9 @@ const UtangSummary = ({
 
     successToast(UTANG_PAID);
 
-    await paid(utangs);
+    utangs.map((utang) => {
+      deleteItem(utang);
+    });
 
     setTimeout(() => {
       setExploding(false);

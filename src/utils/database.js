@@ -7,7 +7,7 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { PAID, PAYMENTS } from "../constants";
+import { PAYMENTS } from "../constants";
 
 const paymentsCollectionRef = collection(firestoreDB, PAYMENTS);
 const deletedCollectionRef = collection(firestoreDB, "DELETED");
@@ -63,15 +63,6 @@ export const getPayments = async (setPayments) => {
     });
 
     setPayments(payments.reverse());
-  });
-};
-
-export const paid = async (utangs) => {
-  utangs.map(async (utang) => {
-    const utangNew = { ...utang, status: PAID };
-    await updateDoc(doc(firestoreDB, "UTANGS", `${utangNew.uid}`), {
-      ...utangNew,
-    });
   });
 };
 

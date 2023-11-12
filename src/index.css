@@ -6,7 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #383838;
+  background-color: #121212;
 }
 
 code {
@@ -15,12 +15,12 @@ code {
 }
 
 .Mui-selected {
-  color: darksalmon !important;
+  color: #7acde9 !important;
 }
 
-.MuiBottomNavigationAction-label {
-  color: darksalmon !important;
-  font-family: ui-monospace !important;
+.MuiBottomNavigationAction-label{
+  color: #7acde9 !important;
+  font-family: ui-monospace !important ;
   font-size: 0.7rem !important;
   margin-top: 7px !important;
 }

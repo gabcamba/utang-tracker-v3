@@ -1,7 +1,9 @@
-import React from "react";
-import { APP_VERSION, GOOD_JOB, HOME_VIEW, NO_UTANG_FOUND } from "../constants";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
+import React, { useEffect } from "react";
+import { APP_VERSION, GOOD_JOB, NO_UTANG_FOUND } from "../constants";
 import WithTwoActions from "./swipeableList/WithTwoActions";
+import { useSpring, animated } from "@react-spring/web";
+import { listItemSpring } from "../springs";
+
 const UtangList = ({
   utangs,
   setUtangToEdit,
@@ -9,15 +11,39 @@ const UtangList = ({
   view,
   utangToEdit,
   setExploding,
+  create,
+  setCreate,
 }) => {
-  const [parent] = useAutoAnimate();
-  const list = view === HOME_VIEW ? utangs : deleted;
+  const list = utangs;
+  const springs = useSpring(listItemSpring);
+
+  const handleScroll = () => {
+    sessionStorage.setItem("scrollPos", window.scrollY);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    const setScroll = async () => {
+      window.scrollTo({
+        top: parseInt(sessionStorage.getItem("scrollPos")),
+      });
+    };
+
+    setScroll();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [view]);
   return (
     <>
-      <div
-        ref={parent}
+      <animated.div
+        style={{ ...springs }}
         className={`${
-          view === "deleted" ? "utang-list list-expand" : "utang-list"
+          view === "deleted" || !create
+            ? "utang-list list-expand"
+            : utangToEdit
+            ? "utang-list lock-scroll"
+            : "utang-list"
         }`}
       >
         {list.length ? (
@@ -27,6 +53,7 @@ const UtangList = ({
             list={list}
             utangToEdit={utangToEdit}
             setExploding={setExploding}
+            setCreate={setCreate}
           />
         ) : (
           <div className="no-utang">
@@ -40,7 +67,7 @@ const UtangList = ({
                 marginTop: "10px",
               }}
             >
-              {APP_VERSION }
+              {APP_VERSION}
             </span>
             <a
               href="https://github.com/gabcamba"
@@ -70,7 +97,7 @@ const UtangList = ({
             <span style={{ fontSize: "0.7rem" }}>🍓🥕</span>
           </div>
         )}
-      </div>
+      </animated.div>
     </>
   );
 };

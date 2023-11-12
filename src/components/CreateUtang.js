@@ -4,6 +4,7 @@ import useSound from "use-sound";
 import pop from "../media/pop.wav";
 import error from "../media/error.wav";
 import { createUtang, updateItem } from "../utils/database";
+import { useSpring, animated } from "@react-spring/web";
 
 import {
   FIELD_ERROR,
@@ -19,21 +20,26 @@ import {
 import { toFloat, toInt } from "../utils/converter";
 import { errorToast, successToast } from "../utils/toast";
 import { generateUUID } from "../utils/uuid";
+import { createUtangSpring } from "../springs";
 
-const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
+const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
-  const [person, setPerson] = useState(GAB);
+  const [person, setPerson] = useState(null);
+  const [category, setCategory] = useState("");
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [play] = useSound(pop);
   const [playError] = useSound(error);
+
+  const springs = useSpring(createUtangSpring);
 
   useEffect(() => {
     if (utangToEdit) {
       setAmount(utangToEdit.amount.toString());
       setTitle(utangToEdit.name);
       setPerson(utangToEdit.person);
+      setCategory(utangToEdit.category);
     } else {
       setAmount("");
       setTitle("");
@@ -56,6 +62,11 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
     setPerson(e.target.value);
   };
 
+  const onSelectCategory = (e) => {
+    setConfirm(false);
+    setCategory(e.target.value);
+  };
+
   const onClickPlus = () => {
     setConfirm(true);
   };
@@ -70,7 +81,8 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
       isNaN(toInt(amount)) ||
       isNaN(toFloat(amount)) ||
       toInt(amount) === 0 ||
-      toFloat(amount) === 0
+      toFloat(amount) === 0 ||
+      !category
     ) {
       playError();
       errorToast(FIELD_ERROR);
@@ -82,7 +94,8 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
       utangToEdit &&
       utangToEdit.name == title &&
       utangToEdit.amount == amount &&
-      utangToEdit.person == person
+      utangToEdit.person == person &&
+      title.trim() === utangToEdit.name
     ) {
       errorToast(NO_FIELDS_CHANGED);
       playError();
@@ -100,6 +113,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
         person: person,
         edited: true,
         editDate: date,
+        category: category,
       };
 
       updatedUtang.hist = [
@@ -123,6 +137,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
         amount: amount.includes(".") ? toFloat(amount) : toInt(amount),
         person: person,
         status: UNPAID,
+        category: category,
         uid: `${date}${uid}`,
         edited: false,
       };
@@ -152,12 +167,12 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
   };
 
   return (
-    <div className="create-utang">
+    <animated.div className="create-utang" style={{ ...springs }}>
       <input
         value={title}
         onChange={(e) => onChangeTitle(e)}
         placeholder="description"
-        maxLength={10}
+        maxLength={20}
         className={`${utangToEdit ? "editing" : ""} input-title`}
         type="text"
       />
@@ -183,10 +198,24 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
           <option value={GAB}>{GAB_LC}</option>
           <option value={MEI}>{MEI_LC}</option>
         </select>
+        <select
+          value={category}
+          onChange={(e) => onSelectCategory(e)}
+          className="select category"
+        >
+          <option value="" disabled selected>
+            category
+          </option>
+          <option value="food">food</option>
+          <option value="transpo">transpo</option>
+          <option value="home">home</option>
+          <option value="grocery">grocery</option>
+          <option value="leisure">leisure</option>
+        </select>
         <div className={`${confirm ? "confirm" : ""} create`}>
           {confirm && !loading ? (
             <button
-              disabled={loading}
+              // disabled={loading}
               onClick={() => onClickOK()}
               className="btn confirm"
             >
@@ -194,7 +223,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
             </button>
           ) : (
             <button
-              disabled={loading}
+              // disabled={loading}
               onClick={() => onClickPlus()}
               className="btn"
             >
@@ -203,7 +232,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
           )}
         </div>
       </div>
-    </div>
+    </animated.div>
   );
 };
 

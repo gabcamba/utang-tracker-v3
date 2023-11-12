@@ -6,12 +6,13 @@ import UtangList from "./components/UtangList";
 import PaymentsList from "./components/PaymentsList";
 import CreateUtang from "./components/CreateUtang";
 import NavBar from "./components/NavBar";
-
 import ConfettiExplosion from "react-confetti-explosion";
 import { Toaster } from "react-hot-toast";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { getDeleted, getPayments, getUtangs } from "./utils/database";
 import { DELETED_VIEW, HOME_VIEW } from "./constants";
+import DeletedList from "./components/DeletedList";
+import AddFab from "./components/AddFab";
+import CloseFab from "./components/CloseFab";
 
 function App() {
   const [utangs, setUtangs] = useState([]);
@@ -20,29 +21,36 @@ function App() {
   const [forPay, setForPay] = useState(false);
   const [utangToEdit, setUtangToEdit] = useState(null);
   const [payments, setPayments] = useState([]);
+  const [create, setCreate] = useState(false);
   const [view, setView] = useState(HOME_VIEW);
-  const [parent] = useAutoAnimate();
 
+  const toggleCreate = () => {
+    setCreate(!create);
+
+    if (utangToEdit && create) {
+      setUtangToEdit(null);
+    }
+  };
   useEffect(() => {
-    const getHistory = async () => {
-      await getPayments(setPayments);
+    const fetch = () => {
+      getUtangs(setUtangs);
     };
 
-    const fetch = async () => {
-      await getUtangs(setUtangs);
+    const fetchDeleted = () => {
+      getDeleted(setDeleted);
     };
 
-    const fetchDeleted = async () => {
-      await getDeleted(setDeleted);
+    const getHistory = () => {
+      getPayments(setPayments);
     };
 
     fetch();
     getHistory();
     fetchDeleted();
-  }, [view]);
+  }, []);
 
   return (
-    <div ref={parent} className="App lock-scroll">
+    <div className="App lock-scroll">
       <div>
         <Toaster />
       </div>
@@ -56,7 +64,7 @@ function App() {
         setForPay={setForPay}
         setUtangToEdit={setUtangToEdit}
       />
-      {view === DELETED_VIEW || view === HOME_VIEW ? (
+      {view === HOME_VIEW ? (
         <UtangList
           utangs={utangs}
           deleted={deleted}
@@ -65,6 +73,20 @@ function App() {
           payments={payments}
           view={view}
           setExploding={setExploding}
+          create={create}
+          setCreate={setCreate}
+        />
+      ) : view === DELETED_VIEW ? (
+        <DeletedList
+          utangs={utangs}
+          deleted={deleted}
+          setUtangToEdit={setUtangToEdit}
+          utangToEdit={utangToEdit}
+          payments={payments}
+          view={view}
+          setExploding={setExploding}
+          create={create}
+          setCreate={setCreate}
         />
       ) : (
         <PaymentsList
@@ -74,13 +96,20 @@ function App() {
         />
       )}
 
-      {view === HOME_VIEW && (
+      {view === HOME_VIEW && create && (
         <CreateUtang
           utangToEdit={utangToEdit}
           view={view}
           setView={setView}
           setUtangToEdit={setUtangToEdit}
+          create={create}
         />
+      )}
+      {view === HOME_VIEW && !create && (
+        <AddFab toggleCreate={toggleCreate} create={create} />
+      )}
+      {view === HOME_VIEW && create && (
+        <CloseFab toggleCreate={toggleCreate} create={create} />
       )}
       <NavBar view={view} setView={setView} />
     </div>

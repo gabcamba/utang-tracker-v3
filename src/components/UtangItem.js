@@ -1,30 +1,107 @@
 import React, { useState } from "react";
-import { GAB } from "../constants";
+import { DELETED_VIEW, GAB, HOME_VIEW } from "../constants";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
+import DeleteSweepRoundedIcon from "@mui/icons-material/DeleteSweepRounded";
 import { formatDateTime } from "../utils/formatDate";
 import { formatCurrency } from "../utils/converter";
-const UtangItem = ({ utang }) => {
+import { useSpring, animated } from "@react-spring/web";
+
+import RestaurantRoundedIcon from "@mui/icons-material/RestaurantRounded";
+import {
+  AttachMoneyRounded,
+  DirectionsBusRounded,
+  HomeRounded,
+  ShoppingCartRounded,
+  StarRounded,
+} from "@mui/icons-material";
+import { editModalStyle, utangItemIconStyle } from "../styles";
+import { utangItemSpring } from "../springs";
+
+const UtangItem = ({ utang, view }) => {
   const [viewHistory, setViewHistory] = useState(false);
 
+  const springs = useSpring(utangItemSpring);
   const toggleHistory = () => {
     setViewHistory(!viewHistory);
   };
 
+  const categoryIconList = {
+    food: {
+      icon: <RestaurantRoundedIcon />,
+      color: "forestgreen",
+    },
+    transpo: {
+      icon: <DirectionsBusRounded />,
+      color: "#967ae9",
+    },
+    home: {
+      icon: <HomeRounded />,
+      color: "blueviolet",
+    },
+    household: {
+      icon: <HomeRounded />,
+      color: "blueviolet",
+    },
+    grocery: {
+      icon: <ShoppingCartRounded />,
+      color: "cornflowerblue",
+    },
+    leisure: {
+      icon: <StarRounded />,
+      color: "darkorange",
+    },
+  };
+
   return (
     <>
-      <div key={utang.uid} className="utang-item">
+      <animated.div
+        style={{ ...springs }}
+        key={utang.uid}
+        className="utang-item"
+      >
+        <div
+          style={{
+            ...utangItemIconStyle,
+            backgroundColor: utang.category
+              ? categoryIconList[utang.category]?.color
+              : "blueviolet",
+          }}
+        >
+          {utang.category ? (
+            categoryIconList[utang.category]?.icon
+          ) : (
+            <AttachMoneyRounded />
+          )}
+        </div>
         <div className="title-person">
           <div className="utang-name">{utang.name}</div>
-          <div className="utang-person">{formatDateTime(utang.date)}</div>
-          {utang.edited && (
-            <div onClick={() => toggleHistory()} className="utang-edited">
-              Edited {utang.editDate ? formatDateTime(utang.editDate) : null}
-            </div>
-          )}
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            {!utang.edited && view === HOME_VIEW && (
+              <div className="utang-person">{formatDateTime(utang.date)}</div>
+            )}
+            {utang.edited && (
+              <div onClick={() => toggleHistory()} className="utang-edited">
+                <EditNoteRoundedIcon
+                  sx={{ marginRight: "5px", fontSize: "2em" }}
+                />
+                {utang.editDate ? `${formatDateTime(utang.editDate)}` : null}
+              </div>
+            )}
+
+            {view === DELETED_VIEW && (
+              <div className="utang-deleted">
+                <DeleteSweepRoundedIcon
+                  sx={{ marginRight: "5px", fontSize: "2em" }}
+                />
+                {formatDateTime(utang.date)}
+              </div>
+            )}
+          </div>
         </div>
         <div className="check">
           <div className="amount">{formatCurrency(utang.amount)}</div>
@@ -32,7 +109,7 @@ const UtangItem = ({ utang }) => {
         <div className={`amount ${utang.person === GAB ? "orange" : "red"}`}>
           <span style={{ marginRight: 20 }}>{utang.person}</span>
         </div>
-      </div>
+      </animated.div>
 
       <Dialog
         open={viewHistory}
@@ -40,14 +117,7 @@ const UtangItem = ({ utang }) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         PaperProps={{
-          style: {
-            borderRadius: "15px",
-            border: "1px solid darksalmon",
-            fontFamily: "ui-monospace",
-            background: "none",
-            "-webkit-backdrop-filter": "blur(10px)",
-            backdropFilter: "blur(10px)",
-          },
+          style: editModalStyle,
         }}
       >
         <DialogTitle
@@ -84,7 +154,7 @@ const UtangItem = ({ utang }) => {
                     textAlign: "center",
                   }}
                 >
-                  <div style={{ flex: 3, textAlign: "left" }}>
+                  <div style={{ flex: 7, textAlign: "left" }}>
                     <div>{hist.name}</div>
                     <div style={{ fontSize: "0.6rem", color: "darksalmon" }}>
                       {hist.date
@@ -97,12 +167,12 @@ const UtangItem = ({ utang }) => {
                   <div
                     style={{
                       color: hist.person === "Gab" ? "orange" : "tomato",
-                      flex: 1,
+                      flex: 2.5,
                     }}
                   >
                     {hist.person}
                   </div>
-                  <div style={{ flex: 3, textAlign: "right" }}>
+                  <div style={{ flex: 2.5, textAlign: "right" }}>
                     {formatCurrency(hist.amount)}
                   </div>
                 </div>
