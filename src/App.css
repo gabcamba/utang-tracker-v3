@@ -14,7 +14,7 @@
     position: fixed;
     top: 0;
     width: 100vw;
-    z-index: 999;
+    z-index: 1;
 
     .gab,
     .mei,
@@ -260,8 +260,8 @@
 
     .editing {
       background-color: rgba(71, 61, 139, 0.567) !important;
-      -webkit-backdrop-filter: blur(30px);
-      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(20px) !important;
+      backdrop-filter: blur(20px) !important;
     }
 
     .input-title {

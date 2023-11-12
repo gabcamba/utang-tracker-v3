@@ -20,6 +20,7 @@ import {
 import { toFloat, toInt } from "../utils/converter";
 import { errorToast, successToast } from "../utils/toast";
 import { generateUUID } from "../utils/uuid";
+import { createUtangSpring } from "../springs";
 
 const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
   const [title, setTitle] = useState("");
@@ -31,16 +32,14 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
   const [play] = useSound(pop);
   const [playError] = useSound(error);
 
-  const springs = useSpring({
-    from: { opacity: 0, y: 500 },
-    to: { opacity: 1, y: 0 },
-  });
+  const springs = useSpring(createUtangSpring);
 
   useEffect(() => {
     if (utangToEdit) {
       setAmount(utangToEdit.amount.toString());
       setTitle(utangToEdit.name);
       setPerson(utangToEdit.person);
+      setCategory(utangToEdit.category);
     } else {
       setAmount("");
       setTitle("");
@@ -95,7 +94,8 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
       utangToEdit &&
       utangToEdit.name == title &&
       utangToEdit.amount == amount &&
-      utangToEdit.person == person
+      utangToEdit.person == person &&
+      title.trim() === utangToEdit.name
     ) {
       errorToast(NO_FIELDS_CHANGED);
       playError();
@@ -215,7 +215,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
         <div className={`${confirm ? "confirm" : ""} create`}>
           {confirm && !loading ? (
             <button
-              disabled={loading}
+              // disabled={loading}
               onClick={() => onClickOK()}
               className="btn confirm"
             >
@@ -223,7 +223,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
             </button>
           ) : (
             <button
-              disabled={loading}
+              // disabled={loading}
               onClick={() => onClickPlus()}
               className="btn"
             >

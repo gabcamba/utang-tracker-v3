@@ -4,6 +4,7 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import RestoreIcon from "@mui/icons-material/RestoreRounded";
 import AutoDeleteRoundedIcon from "@mui/icons-material/AutoDeleteRounded";
 import HomeIcon from "@mui/icons-material/HomeRounded";
+import { navStyle } from "../styles";
 
 const LabelBottomNavigation = ({ view, setView }) => {
   const handleChange = (event, newValue) => {
@@ -12,17 +13,7 @@ const LabelBottomNavigation = ({ view, setView }) => {
 
   return (
     <BottomNavigation
-      sx={{
-        width: "100%",
-        height: "10vh",
-        backgroundColor: "transparent",
-        textColor: "white",
-        position: "fixed",
-        bottom: 0,
-        background: "none",
-        "-webkit-backdrop-filter": "blur(30px)",
-        backdropFilter: "blur(30px)",
-      }}
+      sx={navStyle}
       value={view}
       onChange={handleChange}
     >

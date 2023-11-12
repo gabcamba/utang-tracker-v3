@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 
 import { formatDateTime } from "../utils/formatDate";
 import { formatCurrency } from "../utils/converter";
+import { paymentModalStyle } from "../styles";
 const PaymentHistoryModal = ({ open, payment, toggleModal }) => {
   return (
     <Dialog
@@ -15,24 +16,18 @@ const PaymentHistoryModal = ({ open, payment, toggleModal }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       PaperProps={{
-        style: {
-          borderRadius: "15px",
-          fontFamily: "ui-monospace",
-          background: "none",
-          "-webkit-backdrop-filter": "blur(10px)",
-          backdropFilter: "blur(10px)",
-        },
+        style: paymentModalStyle,
       }}
     >
       <DialogTitle
         sx={{
-          color: "darksalmon",
+          color: "#69c881",
           fontFamily: "ui-monospace",
           fontSize: "1em",
         }}
         id="alert-dialog-title"
       >
-        history
+        utang/s paid:
       </DialogTitle>
       <DialogContent sx={{ margin: 0 }}>
         <div
@@ -59,7 +54,7 @@ const PaymentHistoryModal = ({ open, payment, toggleModal }) => {
                 }}
                 key={payment.id}
               >
-                <div style={{ flex: 5, textAlign: "left",}}>
+                <div style={{ flex: 6, textAlign: "left",}}>
                   <div>{payment.name}</div>
                   <div style={{ fontSize: "0.6rem", color: "darksalmon" }}>
                     {formatDateTime(payment.date)}

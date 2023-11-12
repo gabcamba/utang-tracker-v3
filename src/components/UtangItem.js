@@ -9,6 +9,7 @@ import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
 import DeleteSweepRoundedIcon from "@mui/icons-material/DeleteSweepRounded";
 import { formatDateTime } from "../utils/formatDate";
 import { formatCurrency } from "../utils/converter";
+import { useSpring, animated } from "@react-spring/web";
 
 import RestaurantRoundedIcon from "@mui/icons-material/RestaurantRounded";
 import {
@@ -18,10 +19,13 @@ import {
   ShoppingCartRounded,
   StarRounded,
 } from "@mui/icons-material";
+import { editModalStyle, utangItemIconStyle } from "../styles";
+import { utangItemSpring } from "../springs";
 
 const UtangItem = ({ utang, view }) => {
   const [viewHistory, setViewHistory] = useState(false);
 
+  const springs = useSpring(utangItemSpring);
   const toggleHistory = () => {
     setViewHistory(!viewHistory);
   };
@@ -55,22 +59,17 @@ const UtangItem = ({ utang, view }) => {
 
   return (
     <>
-      <div key={utang.uid} className="utang-item">
+      <animated.div
+        style={{ ...springs }}
+        key={utang.uid}
+        className="utang-item"
+      >
         <div
           style={{
-            width: 40,
-            height: 40,
+            ...utangItemIconStyle,
             backgroundColor: utang.category
               ? categoryIconList[utang.category]?.color
               : "blueviolet",
-            borderRadius: "50%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            color: "white",
-
-            marginLeft: 20,
-            marginRight: 12,
           }}
         >
           {utang.category ? (
@@ -110,7 +109,7 @@ const UtangItem = ({ utang, view }) => {
         <div className={`amount ${utang.person === GAB ? "orange" : "red"}`}>
           <span style={{ marginRight: 20 }}>{utang.person}</span>
         </div>
-      </div>
+      </animated.div>
 
       <Dialog
         open={viewHistory}
@@ -118,14 +117,7 @@ const UtangItem = ({ utang, view }) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         PaperProps={{
-          style: {
-            borderRadius: "15px",
-            border: "1px solid darksalmon",
-            fontFamily: "ui-monospace",
-            background: "none",
-            "-webkit-backdrop-filter": "blur(10px)",
-            backdropFilter: "blur(10px)",
-          },
+          style: editModalStyle,
         }}
       >
         <DialogTitle

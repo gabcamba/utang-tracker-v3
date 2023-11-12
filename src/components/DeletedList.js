@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { APP_VERSION, GOOD_JOB, NO_UTANG_FOUND } from "../constants";
 import WithTwoActions from "./swipeableList/WithTwoActions";
 import { useSpring, animated } from "@react-spring/web";
+import { listItemSpring } from "../springs";
 
 const DeletedList = ({
   utangs,
@@ -14,10 +15,7 @@ const DeletedList = ({
   setCreate,
 }) => {
   const list = deleted;
-  const springs = useSpring({
-    from: { opacity: 0, y: 30 },
-    to: { opacity: 1, y: 0 },
-  });
+  const springs = useSpring(listItemSpring);
 
   useEffect(() => {
     console.log("LIST MOUNT");
@@ -29,7 +27,6 @@ const DeletedList = ({
   return (
     <>
       <animated.div
-        // ref={parent}
         style={{ ...springs }}
         className={`${
           view === "deleted" || !create

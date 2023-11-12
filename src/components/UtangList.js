@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { APP_VERSION, GOOD_JOB, NO_UTANG_FOUND } from "../constants";
 import WithTwoActions from "./swipeableList/WithTwoActions";
-import { useSpring,animated } from "@react-spring/web";
+import { useSpring, animated } from "@react-spring/web";
+import { listItemSpring } from "../springs";
 
 const UtangList = ({
   utangs,
@@ -14,23 +15,29 @@ const UtangList = ({
   setCreate,
 }) => {
   const list = utangs;
-  const springs = useSpring({
-    from: { opacity: 0, y:30 },
-    to: { opacity: 1, y: 0},
-  })
+  const springs = useSpring(listItemSpring);
 
+  const handleScroll = () => {
+    sessionStorage.setItem("scrollPos", window.scrollY);
+  };
   useEffect(() => {
-    console.log("LIST MOUNT");
+    window.addEventListener("scroll", handleScroll);
 
-    return(() => {
-      console.log("LIST UNMOUNT");
-    })
-  }, [view])
+    const setScroll = async () => {
+      window.scrollTo({
+        top: parseInt(sessionStorage.getItem("scrollPos")),
+      });
+    };
+
+    setScroll();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [view]);
   return (
     <>
       <animated.div
-        // ref={parent}
-        style={{...springs}}
+        style={{ ...springs }}
         className={`${
           view === "deleted" || !create
             ? "utang-list list-expand"

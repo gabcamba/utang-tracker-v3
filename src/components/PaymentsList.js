@@ -2,12 +2,10 @@ import React from "react";
 import PaymentItem from "./PaymentItem";
 import { APP_VERSION, NO_UTANG_FOUND } from "../constants";
 import { useSpring, animated } from "@react-spring/web";
+import { listItemSpring } from "../springs";
 
 const UtangList = ({ payments }) => {
-  const springs = useSpring({
-    from: { opacity: 0, y: 30 },
-    to: { opacity: 1, y: 0 },
-  });
+  const springs = useSpring(listItemSpring);
   return (
     <>
       <animated.div style={{ ...springs }} className="utang-list list-expand">
