@@ -18,9 +18,29 @@ code {
   color: #7acde9 !important;
 }
 
-.MuiBottomNavigationAction-label{
+.MuiBottomNavigationAction-label {
   color: #7acde9 !important;
   font-family: ui-monospace !important ;
   font-size: 0.7rem !important;
   margin-top: 7px !important;
+}
+
+.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+  color: white !important;
+  background-color: rgba(73, 73, 73, 0.501) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(20px) !important;
+  position: fixed;
+}
+
+.MuiButtonBase-root {
+  font-family: ui-monospace !important;
+}
+
+.MuiInputBase-root {
+  outline: none !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border: none !important;
 }
