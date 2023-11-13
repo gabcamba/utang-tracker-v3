@@ -1,17 +1,17 @@
 export const addFabSpring = {
-  from: { y: -100 },
+  from: { y: -190 },
   to: { y: 0 },
   config: {
-    mass: 1.5,
+    mass: 2,
     tension: 400,
   },
 };
 
 export const deleteFabSpring = {
-  from: { y: 100 },
+  from: { y: 190 },
   to: { y: 0 },
   config: {
-    mass: 1.5,
+    mass: 2,
     tension: 400,
   },
 };

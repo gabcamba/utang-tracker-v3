@@ -12,7 +12,7 @@ const CloseFab = ({ toggleCreate }) => {
       style={{
         ...springs,
         ...fabStyle,
-        bottom: '26vh',
+        bottom: '36vh',
         backgroundColor: "#eb4c42",
       }}
     >

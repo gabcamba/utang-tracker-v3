@@ -21,12 +21,13 @@ import { toFloat, toInt } from "../utils/converter";
 import { errorToast, successToast } from "../utils/toast";
 import { generateUUID } from "../utils/uuid";
 import { createUtangSpring } from "../springs";
+import { Button, MenuItem, Select } from "@mui/material";
 
 const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
-  const [person, setPerson] = useState(null);
-  const [category, setCategory] = useState("");
+  const [person, setPerson] = useState("");
+  const [category, setCategory] = useState("category");
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [play] = useSound(pop);
@@ -82,7 +83,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
       isNaN(toFloat(amount)) ||
       toInt(amount) === 0 ||
       toFloat(amount) === 0 ||
-      !category
+      !category || category === 'category'
     ) {
       playError();
       errorToast(FIELD_ERROR);
@@ -147,9 +148,9 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
 
       play();
       successToast(UTANG_CREATED);
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     }
 
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setTitle("");
     setAmount("");
     setConfirm(false);
@@ -190,47 +191,61 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
             onPaste={handlePaste}
           />
         </div>
-        <select
+        <Select
           value={person}
           onChange={(e) => onSelectPerson(e)}
           className="select"
+          sx={{
+            ".MuiSvgIcon-root ": {
+              fill: "white !important",
+            },
+          }}
         >
-          <option value={GAB}>{GAB_LC}</option>
-          <option value={MEI}>{MEI_LC}</option>
-        </select>
-        <select
+          <MenuItem value="category" disabled>
+            <em>person</em>
+          </MenuItem>
+          <MenuItem value={GAB}>{GAB_LC}</MenuItem>
+          <MenuItem value={MEI}>{MEI_LC}</MenuItem>
+        </Select>
+        <Select
+          defaultValue="category"
           value={category}
           onChange={(e) => onSelectCategory(e)}
           className="select category"
+          sx={{
+            ".MuiSvgIcon-root ": {
+              fill: "white !important",
+            },
+          }}
         >
-          <option value="" disabled selected>
-            category
-          </option>
-          <option value="food">food</option>
-          <option value="transpo">transpo</option>
-          <option value="home">home</option>
-          <option value="grocery">grocery</option>
-          <option value="leisure">leisure</option>
-        </select>
-        <div className={`${confirm ? "confirm" : ""} create`}>
-          {confirm && !loading ? (
-            <button
-              // disabled={loading}
-              onClick={() => onClickOK()}
-              className="btn confirm"
-            >
-              ok
-            </button>
-          ) : (
-            <button
-              // disabled={loading}
-              onClick={() => onClickPlus()}
-              className="btn"
-            >
-              {utangToEdit ? "edit" : "create"}
-            </button>
-          )}
-        </div>
+          <MenuItem value="category" disabled>
+            <em>category</em>
+          </MenuItem>
+          <MenuItem value="food">food</MenuItem>
+          <MenuItem value="transpo">transpo</MenuItem>
+          <MenuItem value="home">home</MenuItem>
+          <MenuItem value="grocery">grocery</MenuItem>
+          <MenuItem value="leisure">leisure</MenuItem>
+        </Select>
+      </div>
+      <div className={`${confirm ? "confirm" : ""} create`}>
+        {confirm && !loading ? (
+          <Button
+            onClick={() => onClickOK()}
+            className="btn confirm"
+            sx={{textTransform: 'uppercase'}}
+          >
+            ok
+          </Button>
+        ) : (
+          <Button
+            onClick={() => onClickPlus()}
+            className="btn"
+            sx={{textTransform: 'lowercase'}}
+          >
+            {utangToEdit ? "edit" : "create"}
+          </Button>
+        )}
       </div>
     </animated.div>
   );
