@@ -25,12 +25,16 @@ code {
   margin-top: 7px !important;
 }
 
-.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+.MuiPaper-root {
   color: white !important;
   background-color: rgba(73, 73, 73, 0.501) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   backdrop-filter: blur(20px) !important;
   position: fixed;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
 }
 
 .MuiButtonBase-root {
@@ -43,4 +47,12 @@ code {
 
 .MuiOutlinedInput-notchedOutline {
   border: none !important;
+}
+
+.MuiMenuItem-root{
+  justify-content: center !important;
+}
+
+.Mui-selected {
+  background: none !important;
 }
