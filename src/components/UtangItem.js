@@ -84,7 +84,7 @@ const UtangItem = ({ utang, view }) => {
             {!utang.edited && view === HOME_VIEW && (
               <div className="utang-person">{formatDateTime(utang.date)}</div>
             )}
-            {utang.edited && (
+            {utang.edited && view !== DELETED_VIEW && (
               <div onClick={() => toggleHistory()} className="utang-edited">
                 <EditNoteRoundedIcon
                   sx={{ marginRight: "5px", fontSize: "2em" }}

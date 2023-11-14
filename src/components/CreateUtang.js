@@ -155,9 +155,6 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
     setAmount("");
     setConfirm(false);
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
   };
 
   const handlePaste = (e) => {
