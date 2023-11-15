@@ -16,47 +16,28 @@ const PaymentHistoryModal = ({ open, payment, toggleModal }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       PaperProps={{
-        style: paymentModalStyle,
+        style: paymentModalStyle.main,
       }}
     >
       <DialogTitle
-        sx={{
-          color: "#69c881",
-          fontFamily: "ui-monospace",
-          fontSize: "1em",
-        }}
+        sx={paymentModalStyle.header}
         id="alert-dialog-title"
       >
         utang/s paid:
       </DialogTitle>
       <DialogContent sx={{ margin: 0 }}>
         <div
-          style={{
-            width: "70vw",
-            maxHeight: "40vh",
-            color: "white",
-            fontSize: "50px",
-          }}
+          style={paymentModalStyle.itemContainer}
         >
           {
             payment.utangs.map((payment) => (
               <div
-                style={{
-                  width: "100%",
-                  marginBottom: "10px",
-                  borderRadius: "5px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  fontSize: "0.8rem",
-                  height: "50px",
-                  textAlign: "center",
-                }}
+                style={paymentModalStyle.item}
                 key={payment.id}
               >
                 <div style={{ flex: 6, textAlign: "left",}}>
                   <div>{payment.name}</div>
-                  <div style={{ fontSize: "0.6rem", color: "darksalmon" }}>
+                  <div style={{ fontSize: "0.6rem", color: "#69c881" }}>
                     {formatDateTime(payment.date)}
                   </div>
                 </div>
@@ -79,11 +60,7 @@ const PaymentHistoryModal = ({ open, payment, toggleModal }) => {
       </DialogContent>
       <DialogActions>
         <Button
-          sx={{
-            fontFamily: "ui-monospace",
-            textTransform: "lowercase",
-            color: "#69c881",
-          }}
+          sx={paymentModalStyle.close}
           onClick={() => toggleModal(false)}
         >
           close

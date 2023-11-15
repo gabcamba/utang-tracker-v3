@@ -8,7 +8,6 @@ import {
 } from "react-swipeable-list";
 import "react-swipeable-list/dist/styles.css";
 
-import "./WithTwoActions.css";
 import UtangItem from "../UtangItem";
 import { successToast } from "../../utils/toast";
 import { DELETED, UTANG_DELETED, UTANG_PAID_SINGULAR } from "../../constants";
@@ -17,6 +16,7 @@ import useSound from "use-sound";
 import pop from "../../media/pop.wav";
 import edit from "../../media/edit.wav";
 import { generateUUID } from "../../utils/uuid";
+import { swipeActionStyle } from "../../styles";
 
 const WithTwoActions = ({
   list,
@@ -75,21 +75,13 @@ const WithTwoActions = ({
     }, 2000);
   };
 
-  const actionStyles = {
-    display: "flex",
-    color: "white",
-    fontFamily: "ui-monospace",
-    justifyContent: "center",
-    alignItems: "center",
-  };
-
   const trailingActions = (utang) => (
     <TrailingActions>
       {utangToEdit ? null : (
         <SwipeAction destructive={true} onClick={() => handlePay(utang)}>
           <div
             style={{
-              ...actionStyles,
+              ...swipeActionStyle,
               backgroundColor: "#69c881",
               borderTopLeftRadius: 5,
               borderBottomLeftRadius: 5,
@@ -102,7 +94,9 @@ const WithTwoActions = ({
 
       {utangToEdit ? null : (
         <SwipeAction onClick={() => handleEdit(utang)}>
-          <div style={{ ...actionStyles, backgroundColor: "darkslateblue" }}>
+          <div
+            style={{ ...swipeActionStyle, backgroundColor: "darkslateblue" }}
+          >
             edit
           </div>
         </SwipeAction>
@@ -110,7 +104,9 @@ const WithTwoActions = ({
 
       {utangToEdit ? null : (
         <SwipeAction destructive={true} onClick={() => handleDelete(utang)}>
-          <div style={{ ...actionStyles, backgroundColor: "tomato" }}>del</div>
+          <div style={{ ...swipeActionStyle, backgroundColor: "tomato" }}>
+            del
+          </div>
         </SwipeAction>
       )}
     </TrailingActions>
@@ -119,7 +115,6 @@ const WithTwoActions = ({
   const editStyle = (id) => {
     if (utangToEdit && editItemID === id) {
       return {
-        border: "100px solid red !important",
         backgroundColor: "darkslateblue",
       };
     }
@@ -128,7 +123,6 @@ const WithTwoActions = ({
   return (
     <div className="basic-swipeable-list__container">
       <SwipeableList
-        // ref={parent}
         fullSwipe={false}
         type={ListType.IOS}
         destructiveCallbackDelay={300}

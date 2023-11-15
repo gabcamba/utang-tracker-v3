@@ -22,6 +22,7 @@ import { errorToast, successToast } from "../utils/toast";
 import { generateUUID } from "../utils/uuid";
 import { createUtangSpring } from "../springs";
 import { Button, MenuItem, Select } from "@mui/material";
+import { selectStyle } from "../styles";
 
 const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
   const [title, setTitle] = useState("");
@@ -192,11 +193,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
           value={person}
           onChange={(e) => onSelectPerson(e)}
           className="select"
-          sx={{
-            ".MuiSvgIcon-root ": {
-              fill: "white !important",
-            },
-          }}
+          sx={{...selectStyle}}
         >
           <MenuItem value="category" disabled>
             <em>person</em>
@@ -209,11 +206,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
           value={category}
           onChange={(e) => onSelectCategory(e)}
           className="select category"
-          sx={{
-            ".MuiSvgIcon-root ": {
-              fill: "white !important",
-            },
-          }}
+          sx={{...selectStyle}}
         >
           <MenuItem value="category" disabled>
             <em>category</em>
@@ -226,7 +219,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
         </Select>
       </div>
       <div className={`${confirm ? "confirm" : ""} create`}>
-        {confirm && !loading ? (
+        {confirm ? (
           <Button
             onClick={() => onClickOK()}
             className="btn confirm"

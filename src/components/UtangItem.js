@@ -11,10 +11,10 @@ import { formatDateTime } from "../utils/formatDate";
 import { formatCurrency } from "../utils/converter";
 import { useSpring, animated } from "@react-spring/web";
 
-import RestaurantRoundedIcon from "@mui/icons-material/RestaurantRounded";
 import {
   AttachMoneyRounded,
   DirectionsBusRounded,
+  FastfoodRounded,
   HomeRounded,
   ShoppingCartRounded,
   StarRounded,
@@ -32,28 +32,28 @@ const UtangItem = ({ utang, view }) => {
 
   const categoryIconList = {
     food: {
-      icon: <RestaurantRoundedIcon />,
-      color: "forestgreen",
+      icon: <FastfoodRounded />,
+      color: "cornflowerblue",
     },
     transpo: {
       icon: <DirectionsBusRounded />,
-      color: "#967ae9",
+      color: "#DDACF5",
     },
     home: {
       icon: <HomeRounded />,
-      color: "blueviolet",
+      color: "#9854CB",
     },
     household: {
       icon: <HomeRounded />,
-      color: "blueviolet",
+      color: "#9854CB",
     },
     grocery: {
       icon: <ShoppingCartRounded />,
-      color: "cornflowerblue",
+      color: "#64379F",
     },
     leisure: {
       icon: <StarRounded />,
-      color: "darkorange",
+      color: "#27104E",
     },
   };
 
