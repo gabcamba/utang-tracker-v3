@@ -13,7 +13,7 @@ const AddFab = ({ toggleCreate }) => {
         ...springs,
         ...fabStyle,
         bottom: 100,
-        backgroundColor: "darkorange",
+        backgroundColor: "#20b2aa",
       }}
     >
       <AddRounded />

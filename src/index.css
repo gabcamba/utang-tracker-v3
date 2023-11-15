@@ -15,17 +15,17 @@ code {
 }
 
 .Mui-selected {
-  color: #7acde9 !important;
+  color: #20b2aa !important;
 }
 
 .MuiBottomNavigationAction-label {
-  color: #7acde9 !important;
+  color: #20b2aa !important;
   font-family: ui-monospace !important ;
   font-size: 0.7rem !important;
   margin-top: 7px !important;
 }
 
-.MuiPaper-root {
+.MuiMenu-paper {
   color: white !important;
   background-color: rgba(73, 73, 73, 0.501) !important;
   -webkit-backdrop-filter: blur(20px) !important;
