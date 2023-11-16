@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import UtangSummary from "./components/UtangSummary";
-import UtangList from "./components/UtangList";
-import PaymentsList from "./components/PaymentsList";
 import CreateUtang from "./components/CreateUtang";
+import DeletedList from "./components/DeletedList";
+import Fab from "./components/Fab";
 import NavBar from "./components/NavBar";
+import PaymentsList from "./components/PaymentsList";
+import UtangList from "./components/UtangList";
+import UtangSummary from "./components/UtangSummary";
+
 import ConfettiExplosion from "react-confetti-explosion";
 import { Toaster } from "react-hot-toast";
 import { getDeleted, getPayments, getUtangs } from "./utils/database";
 import { DELETED_VIEW, HOME_VIEW } from "./constants";
-import DeletedList from "./components/DeletedList";
-import AddFab from "./components/AddFab";
-import CloseFab from "./components/CloseFab";
 
 function App() {
   const [utangs, setUtangs] = useState([]);
@@ -67,10 +67,8 @@ function App() {
       {view === HOME_VIEW ? (
         <UtangList
           utangs={utangs}
-          deleted={deleted}
           setUtangToEdit={setUtangToEdit}
           utangToEdit={utangToEdit}
-          payments={payments}
           view={view}
           setExploding={setExploding}
           create={create}
@@ -78,40 +76,37 @@ function App() {
         />
       ) : view === DELETED_VIEW ? (
         <DeletedList
-          utangs={utangs}
           deleted={deleted}
           setUtangToEdit={setUtangToEdit}
           utangToEdit={utangToEdit}
-          payments={payments}
           view={view}
           setExploding={setExploding}
           create={create}
           setCreate={setCreate}
         />
       ) : (
-        <PaymentsList
-          utangs={utangs}
-          setUtangToEdit={setUtangToEdit}
-          payments={payments}
-        />
+        <PaymentsList payments={payments} />
       )}
 
       {view === HOME_VIEW && create && (
         <CreateUtang
           utangToEdit={utangToEdit}
-          view={view}
-          setView={setView}
           setUtangToEdit={setUtangToEdit}
-          create={create}
         />
       )}
-      {view === HOME_VIEW && !create && (
-        <AddFab toggleCreate={toggleCreate} create={create} />
+      {view === HOME_VIEW && (
+        <Fab
+          toggleCreate={toggleCreate}
+          create={create}
+          utangToEdit={utangToEdit}
+        />
       )}
-      {view === HOME_VIEW && create && (
-        <CloseFab toggleCreate={toggleCreate} create={create} />
-      )}
-      <NavBar view={view} setView={setView} />
+      <NavBar
+        view={view}
+        setView={setView}
+        setUtangToEdit={setUtangToEdit}
+        setCreate={setCreate}
+      />
     </div>
   );
 }

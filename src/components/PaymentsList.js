@@ -1,6 +1,6 @@
 import React from "react";
 import PaymentItem from "./PaymentItem";
-import { APP_VERSION, NO_UTANG_FOUND } from "../constants";
+import { NO_UTANG_FOUND } from "../constants";
 import { useSpring, animated } from "@react-spring/web";
 import { listItemSpring } from "../springs";
 
@@ -16,7 +16,7 @@ const UtangList = ({ payments }) => {
         ) : (
           <div className="no-utang">
             <span>{NO_UTANG_FOUND}</span>
-            <span
+            {/*<span
               style={{
                 fontSize: "0.7rem",
                 color: "#69c881",
@@ -50,7 +50,7 @@ const UtangList = ({ payments }) => {
             >
               github.com/meinardxd
             </a>
-            <span style={{ fontSize: "0.7rem" }}>🍓🥕</span>
+            <span style={{ fontSize: "0.7rem" }}>🍓🥕</span>*/}
           </div>
         )}
       </animated.div>

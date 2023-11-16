@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
-import { APP_VERSION, GOOD_JOB, NO_UTANG_FOUND } from "../constants";
+import React from "react";
+import { NO_UTANG_FOUND } from "../constants";
 import WithTwoActions from "./swipeableList/WithTwoActions";
 import { useSpring, animated } from "@react-spring/web";
 import { listItemSpring } from "../springs";
 
 const DeletedList = ({
-  utangs,
   setUtangToEdit,
   deleted,
   view,
@@ -17,13 +16,6 @@ const DeletedList = ({
   const list = deleted;
   const springs = useSpring(listItemSpring);
 
-  useEffect(() => {
-    console.log("LIST MOUNT");
-
-    return () => {
-      console.log("LIST UNMOUNT");
-    };
-  }, [view]);
   return (
     <>
       <animated.div
@@ -48,9 +40,9 @@ const DeletedList = ({
         ) : (
           <div className="no-utang">
             <span>
-              {NO_UTANG_FOUND} <br /> {GOOD_JOB}
+              {NO_UTANG_FOUND} {/*<br /> {GOOD_JOB}*/}
             </span>
-            <span
+            {/*<span
               style={{
                 fontSize: "0.7rem",
                 color: "#69c881",
@@ -58,8 +50,8 @@ const DeletedList = ({
               }}
             >
               {APP_VERSION}
-            </span>
-            <a
+            </span>*/}
+            {/*<a
               href="https://github.com/gabcamba"
               rel="noreferrer"
               target="_blank"
@@ -83,8 +75,8 @@ const DeletedList = ({
               }}
             >
               github.com/meinardxd
-            </a>
-            <span style={{ fontSize: "0.7rem" }}>🍓🥕</span>
+            </a>*/}
+            {/*<span style={{ fontSize: "0.7rem" }}>🍓🥕</span>*/}
           </div>
         )}
       </animated.div>

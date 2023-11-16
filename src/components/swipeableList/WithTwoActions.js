@@ -77,38 +77,30 @@ const WithTwoActions = ({
 
   const trailingActions = (utang) => (
     <TrailingActions>
-      {utangToEdit ? null : (
-        <SwipeAction destructive={true} onClick={() => handlePay(utang)}>
-          <div
-            style={{
-              ...swipeActionStyle,
-              backgroundColor: "#69c881",
-              borderTopLeftRadius: 5,
-              borderBottomLeftRadius: 5,
-            }}
-          >
-            pay
-          </div>
-        </SwipeAction>
-      )}
+      <SwipeAction destructive={true} onClick={() => handlePay(utang)}>
+        <div
+          style={{
+            ...swipeActionStyle,
+            backgroundColor: "#69c881",
+            borderTopLeftRadius: 5,
+            borderBottomLeftRadius: 5,
+          }}
+        >
+          pay
+        </div>
+      </SwipeAction>
 
-      {utangToEdit ? null : (
-        <SwipeAction onClick={() => handleEdit(utang)}>
-          <div
-            style={{ ...swipeActionStyle, backgroundColor: "darkslateblue" }}
-          >
-            edit
-          </div>
-        </SwipeAction>
-      )}
+      <SwipeAction onClick={() => handleEdit(utang)}>
+        <div style={{ ...swipeActionStyle, backgroundColor: "darkslateblue" }}>
+          edit
+        </div>
+      </SwipeAction>
 
-      {utangToEdit ? null : (
-        <SwipeAction destructive={true} onClick={() => handleDelete(utang)}>
-          <div style={{ ...swipeActionStyle, backgroundColor: "tomato" }}>
-            del
-          </div>
-        </SwipeAction>
-      )}
+      <SwipeAction destructive={true} onClick={() => handleDelete(utang)}>
+        <div style={{ ...swipeActionStyle, backgroundColor: "tomato" }}>
+          del
+        </div>
+      </SwipeAction>
     </TrailingActions>
   );
 

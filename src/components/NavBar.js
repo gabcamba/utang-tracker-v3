@@ -6,17 +6,20 @@ import AutoDeleteRoundedIcon from "@mui/icons-material/AutoDeleteRounded";
 import HomeIcon from "@mui/icons-material/HomeRounded";
 import { navStyle } from "../styles";
 
-const LabelBottomNavigation = ({ view, setView }) => {
+const LabelBottomNavigation = ({
+  view,
+  setView,
+  setUtangToEdit,
+  setCreate,
+}) => {
   const handleChange = (event, newValue) => {
+    setUtangToEdit(null);
+    setCreate(false);
     setView(newValue);
   };
 
   return (
-    <BottomNavigation
-      sx={navStyle}
-      value={view}
-      onChange={handleChange}
-    >
+    <BottomNavigation sx={navStyle} value={view} onChange={handleChange}>
       <BottomNavigationAction
         label="home"
         value="home"
