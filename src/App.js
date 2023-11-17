@@ -31,26 +31,15 @@ function App() {
       setUtangToEdit(null);
     }
   };
+
   useEffect(() => {
-    const fetch = () => {
-      getUtangs(setUtangs);
-    };
-
-    const fetchDeleted = () => {
-      getDeleted(setDeleted);
-    };
-
-    const getHistory = () => {
-      getPayments(setPayments);
-    };
-
-    fetch();
-    getHistory();
-    fetchDeleted();
+    getUtangs(setUtangs);
+    getDeleted(setDeleted);
+    getPayments(setPayments);
   }, []);
 
   return (
-    <div className="App lock-scroll">
+    <div className="App">
       <div>
         <Toaster />
       </div>

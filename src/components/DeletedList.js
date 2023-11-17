@@ -23,8 +23,6 @@ const DeletedList = ({
         className={`${
           view === "deleted" || !create
             ? "utang-list list-expand"
-            : utangToEdit
-            ? "utang-list lock-scroll"
             : "utang-list"
         }`}
       >

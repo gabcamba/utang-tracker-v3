@@ -95,9 +95,6 @@
     }
   }
 
-  .lock-scroll {
-    overflow: hidden !important;
-  }
   .utang-list {
     overflow: auto;
     height: auto;

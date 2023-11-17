@@ -48,7 +48,7 @@ const UtangList = ({
           alignItems: "center",
         }}
       >
-        <span style={{ fontSize: "0.7rem", color: "gray", marginTop: 10}}>
+        <span style={{ fontSize: "0.7rem", color: "gray", marginTop: 10 }}>
           Made with ❤️ by 🍓🥕
         </span>
         <span
@@ -66,8 +66,6 @@ const UtangList = ({
         className={`${
           view === "deleted" || !create
             ? "utang-list list-expand"
-            : utangToEdit
-            ? "utang-list lock-scroll"
             : "utang-list"
         }`}
       >
@@ -85,7 +83,7 @@ const UtangList = ({
             <span>
               {NO_UTANG_FOUND} {/*<br /> {GOOD_JOB}*/}
             </span>
-           {/*<span
+            {/*<span
               style={{
                 fontSize: "0.7rem",
                 color: "#69c881",
