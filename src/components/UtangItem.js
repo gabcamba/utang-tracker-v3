@@ -123,7 +123,7 @@ const UtangItem = ({ utang, view }) => {
         <DialogTitle
           sx={{
             color: "darksalmon",
-            fontFamily: "ui-monospace",
+            fontFamily: "ui-monospace, SF Mono",
             fontSize: "1em",
           }}
           id="alert-dialog-title"
@@ -182,7 +182,7 @@ const UtangItem = ({ utang, view }) => {
         <DialogActions>
           <Button
             sx={{
-              fontFamily: "ui-monospace",
+              fontFamily: "ui-monospace, SF Mono",
               textTransform: "lowercase",
               color: "#69c881",
             }}

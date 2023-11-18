@@ -5,11 +5,11 @@ import { fabStyle } from "../styles";
 
 const Fab = ({ toggleCreate, create, utangToEdit }) => {
   const [springs, api] = useSpring(() => ({
-    from: { y: 100 },
-    to: { y: create || utangToEdit ? -190 : 0 },
+    from: { bottom: '-10vh' },
+    to: { bottom: create || utangToEdit ? '36vh' : '13vh' },
     config: {
       mass: 2,
-      tension: 500,
+      tension: 350,
     },
   }));
 
@@ -17,10 +17,10 @@ const Fab = ({ toggleCreate, create, utangToEdit }) => {
     if (create) {
       api.start({
         from: {
-          y: 0,
+          bottom: '13vh',
         },
         to: {
-          y: -190,
+          bottom: '36vh',
         },
       });
     }
@@ -30,19 +30,19 @@ const Fab = ({ toggleCreate, create, utangToEdit }) => {
     if (create || utangToEdit) {
       api.start({
         from: {
-          y: -190,
+          bottom: '36vh',
         },
         to: {
-          y: 0,
+          bottom: '13vh',
         },
       });
     } else {
       api.start({
         from: {
-          y: 0,
+        bottom: '13vh',
         },
         to: {
-          y: -190,
+          bottom: '36vh',
         },
       });
     }
@@ -55,7 +55,6 @@ const Fab = ({ toggleCreate, create, utangToEdit }) => {
       style={{
         ...springs,
         ...fabStyle,
-        bottom: 100,
         backgroundColor: !create ? "#20b2aa" : "tomato",
       }}
     >

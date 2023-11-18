@@ -13,8 +13,6 @@ const LabelBottomNavigation = ({
   setCreate,
 }) => {
   const handleChange = (event, newValue) => {
-    setUtangToEdit(null);
-    setCreate(false);
     setView(newValue);
   };
 

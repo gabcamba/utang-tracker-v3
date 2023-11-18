@@ -1,5 +1,3 @@
-
-
 export const createUtangSpring = {
   from: { y: 500 },
   to: { y: 0 },
@@ -20,6 +18,6 @@ export const listItemSpring = {
 };
 
 export const utangItemSpring = {
-  from: { opacity: 0, },
-  to: { opacity: 1, },
+  from: { opacity: 0 },
+  to: { opacity: 1 },
 };

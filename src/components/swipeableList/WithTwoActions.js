@@ -28,7 +28,6 @@ const WithTwoActions = ({
 }) => {
   const [play] = useSound(pop);
   const [playEdit] = useSound(edit);
-  const [editItemID, setEditItemID] = useState(null);
 
   const handleDelete = async (utang) => {
     play();
@@ -46,12 +45,10 @@ const WithTwoActions = ({
   const handleEdit = (utang) => {
     if (utangToEdit) {
       playEdit();
-      setEditItemID(null);
       setUtangToEdit(null);
     } else {
       playEdit();
       setUtangToEdit(utang);
-      setEditItemID(utang.uid);
       setCreate(true);
     }
   };
@@ -105,7 +102,7 @@ const WithTwoActions = ({
   );
 
   const editStyle = (id) => {
-    if (utangToEdit && editItemID === id) {
+    if (utangToEdit?.uid  === id) {
       return {
         backgroundColor: "darkslateblue",
       };
