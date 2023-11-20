@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   SwipeableList,
   SwipeableListItem,
@@ -102,7 +102,7 @@ const WithTwoActions = ({
   );
 
   const editStyle = (id) => {
-    if (utangToEdit?.uid  === id) {
+    if (utangToEdit?.uid === id) {
       return {
         backgroundColor: "darkslateblue",
       };
