@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   SwipeableList,
   SwipeableListItem,
@@ -28,7 +28,6 @@ const WithTwoActions = ({
 }) => {
   const [play] = useSound(pop);
   const [playEdit] = useSound(edit);
-  const [editItemID, setEditItemID] = useState(null);
 
   const handleDelete = async (utang) => {
     play();
@@ -46,12 +45,10 @@ const WithTwoActions = ({
   const handleEdit = (utang) => {
     if (utangToEdit) {
       playEdit();
-      setEditItemID(null);
       setUtangToEdit(null);
     } else {
       playEdit();
       setUtangToEdit(utang);
-      setEditItemID(utang.uid);
       setCreate(true);
     }
   };
@@ -77,43 +74,35 @@ const WithTwoActions = ({
 
   const trailingActions = (utang) => (
     <TrailingActions>
-      {utangToEdit ? null : (
-        <SwipeAction destructive={true} onClick={() => handlePay(utang)}>
-          <div
-            style={{
-              ...swipeActionStyle,
-              backgroundColor: "#69c881",
-              borderTopLeftRadius: 5,
-              borderBottomLeftRadius: 5,
-            }}
-          >
-            pay
-          </div>
-        </SwipeAction>
-      )}
+      <SwipeAction destructive={true} onClick={() => handlePay(utang)}>
+        <div
+          style={{
+            ...swipeActionStyle,
+            backgroundColor: "#69c881",
+            borderTopLeftRadius: 5,
+            borderBottomLeftRadius: 5,
+          }}
+        >
+          pay
+        </div>
+      </SwipeAction>
 
-      {utangToEdit ? null : (
-        <SwipeAction onClick={() => handleEdit(utang)}>
-          <div
-            style={{ ...swipeActionStyle, backgroundColor: "darkslateblue" }}
-          >
-            edit
-          </div>
-        </SwipeAction>
-      )}
+      <SwipeAction onClick={() => handleEdit(utang)}>
+        <div style={{ ...swipeActionStyle, backgroundColor: "darkslateblue" }}>
+          edit
+        </div>
+      </SwipeAction>
 
-      {utangToEdit ? null : (
-        <SwipeAction destructive={true} onClick={() => handleDelete(utang)}>
-          <div style={{ ...swipeActionStyle, backgroundColor: "tomato" }}>
-            del
-          </div>
-        </SwipeAction>
-      )}
+      <SwipeAction destructive={true} onClick={() => handleDelete(utang)}>
+        <div style={{ ...swipeActionStyle, backgroundColor: "tomato" }}>
+          del
+        </div>
+      </SwipeAction>
     </TrailingActions>
   );
 
   const editStyle = (id) => {
-    if (utangToEdit && editItemID === id) {
+    if (utangToEdit?.uid === id) {
       return {
         backgroundColor: "darkslateblue",
       };

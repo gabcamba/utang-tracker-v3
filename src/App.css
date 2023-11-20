@@ -1,8 +1,5 @@
 .App {
   background-color: #121212;
-  ::-webkit-scrollbar {
-    display: none;
-  }
   .utang-summary {
     background-image: url("../public/C&S.png");
     background-color: #121212;
@@ -34,7 +31,7 @@
         margin: 5px;
         color: rgb(216, 216, 216);
         font-size: 1em;
-        font-family: ui-monospace;
+        font-family: ui-monospace, SF Mono;
         text-shadow: 2px 2px 8px #000000;
       }
 
@@ -42,7 +39,7 @@
         color: white;
         font-size: 1.3em;
         margin: 5px;
-        font-family: ui-monospace;
+        font-family: ui-monospace, SF Mono;
         text-shadow: 2px 2px 8px #000000;
       }
     }
@@ -56,7 +53,7 @@
         margin: 5px;
         color: rgb(216, 216, 216);
         font-size: 1em;
-        font-family: ui-monospace;
+        font-family: ui-monospace, SF Mono;
         text-shadow: 2px 2px 8px #000000;
       }
 
@@ -64,7 +61,7 @@
         color: white;
         font-size: 1.3em;
         margin: 5px;
-        font-family: ui-monospace;
+        font-family: ui-monospace, SF Mono;
         text-shadow: 2px 2px 8px #000000;
       }
     }
@@ -81,7 +78,7 @@
         margin: 5px;
         color: rgb(216, 216, 216);
         font-size: 1em;
-        font-family: ui-monospace;
+        font-family: ui-monospace, SF Mono;
         text-shadow: 2px 2px 8px #000000;
       }
 
@@ -90,20 +87,19 @@
         font-size: 1.3em;
         margin: 5px;
         text-shadow: 2px 2px 8px #000000;
-        font-family: ui-monospace;
+        font-family: ui-monospace, SF Mono;
       }
     }
   }
 
-  .lock-scroll {
-    overflow: hidden !important;
-  }
   .utang-list {
     overflow: auto;
     height: auto;
     background-color: #181818;
     margin-bottom: 40vh;
     padding-top: 15vh;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
 
     .no-utang {
       display: flex;
@@ -112,7 +108,7 @@
       align-items: center;
       height: 80vh;
       color: rgb(181, 181, 181);
-      font-family: ui-monospace;
+      font-family: ui-monospace, SF Mono;
       text-align: center;
       font-size: 0.9rem;
       background-color: #121212 !important;
@@ -127,7 +123,7 @@
       align-items: center;
       height: 80px;
       width: 100%;
-      border-bottom: 0.2px solid #323232;
+      border-bottom: 0.2px solid #212121b5;
 
       .item {
         flex: 1;
@@ -135,7 +131,7 @@
         justify-content: center;
         align-items: center;
         color: white;
-        font-family: ui-monospace;
+        font-family: ui-monospace, SF Mono;
       }
 
       .namedate {
@@ -152,7 +148,7 @@
           margin-top: 5px;
           color: rgb(184, 184, 184);
           font-size: 0.5em;
-          font-family: ui-monospace;
+          font-family: ui-monospace, SF Mono;
           margin-left: 20px;
         }
       }
@@ -175,28 +171,28 @@
       .title-person {
         flex: 6;
         color: white;
-        font-family: ui-monospace;
+        font-family: ui-monospace, SF Mono;
         display: flex;
         justify-content: center;
         align-items: flex-start;
         flex-direction: column;
 
         .utang-name {
-          font-size: 0.87em;
+          font-size: 0.8em;
           font-weight: 500;
         }
         .utang-person {
           margin-top: 5px;
           color: rgb(184, 184, 184);
           font-size: 0.5em;
-          font-family: ui-monospace;
+          font-family: ui-monospace, SF Mono;
         }
 
         .utang-edited {
           margin-top: 5px;
           color: rgb(255, 178, 178);
           font-size: 0.5em;
-          font-family: ui-monospace;
+          font-family: ui-monospace, SF Mono;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -206,7 +202,7 @@
           margin-top: 5px;
           color: tomato;
           font-size: 0.5em;
-          font-family: ui-monospace;
+          font-family: ui-monospace, SF Mono;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -220,7 +216,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        font-family: ui-monospace;
+        font-family: ui-monospace, SF Mono;
         text-align: center;
       }
 
@@ -263,27 +259,27 @@
     }
 
     .input-title {
-      background-color: #7acde9;
+      background-color: cornflowerblue;
       color: white !important;
       flex: 3;
       outline: none;
       border: none;
-      font-size: 1em;
       border-radius: 0;
+      font-size: 1em;
       text-align: center;
-      font-family: ui-monospace;
+      font-family: ui-monospace, SF Mono;
       -webkit-backdrop-filter: blur(30px);
       backdrop-filter: blur(30px);
       margin: 0;
       padding: 0;
-      border-top-right-radius: 5px !important;
-      border-top-left-radius: 5px !important;
+      border-top-right-radius: 10px !important;
+      border-top-left-radius: 10px !important;
     }
 
     ::-webkit-input-placeholder {
       /* Chrome/Opera/Safari */
       font-size: 1em;
-      font-family: ui-monospace;
+      font-family: ui-monospace, SF Mono;
       font-weight: normal;
       color: rgb(255, 255, 255);
       font-style: italic;
@@ -294,14 +290,14 @@
       display: flex;
 
       .amount {
-        background-color: #de6238;
+        background-color: #DDACF5;
         border: none;
         flex: 3;
         color: white;
         font-size: 1em;
         width: 100%;
         border-radius: 0;
-        font-family: ui-monospace;
+        font-family: ui-monospace, SF Mono;
         text-align: center;
         outline: none;
         -webkit-backdrop-filter: blur(30px);
@@ -317,14 +313,22 @@
         font-size: 1em;
         font-weight: normal;
         border-radius: 0;
-        font-family: ui-monospace;
+        font-family: ui-monospace, SF Mono;
         text-align-last: center;
         -webkit-backdrop-filter: blur(30px);
         backdrop-filter: blur(30px);
       }
 
+      .Gab {
+        background-color: #9854CB !important;
+      }
+
+      .Mei {
+        background-color: #967ae9 !important;
+      }
+
       .category {
-        background-color: rgb(233, 150, 122);
+        background-color: #64379F;
       }
     }
 
@@ -346,7 +350,7 @@
 
       .btn {
         font-size: 1em;
-        font-family: ui-monospace;
+        font-family: ui-monospace, SF Mono;
         border-radius: 0;
         background-color: transparent;
         border: none;

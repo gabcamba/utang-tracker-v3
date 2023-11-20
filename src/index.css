@@ -7,6 +7,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #121212;
+  ::-webkit-scrollbar {
+    display: none !important;
+  }
 }
 
 code {
@@ -20,7 +23,7 @@ code {
 
 .MuiBottomNavigationAction-label {
   color: #20b2aa !important;
-  font-family: ui-monospace !important ;
+  font-family: ui-monospace, SF Mono !important ;
   font-size: 0.7rem !important;
   margin-top: 7px !important;
 }
@@ -38,7 +41,7 @@ code {
 }
 
 .MuiButtonBase-root {
-  font-family: ui-monospace !important;
+  font-family: ui-monospace, SF Mono !important;
 }
 
 .MuiInputBase-root {
@@ -49,7 +52,7 @@ code {
   border: none !important;
 }
 
-.MuiMenuItem-root{
+.MuiMenuItem-root {
   justify-content: center !important;
 }
 

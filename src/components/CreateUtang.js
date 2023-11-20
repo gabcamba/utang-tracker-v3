@@ -24,13 +24,12 @@ import { createUtangSpring } from "../springs";
 import { Button, MenuItem, Select } from "@mui/material";
 import { selectStyle } from "../styles";
 
-const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
+const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [person, setPerson] = useState("");
   const [category, setCategory] = useState("category");
   const [confirm, setConfirm] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [play] = useSound(pop);
   const [playError] = useSound(error);
 
@@ -74,8 +73,6 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
   };
 
   const onClickOK = async () => {
-    setLoading(true);
-
     if (
       !title ||
       !amount ||
@@ -84,11 +81,11 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
       isNaN(toFloat(amount)) ||
       toInt(amount) === 0 ||
       toFloat(amount) === 0 ||
-      !category || category === 'category'
+      !category ||
+      category === "category"
     ) {
       playError();
       errorToast(FIELD_ERROR);
-      setLoading(false);
       return;
     }
 
@@ -97,11 +94,11 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
       utangToEdit.name == title &&
       utangToEdit.amount == amount &&
       utangToEdit.person == person &&
+      utangToEdit.category === category &&
       title.trim() === utangToEdit.name
     ) {
       errorToast(NO_FIELDS_CHANGED);
       playError();
-      setLoading(false);
       return;
     }
 
@@ -155,7 +152,6 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
     setTitle("");
     setAmount("");
     setConfirm(false);
-
   };
 
   const handlePaste = (e) => {
@@ -166,78 +162,80 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit, create }) => {
   };
 
   return (
-    <animated.div className="create-utang" style={{ ...springs }}>
-      <input
-        value={title}
-        onChange={(e) => onChangeTitle(e)}
-        placeholder="description"
-        maxLength={20}
-        className={`${utangToEdit ? "editing" : ""} input-title`}
-        type="text"
-      />
-      <div className="amount-person">
-        <div style={{ flex: 3, display: "flex" }}>
-          <input
-            value={amount}
-            onChange={(e) => onChangeAmount(e)}
-            placeholder="amount"
-            maxLength={8}
-            className="amount"
-            pattern="[0-9]*"
-            inputMode="decimal"
-            required
-            onPaste={handlePaste}
-          />
+    <>
+      <animated.div className="create-utang" style={{ ...springs }}>
+        <input
+          value={title}
+          onChange={(e) => onChangeTitle(e)}
+          placeholder="description"
+          maxLength={20}
+          className={`${utangToEdit ? "editing" : ""} input-title`}
+          type="text"
+        />
+        <div className="amount-person">
+          <div style={{ flex: 3, display: "flex" }}>
+            <input
+              value={amount}
+              onChange={(e) => onChangeAmount(e)}
+              placeholder="amount"
+              maxLength={8}
+              className="amount"
+              pattern="[0-9]*"
+              inputMode="decimal"
+              required
+              onPaste={handlePaste}
+            />
+          </div>
+          <Select
+            value={person}
+            onChange={(e) => onSelectPerson(e)}
+            className={`select ${person}`}
+            sx={{ ...selectStyle }}
+          >
+            <MenuItem value="category" disabled>
+              <em>person</em>
+            </MenuItem>
+            <MenuItem value={GAB}>{GAB_LC}</MenuItem>
+            <MenuItem value={MEI}>{MEI_LC}</MenuItem>
+          </Select>
+          <Select
+            defaultValue="category"
+            value={category}
+            onChange={(e) => onSelectCategory(e)}
+            className="select category"
+            sx={{ ...selectStyle }}
+          >
+            <MenuItem value="category" disabled>
+              <em>category</em>
+            </MenuItem>
+            <MenuItem value="food">food</MenuItem>
+            <MenuItem value="transpo">transpo</MenuItem>
+            <MenuItem value="home">home</MenuItem>
+            <MenuItem value="grocery">grocery</MenuItem>
+            <MenuItem value="leisure">leisure</MenuItem>
+          </Select>
         </div>
-        <Select
-          value={person}
-          onChange={(e) => onSelectPerson(e)}
-          className="select"
-          sx={{...selectStyle}}
-        >
-          <MenuItem value="category" disabled>
-            <em>person</em>
-          </MenuItem>
-          <MenuItem value={GAB}>{GAB_LC}</MenuItem>
-          <MenuItem value={MEI}>{MEI_LC}</MenuItem>
-        </Select>
-        <Select
-          defaultValue="category"
-          value={category}
-          onChange={(e) => onSelectCategory(e)}
-          className="select category"
-          sx={{...selectStyle}}
-        >
-          <MenuItem value="category" disabled>
-            <em>category</em>
-          </MenuItem>
-          <MenuItem value="food">food</MenuItem>
-          <MenuItem value="transpo">transpo</MenuItem>
-          <MenuItem value="home">home</MenuItem>
-          <MenuItem value="grocery">grocery</MenuItem>
-          <MenuItem value="leisure">leisure</MenuItem>
-        </Select>
-      </div>
-      <div className={`${confirm ? "confirm" : ""} create`}>
-        {confirm ? (
-          <Button
-            onClick={() => onClickOK()}
-            className="btn confirm"
-            sx={{textTransform: 'uppercase'}}
-          >
-            ok
-          </Button>
-        ) : (
-          <Button
-            onClick={() => onClickPlus()}
-            className="btn"
-            sx={{textTransform: 'lowercase'}}
-          >
-            {utangToEdit ? "edit" : "create"}
-          </Button>
-        )}
-      </div>
-    </animated.div>
+        <div className={`${confirm ? "confirm" : ""} create`}>
+          {confirm ? (
+            <Button
+              onClick={() => onClickOK()}
+              className="btn confirm"
+              sx={{ textTransform: "uppercase" }}
+            >
+              ok
+            </Button>
+          ) : (
+            <Button
+              onClick={() => onClickPlus()}
+              className="btn"
+              sx={{ textTransform: "lowercase" }}
+            >
+              {utangToEdit ? "edit" : "create"}
+            </Button>
+          )}
+        </div>
+      </animated.div>
+    </>
   );
 };
 

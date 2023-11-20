@@ -22,7 +22,6 @@ export const UTANG_CREATED = "Utang created";
 export const UTANG_UPDATED = "Utang edited";
 export const FIELD_ERROR = "Errors found on some fields.";
 export const NO_UTANG_FOUND = "No data found.";
-export const GOOD_JOB = `Good job ${GAB} & ${MEI}!`;
 
 // database consts
 export const PAYMENTS = "PAYMENTS";
@@ -33,4 +32,4 @@ export const DELETED_VIEW = 'deleted'
 export const PAYMENTS_VIEW = 'payments'
 
 // app version
-export const APP_VERSION = "v3.111523b"
+export const APP_VERSION = "v3.112023a"

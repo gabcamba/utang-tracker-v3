@@ -12,28 +12,24 @@ const LabelBottomNavigation = ({ view, setView }) => {
   };
 
   return (
-    <BottomNavigation
-      sx={navStyle}
-      value={view}
-      onChange={handleChange}
-    >
+    <BottomNavigation sx={navStyle} value={view} onChange={handleChange}>
       <BottomNavigationAction
         label="home"
         value="home"
         icon={<HomeIcon />}
-        sx={{ color: "gray" }}
+        sx={{ color: "#404040" }}
       />
       <BottomNavigationAction
         label="history"
         value="history"
         icon={<RestoreIcon />}
-        sx={{ color: "gray" }}
+        sx={{ color: "#404040" }}
       />
       <BottomNavigationAction
         label="deleted"
         value="deleted"
         icon={<AutoDeleteRoundedIcon />}
-        sx={{ color: "gray" }}
+        sx={{ color: "#404040" }}
       />
     </BottomNavigation>
   );

@@ -2,7 +2,7 @@
 export const editModalStyle = {
   borderRadius: "15px",
   border: "1px solid rgba(233, 150, 122, 0.197)",
-  fontFamily: "ui-monospace",
+  fontFamily: "ui-monospace, SF Mono",
   background: "none",
   "-webkit-backdrop-filter": "blur(10px)",
   backdropFilter: "blur(10px)",
@@ -11,7 +11,7 @@ export const editModalStyle = {
 export const paymentModalStyle = {
   main: {
     borderRadius: "15px",
-    fontFamily: "ui-monospace",
+    fontFamily: "ui-monospace, SF Mono",
     background: "none",
     "-webkit-backdrop-filter": "blur(30px)",
     backdropFilter: "blur(30px)",
@@ -19,7 +19,7 @@ export const paymentModalStyle = {
   },
   header: {
     color: "#69c881",
-    fontFamily: "ui-monospace",
+    fontFamily: "ui-monospace, SF Mono",
     fontSize: "1em",
   },
   itemContainer: {
@@ -40,7 +40,7 @@ export const paymentModalStyle = {
     textAlign: "center",
   },
   close: {
-    fontFamily: "ui-monospace",
+    fontFamily: "ui-monospace, SF Mono",
     textTransform: "lowercase",
     color: "#69c881",
   },
@@ -92,7 +92,7 @@ export const toastStyle = {
   backdropFilter: "blur(10px)",
   "-webkit-backdrop-filter": "blur(10px)",
   color: "#fff",
-  fontFamily: "ui-monospace",
+  fontFamily: "ui-monospace, SF Mono",
   fontSize: "0.8rem",
 };
 
@@ -105,7 +105,7 @@ export const selectStyle = {
 export const swipeActionStyle = {
   display: "flex",
   color: "white",
-  fontFamily: "ui-monospace",
+  fontFamily: "ui-monospace, SF Mono",
   justifyContent: "center",
   alignItems: "center",
 };
