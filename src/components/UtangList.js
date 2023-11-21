@@ -18,14 +18,14 @@ const UtangList = ({
   const springs = useSpring(listItemSpring);
 
   const handleScroll = () => {
-    sessionStorage.setItem("scrollPos", window.scrollY);
+    localStorage.setItem("scrollPos", window.scrollY);
   };
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
     const setScroll = async () => {
       window.scrollTo({
-        top: parseInt(sessionStorage.getItem("scrollPos")),
+        top: parseInt(localStorage.getItem("scrollPos")),
       });
     };
 
