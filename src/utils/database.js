@@ -28,10 +28,12 @@ export const getSession = async (sessionCode) => {
   }
 };
 
-export const createUser = async (userObj) => {
-  setDoc(doc(firestoreDB, `SESSIONS`, `${userObj.sessionId}`), {
-    dateCreated: Date.now(),
-  });
+export const createUser = async (userObj, createSession) => {
+  if (createSession) {
+    setDoc(doc(firestoreDB, `SESSIONS`, `${userObj.sessionId}`), {
+      dateCreated: Date.now(),
+    });
+  }
 
   setDoc(doc(firestoreDB, `USERS`, `${userObj.userId}`), {
     ...userObj,
@@ -42,7 +44,7 @@ export const createUtang = async (utangObj) => {
   setDoc(
     doc(
       firestoreDB,
-      `SESSIONS/${sessionStorage.getItem("sessionId")}/UTANGS`,
+      `SESSIONS/${localStorage.getItem("sessionId")}/UTANGS`,
       `${utangObj.uid}`
     ),
     {
@@ -51,11 +53,11 @@ export const createUtang = async (utangObj) => {
   );
 };
 
-export const getUtangs = async (setUtangs, sessionId) => {
+export const getUtangs = async (setUtangs) => {
   onSnapshot(
     collection(
       firestoreDB,
-      `SESSIONS/${sessionStorage.getItem("sessionId")}/UTANGS`
+      `SESSIONS/${localStorage.getItem("sessionId")}/UTANGS`
     ),
     (docsSnap) => {
       let records = [];
@@ -72,7 +74,7 @@ export const createDeleted = async (utang) => {
   setDoc(
     doc(
       firestoreDB,
-      `SESSIONS/${sessionStorage.getItem("sessionId")}/DELETED`,
+      `SESSIONS/${localStorage.getItem("sessionId")}/DELETED`,
       `${utang.uid}`
     ),
     {
@@ -85,7 +87,7 @@ export const getDeleted = async (setDeleted) => {
   onSnapshot(
     collection(
       firestoreDB,
-      `SESSIONS/${sessionStorage.getItem("sessionId")}/DELETED`
+      `SESSIONS/${localStorage.getItem("sessionId")}/DELETED`
     ),
     (docsSnap) => {
       let deleted = [];
@@ -103,7 +105,7 @@ export const createPayment = async (payment) => {
   setDoc(
     doc(
       firestoreDB,
-      `SESSIONS/${sessionStorage.getItem("sessionId")}/PAYMENTS`,
+      `SESSIONS/${localStorage.getItem("sessionId")}/PAYMENTS`,
       `${payment.id}`
     ),
     {
@@ -116,7 +118,7 @@ export const getPayments = async (setPayments) => {
   onSnapshot(
     collection(
       firestoreDB,
-      `SESSIONS/${sessionStorage.getItem("sessionId")}/PAYMENTS`
+      `SESSIONS/${localStorage.getItem("sessionId")}/PAYMENTS`
     ),
     (docsSnap) => {
       let payments = [];
@@ -134,7 +136,7 @@ export const updateItem = async (updatedUtang, isDelete) => {
   updateDoc(
     doc(
       firestoreDB,
-      `SESSIONS/${sessionStorage.getItem("sessionId")}/UTANGS`,
+      `SESSIONS/${localStorage.getItem("sessionId")}/UTANGS`,
       updatedUtang.uid
     ),
     {
@@ -147,8 +149,36 @@ export const deleteItem = async (utang) => {
   deleteDoc(
     doc(
       firestoreDB,
-      `SESSIONS/${sessionStorage.getItem("sessionId")}/UTANGS`,
+      `SESSIONS/${localStorage.getItem("sessionId")}/UTANGS`,
       utang.uid
     )
+  );
+};
+
+export const migrateUtangs = async (setUtangs) => {
+  onSnapshot(
+    collection(
+      firestoreDB,
+      `PAYMENTS`
+    ),
+    (docsSnap) => {
+      // let records = [];
+      docsSnap.forEach((document) => {
+        const utangObj = document.data()
+        setDoc(
+          doc(
+            firestoreDB,
+            `SESSIONS/GGJA0YVX/PAYMENTS`,
+            `${utangObj.id}`
+          ),
+          {
+            ...utangObj,
+          }
+        );
+        // records.push(doc.data());
+      });
+
+      // setUtangs(records.reverse());
+    }
   );
 };

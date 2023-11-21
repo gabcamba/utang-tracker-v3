@@ -7,14 +7,26 @@ import Button from "@mui/material/Button";
 import { paymentModalStyle } from "../styles";
 import { generateCode } from "../utils/sessionCodeGenerator";
 import { createUser } from "../utils/database";
-const GenerateSessionModal = ({ open, toggleModal, userId }) => {
-  const code = generateCode();
+import { successToast } from "../utils/toast";
+import { CircularProgress } from "@mui/material";
+
+const code = generateCode();
+
+const GenerateSessionModal = ({ open, toggleModal, userId, setSessionId }) => {
+  const [clicked, setClicked] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onClickConfirm = () => {
-    createUser({ userId: userId, sessionId: code });
+    setLoading(true);
+    localStorage.setItem("user", userId);
+    localStorage.setItem("sessionId", code);
+    setTimeout(() => {
+      createUser({ userId: userId, sessionId: code }, true);
+      setSessionId(code);
+      toggleModal(false);
+    }, 3000);
   };
 
- 
   return (
     <Dialog
       open={open}
@@ -30,13 +42,43 @@ const GenerateSessionModal = ({ open, toggleModal, userId }) => {
       </DialogTitle>
       <DialogContent sx={{ margin: 0 }}>
         <div
-          style={{ color: "white", fontSize: "1.5em", fontWeight: "bolder" }}
+          onClick={() => {
+            navigator.clipboard.writeText(code);
+            successToast("Code copied to clipboard");
+            setClicked(true);
+          }}
+          style={{
+            color: clicked ? "cornflowerblue" : "white",
+            fontSize: "1.5em",
+            fontWeight: "bolder",
+            textAlign: "center",
+            marginTop: 40,
+            letterSpacing: 10,
+            fontFamily: "ui-monospace, SF Mono",
+          }}
         >
-          {code}
+          {loading ? (
+            <CircularProgress
+              sx={{
+                color: "#69c881",
+                height: "25px !important",
+                width: "25px !important",
+                // marginBottom: 5,
+              }}
+            />
+          ) : (
+            code
+          )}
         </div>
 
         <div
-          style={{ color: "white", fontSize: "0.8em", fontWeight: "bolder" }}
+          style={{
+            color: "white",
+            fontSize: "0.8em",
+            marginTop: 60,
+            textAlign: "center",
+            textWrap: "balance",
+          }}
         >
           Send this code to someone to share a session with them
         </div>

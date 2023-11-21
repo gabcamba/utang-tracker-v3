@@ -109,3 +109,77 @@ export const swipeActionStyle = {
   justifyContent: "center",
   alignItems: "center",
 };
+
+export const regPage = {
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100svh",
+    flexDirection: "column",
+    gap: 20,
+  },
+  noSession: {
+    color: "white",
+    fontFamily: "ui-monospace, SF Mono",
+    textAlign: "center",
+    textWrap: "balance",
+    width: "60vw",
+    fontSize: "0.8em",
+  },
+  createSession: {
+    color: "white",
+    backgroundColor: "cornflowerblue",
+    textTransform: "lowercase",
+    width: "60vw",
+    height: 50
+  },
+  bottomContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    gap: 10,
+    marginTop: 50,
+  },
+  joinExisting: {
+    color: "white",
+    fontFamily: "ui-monospace, SF Mono",
+    fontSize: "0.8em",
+    marginBottom: 20,
+    marginTop: 20,
+    width: "60vw",
+    textAlign: "center",
+    textWrap: "balance",
+    // height: '50px'
+  },
+  sessionInput: {
+    padding: 0,
+    height: 50,
+    width: "60vw",
+    outline: "none",
+    border: "none",
+    borderRadius: 5,
+    backgroundColor: "white",
+    color: "black",
+    fontFamily: "ui-monospace, SF Mono",
+    textAlign: "center",
+    textTransform: "uppercase",
+    fontWeight: "bolder",
+    fontSize: "1em",
+    marginBottom: 5,
+    letterSpacing: 5,
+  },
+  circularProgress: {
+    color: "#69c881",
+    height: "25px !important",
+    width: "25px !important",
+  },
+  sessionBtn: {
+    color: "white",
+    backgroundColor: "#26ab47",
+    textTransform: "lowercase",
+    width: "60vw",
+    height: 50
+  },
+};

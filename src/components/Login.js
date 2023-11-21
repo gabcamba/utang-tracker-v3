@@ -1,66 +1,63 @@
-import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import React, { useState } from "react";
 import { auth, provider } from "../firestore";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import swig from "../media/swig.png";
-import { createUser, getDeleted, getPayments, getSession, getUser, getUtangs } from "../utils/database";
-import { generateUUID } from "../utils/uuid";
-import { generateCode } from "../utils/sessionCodeGenerator";
+import { getUser } from "../utils/database";
 import GenerateSessionModal from "./GenerateSessionModal";
-import { errorToast } from "../utils/toast";
-const Login = ({
-  setSessionId,
-  setRegistration,
-  setUtangs,
-  setDeleted,
-  setPayments,
-}) => {
+import { APP_VERSION } from "../constants";
+import { useSpring, animated } from "@react-spring/web";
+import { utangItemSpring } from "../springs";
+import RegistrationPage from "./RegistrationPage";
+
+const Login = ({ setSessionId }) => {
+  const springs = useSpring(utangItemSpring);
+
   const [isRegistration, setIsRegistration] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
   const [isSesionModalOpen, setIsSessionModalOpen] = useState(false);
-  const [inputCode, setInputCode] = useState(null);
 
-  const onClickJoin = async() => {
-
-    // check if session code is existing, return error if not, proceed to home when yes
-
-    if(await getSession(inputCode)){
-      createUser({ userId: userId, sessionId: inputCode });
-
-    } else {
-      errorToast('SESSION CODE NOT FOUND');
-    }
-  };
+  const [loading, setLoading] = useState(false);
 
   const onClickLogin = async () => {
+    setLoading(true);
     signInWithPopup(auth, provider)
       .then(async (result) => {
         const user = result.user;
-        console.log(user);
+        setUserDetails({
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+        });
         setUserId(user.uid);
         const userDetails = await getUser(user.uid);
 
         if (userDetails && userDetails.sessionId) {
-          sessionStorage.setItem("sessionId", userDetails?.sessionId);
-          sessionStorage.setItem("user", user.uid);
+          localStorage.setItem("sessionId", userDetails?.sessionId);
+          localStorage.setItem("user", user.uid);
           setSessionId(userDetails?.sessionId || null);
         } else {
           setIsRegistration(true);
         }
       })
       .catch((error) => {
-        console.error("GOOGLE AUTH ERROR", error.message);
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.error(error.code, "GOOGLE AUTH ERROR", error.message);
       });
   };
   return (
     <>
       {isRegistration ? (
-        <div
+        <RegistrationPage
+          userId={userId}
+          userDetails={userDetails}
+          setSessionId={setSessionId}
+          setIsSessionModalOpen={setIsSessionModalOpen}
+        />
+      ) : (
+        <animated.div
           style={{
+            ...springs,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -68,49 +65,51 @@ const Login = ({
             flexDirection: "column",
           }}
         >
-          <div style={{ color: "white" }}>
-            It looks like your account doesn't have a joined session yet.
+          {loading && (
+            <CircularProgress
+              sx={{
+                color: "#69c881",
+                height: "20px !important",
+                width: "20px !important",
+                marginBottom: 5,
+              }}
+            />
+          )}
+
+          <div style={{ color: "white", fontFamily: "ui-monospace, SF Mono" }}>
+            utang tracker{" "}
           </div>
-          <Button
-            onClick={() => setIsSessionModalOpen(true)}
-            style={{ color: "white", backgroundColor: "green" }}
-          >
-            Create a session{" "}
-          </Button>{" "}
-          {/*create user, generate sessionId, updte user with sessionId, fetch data */}
-          <div style={{ color: "white" }}>Join session? </div>{" "}
-          <input onChange={e => setInputCode(e.target.value)} placeholder="session code" />
-          <Button
-            onClick={() => onClickJoin()}
-            style={{ color: "white", backgroundColor: "green" }}
-          >
-            Join session
-          </Button>
-          {/*create user, fetch sessionId, update user with sessionid, fetch data */}
-        </div>
-      ) : (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100svh",
-          }}
-        >
-          <Button
-            onClick={() => onClickLogin()}
-            sx={{
-              textTransform: "lowercase",
-              color: "white",
-              scale: "0.5 !important",
+          <div
+            style={{
+              color: "#69c881",
+              fontFamily: "ui-monospace, SF Mono",
+              fontSize: "0.7em",
+              marginTop: 10,
             }}
           >
-            <img src={swig} />
-          </Button>
-        </div>
+            {APP_VERSION}
+          </div>
+          {!loading && (
+            <Button
+              onClick={() => onClickLogin()}
+              sx={{
+                textTransform: "lowercase",
+                color: "white",
+                scale: "0.4 !important",
+              }}
+            >
+              <img src={swig} alt="signInWithGoogle" />
+            </Button>
+          )}
+        </animated.div>
       )}
       {
-        <GenerateSessionModal open={isSesionModalOpen} toggleModal={setIsSessionModalOpen} userId={userId}/>
+        <GenerateSessionModal
+          open={isSesionModalOpen}
+          toggleModal={setIsSessionModalOpen}
+          setSessionId={setSessionId}
+          userId={userId}
+        />
       }
     </>
   );

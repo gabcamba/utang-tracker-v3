@@ -26,10 +26,8 @@ function App() {
   const [payments, setPayments] = useState([]);
   const [create, setCreate] = useState(false);
   const [view, setView] = useState(HOME_VIEW);
-  const [isSignedIn, setIsSignedIn] = useState(sessionStorage.getItem("user"));
-  const [sessionId, setSessionId] = useState(
-    sessionStorage.getItem("sessionId")
-  );
+  const [isSignedIn, setIsSignedIn] = useState(localStorage.getItem("user"));
+  const [sessionId, setSessionId] = useState(localStorage.getItem("sessionId"));
 
   const toggleCreate = () => {
     setCreate(!create);
@@ -58,17 +56,15 @@ function App() {
         <Toaster />
       </div>
       <button
-        style={{ zIndex: 9999999999, position: "relative" }}
-        onClick={() => console.log(auth.currentUser)}
-      >
-        print USER
-      </button>
-      <button
-        style={{ zIndex: 9999999999, position: "relative" }}
+        style={{ zIndex: 9999999999, position: "fixed", backgroundColor: '#121212', outline: 'none', border: 'none', color: '#121212' }}
         onClick={() => {
+          // migrateUtangs();
           signOut(auth);
-          sessionStorage.removeItem("user");
-          sessionStorage.removeItem("sessionId");
+          localStorage.removeItem("user");
+          localStorage.removeItem("sessionId");
+          setSessionId(null);
+          setIsSignedIn(false);
+          setView(HOME_VIEW);
         }}
       >
         logout
