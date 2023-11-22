@@ -59,6 +59,7 @@ export const getUtangs = async (setUtangs) => {
       firestoreDB,
       `SESSIONS/${localStorage.getItem("sessionId")}/UTANGS`
     ),
+    { includeMetadataChanges: true },
     (docsSnap) => {
       let records = [];
       docsSnap.forEach((doc) => {
@@ -66,6 +67,8 @@ export const getUtangs = async (setUtangs) => {
       });
 
       setUtangs(records.reverse());
+      localStorage.setItem("utangs", JSON.stringify(records));
+
     }
   );
 };
@@ -155,30 +158,15 @@ export const deleteItem = async (utang) => {
   );
 };
 
-export const migrateUtangs = async (setUtangs) => {
-  onSnapshot(
-    collection(
-      firestoreDB,
-      `PAYMENTS`
-    ),
-    (docsSnap) => {
-      // let records = [];
-      docsSnap.forEach((document) => {
-        const utangObj = document.data()
-        setDoc(
-          doc(
-            firestoreDB,
-            `SESSIONS/GGJA0YVX/PAYMENTS`,
-            `${utangObj.id}`
-          ),
-          {
-            ...utangObj,
-          }
-        );
-        // records.push(doc.data());
+// this block will be used for data migration, sessioncode and collection will be replaced
+// for payments, .id is used, where for utang, .uid
+export const migrateUtangs = async () => {
+  onSnapshot(collection(firestoreDB, `PAYMENTS`), (docsSnap) => {
+    docsSnap.forEach((document) => {
+      const utangObj = document.data();
+      setDoc(doc(firestoreDB, `SESSIONS/GGJA0YVX/PAYMENTS`, `${utangObj.id}`), {
+        ...utangObj,
       });
-
-      // setUtangs(records.reverse());
-    }
-  );
+    });
+  });
 };
