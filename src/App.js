@@ -18,7 +18,10 @@ import Login from "./components/Login";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
 function App() {
-  const [utangs, setUtangs] = useState([]);
+  const [utangs, setUtangs] = useState(
+    JSON.parse(localStorage.getItem("utangs")) || []
+  );
+
   const [deleted, setDeleted] = useState([]);
   const [exploding, setExploding] = useState(false);
   const [forPay, setForPay] = useState(false);
@@ -56,7 +59,14 @@ function App() {
         <Toaster />
       </div>
       <button
-        style={{ zIndex: 9999999999, position: "fixed", backgroundColor: '#121212', outline: 'none', border: 'none', color: '#121212' }}
+        style={{
+          zIndex: 9999999999,
+          position: "fixed",
+          backgroundColor: "#121212",
+          outline: "none",
+          border: "none",
+          color: "#121212",
+        }}
         onClick={() => {
           // migrateUtangs();
           signOut(auth);
