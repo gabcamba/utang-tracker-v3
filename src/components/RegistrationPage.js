@@ -43,7 +43,7 @@ const RegistrationPage = ({
         }}
       >
         <div style={regPage.noSession}>
-          It looks like you haven't joined a session yet.
+          It looks like you haven't joined nor created a session yet.
         </div>
         <Button
           onClick={() => setIsSessionModalOpen(true)}
@@ -53,7 +53,7 @@ const RegistrationPage = ({
         </Button>
         <div style={regPage.bottomContainer}>
           <div style={regPage.joinExisting}>
-            Or join an existing session using an 8-character alphanumeric code:
+            Or join an existing session using a code:
           </div>{" "}
           <input
             maxLength={8}

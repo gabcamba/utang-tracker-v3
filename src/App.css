@@ -1,4 +1,7 @@
 .App {
+  ::-webkit-scrollbar {
+    display: none !important;
+  }
   background-color: #121212;
   .utang-summary {
     background-image: url("../public/C&S.png");
@@ -29,10 +32,10 @@
 
       .name {
         margin: 5px;
-        color: rgb(216, 216, 216);
-        font-size: 1em;
+        color: white;
+        font-size: 0.9em;
         font-family: ui-monospace, SF Mono;
-        text-shadow: 2px 2px 8px #000000;
+        /* text-shadow: 2px 2px 8px #000000; */
       }
 
       .amount {
@@ -40,7 +43,7 @@
         font-size: 1.3em;
         margin: 5px;
         font-family: ui-monospace, SF Mono;
-        text-shadow: 2px 2px 8px #000000;
+        /* text-shadow: 2px 2px 8px #000000; */
       }
     }
     .mei {
@@ -51,10 +54,10 @@
 
       .name {
         margin: 5px;
-        color: rgb(216, 216, 216);
-        font-size: 1em;
+        color: white;
+        font-size: 0.9em;
         font-family: ui-monospace, SF Mono;
-        text-shadow: 2px 2px 8px #000000;
+        /* text-shadow: 2px 2px 8px #000000; */
       }
 
       .amount {
@@ -62,7 +65,7 @@
         font-size: 1.3em;
         margin: 5px;
         font-family: ui-monospace, SF Mono;
-        text-shadow: 2px 2px 8px #000000;
+        /* text-shadow: 2px 2px 8px #000000; */
       }
     }
     .summary {
@@ -76,17 +79,17 @@
       }
       .name {
         margin: 5px;
-        color: rgb(216, 216, 216);
-        font-size: 1em;
+        color: white;
+        font-size: 0.9em;
         font-family: ui-monospace, SF Mono;
-        text-shadow: 2px 2px 8px #000000;
+        /* text-shadow: 2px 2px 8px #000000; */
       }
 
       .amount {
         color: white;
         font-size: 1.3em;
         margin: 5px;
-        text-shadow: 2px 2px 8px #000000;
+        /* text-shadow: 2px 2px 8px #000000; */
         font-family: ui-monospace, SF Mono;
       }
     }
@@ -123,7 +126,7 @@
       align-items: center;
       height: 80px;
       width: 100%;
-      border-bottom: 0.2px solid #212121b5;
+      border-bottom: 0.2px solid rgba(255, 255, 255, 0.063);
 
       .item {
         flex: 1;
@@ -179,7 +182,7 @@
 
         .utang-name {
           font-size: 0.8em;
-          font-weight: 500;
+          font-weight: bold;
         }
         .utang-person {
           margin-top: 5px;
@@ -290,7 +293,7 @@
       display: flex;
 
       .amount {
-        background-color: #DDACF5;
+        background-color: #ddacf5;
         border: none;
         flex: 3;
         color: white;
@@ -320,7 +323,7 @@
       }
 
       .Gab {
-        background-color: #9854CB !important;
+        background-color: #9854cb !important;
       }
 
       .Mei {
@@ -328,7 +331,7 @@
       }
 
       .category {
-        background-color: #64379F;
+        background-color: #64379f;
       }
     }
 

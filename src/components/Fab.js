@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
 import { useSpring, animated } from "@react-spring/web";
-import { AddRounded, CloseRounded } from "@mui/icons-material";
+import {
+  CloseRounded,
+  InterestsRounded,
+  WidgetsRounded,
+} from "@mui/icons-material";
 import { fabStyle } from "../styles";
 
-const Fab = ({ toggleCreate, create, utangToEdit }) => {
+const Fab = ({ toggleCreate, create, utangToEdit, toggleMenu, menuOpen }) => {
   const [springs, api] = useSpring(() => ({
-    from: { bottom: '-10vh' },
-    to: { bottom: create || utangToEdit ? '36vh' : '13vh' },
+    from: { bottom: "-10vh" },
+    to: { bottom: create || utangToEdit ? "36vh" : "13vh" },
     config: {
       mass: 2,
       tension: 350,
@@ -17,37 +21,30 @@ const Fab = ({ toggleCreate, create, utangToEdit }) => {
     if (create) {
       api.start({
         from: {
-          bottom: '13vh',
+          bottom: "13vh",
         },
         to: {
-          bottom: '36vh',
+          bottom: "36vh",
         },
       });
     }
   }, [create, api]);
 
   const handleClick = () => {
+    if (!menuOpen && !create && !utangToEdit) {
+      toggleMenu();
+    }
     if (create || utangToEdit) {
       api.start({
         from: {
-          bottom: '36vh',
+          bottom: "36vh",
         },
         to: {
-          bottom: '13vh',
+          bottom: "13vh",
         },
       });
-    } else {
-      api.start({
-        from: {
-        bottom: '13vh',
-        },
-        to: {
-          bottom: '36vh',
-        },
-      });
+      toggleCreate();
     }
-
-    toggleCreate();
   };
   return (
     <animated.div
@@ -58,7 +55,7 @@ const Fab = ({ toggleCreate, create, utangToEdit }) => {
         backgroundColor: !create ? "#20b2aa" : "tomato",
       }}
     >
-      {create ? <CloseRounded /> : <AddRounded />}
+      {create ? <CloseRounded /> : <InterestsRounded />}
     </animated.div>
   );
 };
