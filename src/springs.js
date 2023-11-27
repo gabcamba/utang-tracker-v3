@@ -8,6 +8,16 @@ export const createUtangSpring = {
   },
 };
 
+export const menuSpring = {
+  from: { backdropFilter: "blur(0px)", "-webkit-backdrop-filter": "blur(0px)" },
+  to: { backdropFilter: "blur(40px)", "-webkit-backdrop-filter": "blur(40px)" },
+  config: {
+    mass: 2,
+    friction: 35,
+    tension: 200,
+  },
+};
+
 export const listItemSpring = {
   from: { opacity: 0, y: 30 },
   to: { opacity: 1, y: 0 },

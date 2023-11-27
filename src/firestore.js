@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, persistentLocalCache } from "firebase/firestore";
+import { getFirestore, persistentLocalCache, CACHE_SIZE_UNLIMITED } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
@@ -15,6 +15,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig, {
   localCache: persistentLocalCache(/*settings*/ {}),
+  cacheSizeBytes: CACHE_SIZE_UNLIMITED,
 });
 export const provider = new GoogleAuthProvider();
 export const auth = getAuth(app);

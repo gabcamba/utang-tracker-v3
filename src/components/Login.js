@@ -1,8 +1,10 @@
 import { signInWithPopup } from "firebase/auth";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { auth, provider } from "../firestore";
 import { Button, CircularProgress } from "@mui/material";
 import swig from "../media/swig.png";
+import blink from "../gifs/PixelPets-Blink.gif";
+import cry from "../gifs/PixelPets-Cry.gif";
 import { getUser } from "../utils/database";
 import GenerateSessionModal from "./GenerateSessionModal";
 import { APP_VERSION } from "../constants";
@@ -10,7 +12,10 @@ import { useSpring, animated } from "@react-spring/web";
 import { utangItemSpring } from "../springs";
 import RegistrationPage from "./RegistrationPage";
 
-const Login = ({ setSessionId }) => {
+const Login = ({ setSessionId, loggedOut }) => {
+  useEffect(() => {
+    localStorage.removeItem("utangs");
+  }, []);
   const springs = useSpring(utangItemSpring);
 
   const [isRegistration, setIsRegistration] = useState(false);
@@ -46,7 +51,14 @@ const Login = ({ setSessionId }) => {
       });
   };
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
       {isRegistration ? (
         <RegistrationPage
           userId={userId}
@@ -55,53 +67,71 @@ const Login = ({ setSessionId }) => {
           setIsSessionModalOpen={setIsSessionModalOpen}
         />
       ) : (
-        <animated.div
+        <div
           style={{
-            ...springs,
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            height: "100svh",
-            flexDirection: "column",
+            paddingBottom: 100,
           }}
         >
-          {loading && (
-            <CircularProgress
-              sx={{
-                color: "#69c881",
-                height: "20px !important",
-                width: "20px !important",
-                marginBottom: 5,
-              }}
-            />
-          )}
-
-          <div style={{ color: "white", fontFamily: "ui-monospace, SF Mono" }}>
-            utang tracker{" "}
-          </div>
-          <div
+          <img
+            alt="pet-blink"
+            src={loggedOut ? cry : blink}
+            style={{ width: "250px" }}
+          />
+          <animated.div
             style={{
-              color: "#69c881",
-              fontFamily: "ui-monospace, SF Mono",
-              fontSize: "0.7em",
-              marginTop: 10,
+              ...springs,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              border: "1px solid #69c88146",
+              height: "200px",
+              width: "300px",
+              borderRadius: "20px",
             }}
           >
-            {APP_VERSION}
-          </div>
-          {!loading && (
-            <Button
-              onClick={() => onClickLogin()}
-              sx={{
-                textTransform: "lowercase",
-                color: "white",
-                scale: "0.4 !important",
+            <div
+              style={{ color: "white", fontFamily: "ui-monospace, SF Mono" }}
+            >
+              utang tracker{" "}
+            </div>
+            <div
+              style={{
+                color: "#69c881",
+                fontFamily: "ui-monospace, SF Mono",
+                fontSize: "0.7em",
+                marginTop: 10,
               }}
             >
-              <img src={swig} alt="signInWithGoogle" />
-            </Button>
-          )}
-        </animated.div>
+              {APP_VERSION}
+            </div>
+            {!loading ? (
+              <>
+                <Button
+                  onClick={() => onClickLogin()}
+                  sx={{
+                    scale: "0.5 !important",
+                  }}
+                >
+                  <img src={swig} alt="signInWithGoogle" />
+                </Button>
+              </>
+            ) : (
+              <CircularProgress
+                sx={{
+                  color: "#69c881",
+                  height: "20px !important",
+                  width: "20px !important",
+                  marginTop: 9,
+                }}
+              />
+            )}
+          </animated.div>
+        </div>
       )}
       {
         <GenerateSessionModal
@@ -111,7 +141,7 @@ const Login = ({ setSessionId }) => {
           userId={userId}
         />
       }
-    </>
+    </div>
   );
 };
 

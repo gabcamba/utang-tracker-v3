@@ -32,4 +32,4 @@ export const DELETED_VIEW = 'deleted'
 export const PAYMENTS_VIEW = 'payments'
 
 // app version
-export const APP_VERSION = "v3.112023a"
+export const APP_VERSION = "v3.112723a"

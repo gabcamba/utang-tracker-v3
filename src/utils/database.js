@@ -41,6 +41,11 @@ export const createUser = async (userObj, createSession) => {
 };
 
 export const createUtang = async (utangObj) => {
+  if (!navigator.onLine) {
+    const currentUtangs = JSON.parse(localStorage.getItem("utangs"));
+    currentUtangs.unshift(utangObj);
+    localStorage.setItem("utangs", JSON.stringify(currentUtangs));
+  }
   setDoc(
     doc(
       firestoreDB,
@@ -66,9 +71,12 @@ export const getUtangs = async (setUtangs) => {
         records.push(doc.data());
       });
 
-      setUtangs(records.reverse());
-      localStorage.setItem("utangs", JSON.stringify(records));
-
+      const list = navigator.onLine
+        ? records.reverse()
+        : JSON.parse(localStorage.getItem("utangs") || []);
+      setUtangs(list);
+      navigator.onLine &&
+        localStorage.setItem("utangs", JSON.stringify(records));
     }
   );
 };
