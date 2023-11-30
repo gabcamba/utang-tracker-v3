@@ -13,6 +13,7 @@ import { useSpring, animated } from "@react-spring/web";
 
 import {
   AttachMoneyRounded,
+  BoltRounded,
   DirectionsBusRounded,
   FastfoodRounded,
   HomeRounded,
@@ -55,6 +56,10 @@ const UtangItem = ({ utang, view }) => {
       icon: <StarRounded />,
       color: "#27104E",
     },
+    bills : {
+      icon: <BoltRounded />,
+      color: "#fcd12a"
+    }
   };
 
   return (

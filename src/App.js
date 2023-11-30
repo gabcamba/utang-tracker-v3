@@ -112,7 +112,7 @@ function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user && sessionId) {
         setIsSignedIn(true);
         getUtangs(setUtangs);
         getDeleted(setDeleted);
@@ -124,7 +124,6 @@ function App() {
         localStorage.removeItem("user");
         localStorage.removeItem("sessionId");
         localStorage.removeItem("utangs");
-        // setIsSignedIn(false);
         setIsLoggedOut(true);
         setView(HOME_VIEW);
       }
@@ -136,17 +135,17 @@ function App() {
       <div>
         <Toaster />
       </div>
-      
+
       {isSignedIn && sessionId ? (
         <div className="App">
-        {menuOpen && (
-          <Menu
-            toggleMenu={toggleMenu}
-            toggleCreate={toggleCreate}
-            handleLogout={handleLogout}
-            handlePayAll={handlePayAll}
-          />
-        )}
+          {menuOpen && (
+            <Menu
+              toggleMenu={toggleMenu}
+              toggleCreate={toggleCreate}
+              handleLogout={handleLogout}
+              handlePayAll={handlePayAll}
+            />
+          )}
           {exploding && (
             <ConfettiExplosion
               particleCount={500}
