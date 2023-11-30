@@ -213,6 +213,7 @@ const CreateUtang = ({ utangToEdit, setUtangToEdit }) => {
             <MenuItem value="home">home</MenuItem>
             <MenuItem value="grocery">grocery</MenuItem>
             <MenuItem value="leisure">leisure</MenuItem>
+            <MenuItem value="bills">bills</MenuItem>
           </Select>
         </div>
         <div className={`${confirm ? "confirm" : ""} create`}>

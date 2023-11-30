@@ -3,7 +3,6 @@ import { useSpring, animated } from "@react-spring/web";
 import {
   CloseRounded,
   InterestsRounded,
-  WidgetsRounded,
 } from "@mui/icons-material";
 import { fabStyle } from "../styles";
 
