@@ -10,17 +10,9 @@ const NoUtang = () => {
     <>
       <div>
         <img alt="peach" style={{ height: 40, width: 40 }} src={peach} />
-        <img
-          alt="zoe"
-          style={{ height: 40, width: 40, marginBottom: 2 }}
-          src={zoe}
-        />
+        <img alt="zoe" style={{ height: 40, width: 40, marginBottom: 2 }} src={zoe} />
         <img alt="mimi" style={{ height: 40, width: 40 }} src={mimi} />
-        <img
-          alt="yuki"
-          style={{ height: 40, width: 40, marginBottom: 2 }}
-          src={yuki}
-        />
+        <img alt="yuki" style={{ height: 40, width: 40, marginBottom: 2 }} src={yuki} />
       </div>
 
       <span>{NO_UTANG_FOUND}</span>
