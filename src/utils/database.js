@@ -74,7 +74,7 @@ export const getUtangs = async (setUtangs) => {
       const list = navigator.onLine
         ? records.reverse()
         : JSON.parse(localStorage.getItem("utangs") || []);
-      setUtangs([]);
+      setUtangs(list);
       navigator.onLine &&
         localStorage.setItem("utangs", JSON.stringify(records));
     }
