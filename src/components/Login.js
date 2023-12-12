@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { auth, provider } from "../firestore";
 import { Button, CircularProgress } from "@mui/material";
 import swig from "../media/swig.png";
-import blink from "../gifs/PixelPets-Blink.gif";
+import blink from "../gifs/Blink-Final.gif";
 import cry from "../gifs/PixelPets-Cry.gif";
 import { getUser } from "../utils/database";
 import GenerateSessionModal from "./GenerateSessionModal";
@@ -78,8 +78,8 @@ const Login = ({ setSessionId, loggedOut }) => {
         >
           <img
             alt="pet-blink"
-            src={loggedOut ? cry : blink}
-            style={{ width: "250px" }}
+            src={loggedOut ? blink : blink}
+            style={{ width: "250px", "margin-bottom": "-5px" }}
           />
           <animated.div
             style={{

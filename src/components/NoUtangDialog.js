@@ -4,12 +4,14 @@ import mimi from "../gifs/Mimi-GIFV2-lg.gif";
 import peach from "../gifs/Peach-GIFV2-lg.gif";
 import yuki from "../gifs/Yuki-GIFV2-lg.gif";
 import zoe from "../gifs/Zoe-GIF-lg.gif";
+import petsJump from "../gifs/Group-Jump-Final.gif";
 
 const NoUtang = () => {
   return (
     <>
       <div>
-        <img alt="peach" style={{ height: 40, width: 40 }} src={peach} />
+        <img style={{ height: 35, width: 100 }} src={petsJump} />
+        {/*<img alt="peach" style={{ height: 40, width: 40 }} src={peach} />
         <img
           alt="zoe"
           style={{ height: 40, width: 40, marginBottom: 2 }}
@@ -19,8 +21,8 @@ const NoUtang = () => {
         <img
           alt="yuki"
           style={{ height: 40, width: 40, marginBottom: 2 }}
-          src={yuki}
-        />
+     src={yuki}
+      />*/}
       </div>
 
       <span>{NO_UTANG_FOUND}</span>
