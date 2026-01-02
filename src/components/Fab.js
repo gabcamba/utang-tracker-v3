@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSpring, animated } from "@react-spring/web";
 import {
-  CloseRounded,
+  CancelRounded,
   InterestsRounded,
 } from "@mui/icons-material";
 import { fabStyle } from "../styles";
@@ -54,7 +54,7 @@ const Fab = ({ toggleCreate, create, utangToEdit, toggleMenu, menuOpen }) => {
         backgroundColor: !create ? "#20b2aa" : "tomato",
       }}
     >
-      {create ? <CloseRounded /> : <InterestsRounded />}
+      {create ? <CancelRounded sx={{fontSize: '2em'}} /> : <InterestsRounded sx={{fontSize: '2em'}}/>}
     </animated.div>
   );
 };

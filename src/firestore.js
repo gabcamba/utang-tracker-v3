@@ -3,14 +3,12 @@ import { getFirestore, persistentLocalCache, CACHE_SIZE_UNLIMITED } from "fireba
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  databaseURL:
-    "https://gabmeiutangtrack-default-rtdb.asia-southeast1.firebasedatabase.app",
-  apiKey: "AIzaSyDmQnbj4au69iMdvn3eTR1an5TUHI-32ZE",
-  authDomain: "gabmeiutangtrack.firebaseapp.com",
-  projectId: "gabmeiutangtrack",
-  storageBucket: "gabmeiutangtrack.appspot.com",
-  messagingSenderId: "281228300923",
-  appId: "1:281228300923:web:942f87f2079a438aff48de",
+  apiKey: "AIzaSyDk9ENzaK7mQdncVM8lYpUfwjbBbiarKfs",
+  authDomain: "tracker-2k25.firebaseapp.com",
+  projectId: "tracker-2k25",
+  storageBucket: "tracker-2k25.firebasestorage.app",
+  messagingSenderId: "230311187884",
+  appId: "1:230311187884:web:52b5de2184b23ebdfc1609"
 };
 
 const app = initializeApp(firebaseConfig, {

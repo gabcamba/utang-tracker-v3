@@ -5,10 +5,14 @@ import {
   AddCircleRounded,
   ArrowCircleLeftRounded,
   CancelRounded,
+  NightlightRounded,
+  LightModeRounded,
   PaidRounded,
 } from "@mui/icons-material";
+import { useTheme } from "../context/ThemeContext";
 
 const Menus = ({ toggleMenu, toggleCreate, handleLogout, handlePayAll }) => {
+  const { theme, toggleTheme } = useTheme();
   const [springs, api] = useSpring(() => ({
     ...menuSpring,
   }));
@@ -59,7 +63,7 @@ const Menus = ({ toggleMenu, toggleCreate, handleLogout, handlePayAll }) => {
 
     setTimeout(() => {
       toggleMenu();
-    }, 600);
+    }, 500);
   };
 
   const handleCreate = () => {
@@ -89,6 +93,12 @@ const Menus = ({ toggleMenu, toggleCreate, handleLogout, handlePayAll }) => {
       itemIcon: <ArrowCircleLeftRounded />,
       iconColor: "#c2aff1",
       itemFunction: handleLogout,
+    },
+    {
+      itemLabel: theme === "dark" ? "Light Mode" : "Dark Mode",
+      itemIcon: theme === "dark" ? <LightModeRounded /> : <NightlightRounded />,
+      iconColor: theme === "dark" ? "#ffd700" : "#1a1a1a",
+      itemFunction: toggleTheme,
     },
   ];
 
@@ -139,7 +149,7 @@ const Menus = ({ toggleMenu, toggleCreate, handleLogout, handlePayAll }) => {
       >
         <animated.div
           style={{
-            color: "white",
+            color: "var(--text-primary)",
             fontFamily: "ui-monospace, SF Mono",
             fontSize: "1em",
             marginBottom: 20,
@@ -149,7 +159,7 @@ const Menus = ({ toggleMenu, toggleCreate, handleLogout, handlePayAll }) => {
         >
           Session code:{" "}
           <span
-            style={{ letterSpacing: 5, color: "#69c881", fontWeight: "bold" }}
+            style={{ letterSpacing: 5, color: "var(--accent-green)", fontWeight: "bold" }}
           >
             {localStorage.getItem("sessionId")}
           </span>
@@ -183,7 +193,7 @@ const Menus = ({ toggleMenu, toggleCreate, handleLogout, handlePayAll }) => {
             </div>
             <div
               style={{
-                color: "white",
+                color: "var(--text-primary)",
                 marginLeft: 20,
                 fontFamily: "ui-monospace, SF Mono",
                 fontSize: "0.85em",

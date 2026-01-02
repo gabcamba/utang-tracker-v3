@@ -1,3 +1,66 @@
+:root {
+  /* Smooth transitions for theme changes */
+  --transition-speed: 0.3s;
+}
+
+/* Dark Theme (Default) */
+:root[data-theme="dark"] {
+  --bg-primary: #121212;
+  --bg-secondary: #181818;
+  --bg-summary: #121212;
+  --text-primary: #ffffff;
+  --text-secondary: #b8b8b8;
+  --text-muted: #b5b5b5;
+  --accent-green: #69c881;
+  --accent-blue: #00a2ff;
+  --accent-purple: #967ae9;
+  --accent-purple-light: #ddacf5;
+  --accent-purple-dark: #64379f;
+  --accent-purple-darker: #9854cb;
+  --accent-orange: orange;
+  --accent-red: tomato;
+  --accent-pink: #ffb2b2;
+  --border-color: rgba(255, 255, 255, 0.063);
+  --backdrop-blur: blur(30px);
+  --nav-selected: #20b2aa;
+  --menu-bg: rgba(0, 0, 0, 0.7);
+  --modal-bg: rgba(73, 73, 73, 0.501);
+  --cornflower: cornflowerblue;
+  --shadow: rgba(0, 0, 0, 0.24);
+}
+
+/* Light Theme */
+:root[data-theme="light"] {
+  --bg-primary: #f5f5f5;
+  --bg-secondary: #ffffff;
+  --bg-summary: #e8e8e8;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --text-muted: #808080;
+  --accent-green: #26ab47;
+  --accent-blue: #0088cc;
+  --accent-purple: #7c5ecf;
+  --accent-purple-light: #c495eb;
+  --accent-purple-dark: #5a3d8f;
+  --accent-purple-darker: #7d43b8;
+  --accent-orange: #ff8c00;
+  --accent-red: #e74c3c;
+  --accent-pink: #ff9999;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --backdrop-blur: blur(20px);
+  --nav-selected: #0088cc;
+  --menu-bg: rgba(255, 255, 255, 0.95);
+  --modal-bg: rgba(245, 245, 245, 0.95);
+  --cornflower: #6495ed;
+  --shadow: rgba(0, 0, 0, 0.15);
+}
+
+* {
+  transition: background-color var(--transition-speed) ease,
+              color var(--transition-speed) ease,
+              border-color var(--transition-speed) ease;
+}
+
 body {
   margin: 0;
 
@@ -6,7 +69,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #121212;
+  background-color: var(--bg-primary);
   ::-webkit-scrollbar {
     display: none !important;
   }
@@ -18,21 +81,21 @@ code {
 }
 
 .Mui-selected {
-  color: #20b2aa !important;
+  color: var(--nav-selected) !important;
 }
 
 .MuiBottomNavigationAction-label {
-  color: #20b2aa !important;
+  color: var(--nav-selected) !important;
   font-family: ui-monospace, SF Mono !important ;
   font-size: 0.7rem !important;
   margin-top: 7px !important;
 }
 
 .MuiMenu-paper {
-  color: white !important;
-  background-color: rgba(73, 73, 73, 0.501) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  backdrop-filter: blur(20px) !important;
+  color: var(--text-primary) !important;
+  background-color: var(--modal-bg) !important;
+  -webkit-backdrop-filter: var(--backdrop-blur) !important;
+  backdrop-filter: var(--backdrop-blur) !important;
   position: fixed;
   display: flex;
   justify-content: center !important;

@@ -15,8 +15,8 @@ import {
   AttachMoneyRounded,
   BoltRounded,
   DirectionsBusRounded,
-  FastfoodRounded,
   HomeRounded,
+  LunchDiningRounded,
   ShoppingCartRounded,
   StarRounded,
 } from "@mui/icons-material";
@@ -33,7 +33,7 @@ const UtangItem = ({ utang, view }) => {
 
   const categoryIconList = {
     food: {
-      icon: <FastfoodRounded />,
+      icon: <LunchDiningRounded />,
       color: "cornflowerblue",
     },
     transpo: {
@@ -56,10 +56,10 @@ const UtangItem = ({ utang, view }) => {
       icon: <StarRounded />,
       color: "#27104E",
     },
-    bills : {
+    bills: {
       icon: <BoltRounded />,
-      color: "#fcd12a"
-    }
+      color: "#fcd12a",
+    },
   };
 
   return (

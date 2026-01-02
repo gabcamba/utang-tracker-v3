@@ -2,10 +2,10 @@
   ::-webkit-scrollbar {
     display: none !important;
   }
-  background-color: #121212;
+  background-color: var(--bg-primary);
   .utang-summary {
     background-image: url("../public/C&S.png");
-    background-color: #121212;
+    background-color: var(--bg-summary);
     background-repeat: repeat;
     background-size: cover;
     height: 15vh;
@@ -32,14 +32,14 @@
 
       .name {
         margin: 5px;
-        color: white;
+        color: var(--text-primary);
         font-size: 0.9em;
         font-family: ui-monospace, SF Mono;
         /* text-shadow: 2px 2px 8px #000000; */
       }
 
       .amount {
-        color: white;
+        color: var(--text-primary);
         font-size: 1.3em;
         margin: 5px;
         font-family: ui-monospace, SF Mono;
@@ -54,14 +54,14 @@
 
       .name {
         margin: 5px;
-        color: white;
+        color: var(--text-primary);
         font-size: 0.9em;
         font-family: ui-monospace, SF Mono;
         /* text-shadow: 2px 2px 8px #000000; */
       }
 
       .amount {
-        color: white;
+        color: var(--text-primary);
         font-size: 1.3em;
         margin: 5px;
         font-family: ui-monospace, SF Mono;
@@ -75,18 +75,18 @@
       align-items: center;
 
       .green {
-        color: #69c881 !important;
+        color: var(--accent-green) !important;
       }
       .name {
         margin: 5px;
-        color: white;
+        color: var(--text-primary);
         font-size: 0.9em;
         font-family: ui-monospace, SF Mono;
         /* text-shadow: 2px 2px 8px #000000; */
       }
 
       .amount {
-        color: white;
+        color: var(--text-primary);
         font-size: 1.3em;
         margin: 5px;
         /* text-shadow: 2px 2px 8px #000000; */
@@ -98,7 +98,7 @@
   .utang-list {
     overflow: auto;
     height: auto;
-    background-color: #181818;
+    background-color: var(--bg-secondary);
     margin-bottom: 40vh;
     padding-top: 15vh;
     border-top-right-radius: 20px;
@@ -110,11 +110,11 @@
       justify-content: center;
       align-items: center;
       height: 80vh;
-      color: rgb(181, 181, 181);
+      color: var(--text-muted);
       font-family: ui-monospace, SF Mono;
       text-align: center;
       font-size: 0.9rem;
-      background-color: #121212 !important;
+      background-color: var(--bg-primary) !important;
     }
 
     .editing {
@@ -126,14 +126,14 @@
       align-items: center;
       height: 80px;
       width: 100%;
-      border-bottom: 0.2px solid rgba(255, 255, 255, 0.063);
+      border-bottom: 0.2px solid var(--border-color);
 
       .item {
         flex: 1;
         display: flex;
         justify-content: center;
         align-items: center;
-        color: white;
+        color: var(--text-primary);
         font-family: ui-monospace, SF Mono;
       }
 
@@ -149,7 +149,7 @@
         }
         .date {
           margin-top: 5px;
-          color: rgb(184, 184, 184);
+          color: var(--text-secondary);
           font-size: 0.5em;
           font-family: ui-monospace, SF Mono;
           margin-left: 20px;
@@ -161,19 +161,19 @@
         justify-content: flex-end;
       }
       .orange {
-        color: orange !important;
+        color: var(--accent-orange) !important;
         display: flex;
         justify-content: flex-end !important;
       }
 
       .red {
-        color: tomato !important;
+        color: var(--accent-red) !important;
         display: flex;
         justify-content: flex-end !important;
       }
       .title-person {
         flex: 6;
-        color: white;
+        color: var(--text-primary);
         font-family: ui-monospace, SF Mono;
         display: flex;
         justify-content: center;
@@ -186,14 +186,14 @@
         }
         .utang-person {
           margin-top: 5px;
-          color: rgb(184, 184, 184);
+          color: var(--text-secondary);
           font-size: 0.5em;
           font-family: ui-monospace, SF Mono;
         }
 
         .utang-edited {
           margin-top: 5px;
-          color: rgb(255, 178, 178);
+          color: var(--accent-pink);
           font-size: 0.5em;
           font-family: ui-monospace, SF Mono;
           display: flex;
@@ -203,7 +203,7 @@
 
         .utang-deleted {
           margin-top: 5px;
-          color: tomato;
+          color: var(--accent-red);
           font-size: 0.5em;
           font-family: ui-monospace, SF Mono;
           display: flex;
@@ -213,7 +213,7 @@
       }
 
       .amount {
-        color: white;
+        color: var(--text-primary);
         font-size: 0.95em;
         flex: 2.5;
         display: flex;
@@ -262,8 +262,8 @@
     }
 
     .input-title {
-      background-color: cornflowerblue;
-      color: white !important;
+      background-color: var(--cornflower);
+      color: var(--text-primary) !important;
       flex: 3;
       outline: none;
       border: none;
@@ -271,8 +271,8 @@
       font-size: 1em;
       text-align: center;
       font-family: ui-monospace, SF Mono;
-      -webkit-backdrop-filter: blur(30px);
-      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: var(--backdrop-blur);
+      backdrop-filter: var(--backdrop-blur);
       margin: 0;
       padding: 0;
       border-top-right-radius: 10px !important;
@@ -284,7 +284,7 @@
       font-size: 1em;
       font-family: ui-monospace, SF Mono;
       font-weight: normal;
-      color: rgb(255, 255, 255);
+      color: var(--text-primary);
       font-style: italic;
     }
 
@@ -293,24 +293,24 @@
       display: flex;
 
       .amount {
-        background-color: #ddacf5;
+        background-color: var(--accent-purple-light);
         border: none;
         flex: 3;
-        color: white;
+        color: var(--text-primary);
         font-size: 1em;
         width: 100%;
         border-radius: 0;
         font-family: ui-monospace, SF Mono;
         text-align: center;
         outline: none;
-        -webkit-backdrop-filter: blur(30px);
-        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: var(--backdrop-blur);
+        backdrop-filter: var(--backdrop-blur);
       }
 
       .select {
         outline: none;
-        background-color: #967ae9;
-        color: white;
+        background-color: var(--accent-purple);
+        color: var(--text-primary);
         flex: 3 !important;
         border: none;
         font-size: 1em;
@@ -318,25 +318,25 @@
         border-radius: 0;
         font-family: ui-monospace, SF Mono;
         text-align-last: center;
-        -webkit-backdrop-filter: blur(30px);
-        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: var(--backdrop-blur);
+        backdrop-filter: var(--backdrop-blur);
       }
 
       .Gab {
-        background-color: #9854cb !important;
+        background-color: var(--accent-purple-darker) !important;
       }
 
       .Mei {
-        background-color: #967ae9 !important;
+        background-color: var(--accent-purple) !important;
       }
 
       .category {
-        background-color: #64379f;
+        background-color: var(--accent-purple-dark);
       }
     }
 
     .create {
-      color: white;
+      color: var(--text-primary);
       flex: 3;
       border: none;
       font-size: 1em;
@@ -344,9 +344,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #69c881;
-      -webkit-backdrop-filter: blur(30px);
-      backdrop-filter: blur(30px);
+      background-color: var(--accent-green);
+      -webkit-backdrop-filter: var(--backdrop-blur);
+      backdrop-filter: var(--backdrop-blur);
       width: 99.9%;
       margin: 0;
       padding: 0;
@@ -357,14 +357,14 @@
         border-radius: 0;
         background-color: transparent;
         border: none;
-        color: white;
+        color: var(--text-primary);
         height: 100%;
         width: 100%;
       }
     }
 
     .confirm {
-      background-color: #26ab47;
+      background-color: var(--accent-green);
     }
   }
 
